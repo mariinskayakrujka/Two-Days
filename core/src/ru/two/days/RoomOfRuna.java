@@ -63,6 +63,8 @@ public class RoomOfRuna extends ScreenGame{
     @Override
     public void show() {
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
+        runa.x = 400;
+        //координата по y
 
     }
     @Override
@@ -128,6 +130,12 @@ public class RoomOfRuna extends ScreenGame{
                 if (paper.hit(gg.touch.x, gg.touch.y)){
                     isReading = true;
                     texPaper = new Texture("paper.png");
+                }
+                if (gg.touch.y < 120 && gg.touch.y > 90 && gg.touch.x >= END_OF_SCREEN_RIGHT){
+                    gg.setScreen(new RoomOfValo(gg));
+                }
+                if (gg.touch.y < 120 && gg.touch.y > 90 && gg.touch.x <= END_OF_SCREEN_LEFT){
+                    gg.setScreen(new Hall(gg));
                 }
                 if(isReading && (gg.touch.x < SCR_WIDTH/8f) || (gg.touch.x > SCR_WIDTH/8f+250 &&
                             gg.touch.x < SCR_WIDTH*7/8f) || (gg.touch.x > SCR_WIDTH*7/8f+250)) {

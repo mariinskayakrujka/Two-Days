@@ -29,7 +29,6 @@ public class TwoDays extends Game {
 	ScreenIntro screenIntro;
 	ScreenSettings screenSettings;
 	ScreenAbout screenAbout;
-	Paper screenPaper;
 
 	@Override
 	public void create () {

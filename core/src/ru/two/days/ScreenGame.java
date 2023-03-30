@@ -121,12 +121,9 @@ public class ScreenGame implements Screen {
     }
 
 
-    public void changeScreen(Screen screen, int x, int y, boolean right, boolean left){
-        if (y < 120 && y > 90 && right && x >= END_OF_SCREEN_RIGHT){
-            gg.setScreen(screen);
-        }
-        if (y < 120 && y > 90 && left && x <= END_OF_SCREEN_LEFT){
-            gg.setScreen(screen);
+    public void changeScreen(Texture changed, Texture changing, int x, int y){
+        if (y < 120 && y > 90 && (x >= END_OF_SCREEN_RIGHT || x <= END_OF_SCREEN_LEFT)){
+            changed = changing;
         }
     }
 

@@ -83,6 +83,9 @@ public class RoomOfValo extends ScreenGame{
                     outputText(poste);
                 }
             }
+            if (gg.touch.y < 120 && gg.touch.y > 90 && gg.touch.x <= END_OF_SCREEN_LEFT){
+                gg.setScreen(new RoomOfRuna(gg));
+            }
             isThreeMinutes();
 
             gg.camera.update();
