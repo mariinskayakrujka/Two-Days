@@ -1,19 +1,13 @@
 package ru.two.days;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.ScreenUtils;
-
-import java.awt.Dimension;
-import java.awt.Toolkit;
 
 public class TwoDays extends Game {
 	//static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -22,14 +16,20 @@ public class TwoDays extends Game {
 	SpriteBatch batch;
 	OrthographicCamera camera;
 	Vector3 touch;
-	BitmapFont font, fontLarge, fontRuna, fontPoliam, fontKaiden, fontValo, fontMassovka;
+	private BitmapFont font;
+	BitmapFont fontLarge;
+	BitmapFont fontRuna;
+	BitmapFont fontPoliam;
+	BitmapFont fontKaiden;
+	BitmapFont fontValo;
+	BitmapFont fontMassovka;
 	boolean soundOn = true;
 
-	ScreenGame roomOfRuna, roomOfValo, classRoom;
 	ScreenIntro screenIntro;
 	ScreenSettings screenSettings;
 	ScreenAbout screenAbout;
 
+	@SuppressWarnings("SuspiciousIndentation")
 	@Override
 	public void create () {
 		// создание системных объектов
@@ -42,7 +42,6 @@ public class TwoDays extends Game {
 		screenIntro = new ScreenIntro(this);
 		screenSettings = new ScreenSettings(this);
 		screenAbout = new ScreenAbout(this);
-        roomOfRuna = new RoomOfRuna(this);
 		setScreen(screenIntro);
 
 	}
@@ -64,7 +63,7 @@ public class TwoDays extends Game {
 		parameter.characters = str;
 		fontLarge = generator.generateFont(parameter);
 		parameter.size = 45;
-		font = generator.generateFont(parameter);
+		setFont(generator.generateFont(parameter));
 
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("speech.ttf"));
 		parameter.size = 30;
@@ -96,11 +95,19 @@ public class TwoDays extends Game {
 	public void dispose () {
 		fontRuna.dispose();
 		fontLarge.dispose();
-		font.dispose();
+		getFont().dispose();
 		fontMassovka.dispose();
 		fontPoliam.dispose();
 		fontValo.dispose();
 		fontKaiden.dispose();
 		batch.dispose();
+	}
+
+	public BitmapFont getFont() {
+		return font;
+	}
+
+	public void setFont(BitmapFont font) {
+		this.font = font;
 	}
 }

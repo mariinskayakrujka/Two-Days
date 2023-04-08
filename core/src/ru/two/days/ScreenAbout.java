@@ -44,7 +44,7 @@ public class ScreenAbout implements Screen {
         gg.batch.setProjectionMatrix(gg.camera.combined);
         gg.batch.begin();
         gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);
-        gg.font.draw(gg.batch, textAbout, 100, 650);
+        gg.getFont().draw(gg.batch, textAbout, 100, 650);
         btnBack.font.draw(gg.batch, btnBack.text, btnBack.x, btnBack.y);
         gg.batch.end();
     }

@@ -3,6 +3,8 @@ package ru.two.days;
 import static ru.two.days.TwoDays.SCR_HEIGHT;
 import static ru.two.days.TwoDays.SCR_WIDTH;
 
+import androidx.annotation.NonNull;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -39,24 +41,25 @@ public class ScreenGame implements Screen {
     PoliamSt poliam;
     KaidenMorem kaiden;
 
-    public ScreenGame(TwoDays context){
-        gg = context;
-        scc = new SpeechCharacters();
-        tt = new Text(gg.font, tt.phrase, 50, SCR_HEIGHT/2f);
-        button = new Texture("button.png");
-        button1 = new Texture("button1.png");
-        runa = new RunaMilekum(SCR_WIDTH/2, 5);
-        kaiden = new KaidenMorem(SCR_WIDTH/3, 3);
-        poliam =  new PoliamSt(SCR_WIDTH/20, 5);
-        end = new Endings(this);
-        sounds[0] = Gdx.audio.newSound(Gdx.files.internal("sounds/beg-v-kablukah.mp3"));
-        sounds[1] = Gdx.audio.newSound(Gdx.files.internal("sounds/Ringings in ye.mp3"));
-        sounds[2] = Gdx.audio.newSound(Gdx.files.internal("sounds/shelest.mp3"));
-        sounds[3] = Gdx.audio.newSound(Gdx.files.internal("sounds/WalkingKover.mp3"));
-        sounds[4] = Gdx.audio.newSound(Gdx.files.internal("sounds/WalkingRuna.mp3"));
-        sounds[5] = Gdx.audio.newSound(Gdx.files.internal("sounds/withoutUn.mp3"));
-        scc = new SpeechCharacters();
-
+    public ScreenGame(@NonNull TwoDays context){
+        try {
+            gg = context;
+            scc = new SpeechCharacters();
+            tt = new Text(gg.getFont(), "", 50, SCR_HEIGHT / 2f);
+        /*button = new Texture("button.png");
+        button1 = new Texture("button1.png");*/
+            runa = new RunaMilekum(SCR_WIDTH / 2);
+            kaiden = new KaidenMorem(SCR_WIDTH / 3);
+            poliam = new PoliamSt(SCR_WIDTH / 20);
+            //end = new Endings(this);
+            sounds[0] = Gdx.audio.newSound(Gdx.files.internal("sounds/beg-v-kablukah.mp3"));
+            sounds[1] = Gdx.audio.newSound(Gdx.files.internal("sounds/Ringings in ye.mp3"));
+            sounds[2] = Gdx.audio.newSound(Gdx.files.internal("sounds/shelest.mp3"));
+            sounds[3] = Gdx.audio.newSound(Gdx.files.internal("sounds/WalkingKover.mp3"));
+            sounds[4] = Gdx.audio.newSound(Gdx.files.internal("sounds/WalkingRuna.mp3"));
+            sounds[5] = Gdx.audio.newSound(Gdx.files.internal("sounds/withoutUn.mp3"));
+            scc = new SpeechCharacters();
+        }catch (NullPointerException ignored){}
         //возможно, перетащить все из рендера
 
     }
@@ -86,7 +89,7 @@ public class ScreenGame implements Screen {
             case 'К': return gg.fontKaiden;
             case 'В': return gg.fontValo;
             case ':': return gg.fontMassovka;
-            default: return gg.font;
+            default: return gg.getFont();
         }
     }
     public void outputText(List<String> list){
@@ -97,7 +100,7 @@ public class ScreenGame implements Screen {
             isTalking = true;
             if(!tt.clear && scc.it.hasNext()) {
                 tt.phrase = it.next();
-                gg.font = whatIsFont(tt.phrase);
+                gg.setFont(whatIsFont(tt.phrase));
             }else {
                 tt.phrase = "";
                 isTalking = false;
@@ -106,7 +109,7 @@ public class ScreenGame implements Screen {
     }
     public void outputText(String phrase){
         tt.phrase = phrase;
-        gg.font = whatIsFont(tt.phrase);
+        gg.setFont(whatIsFont(tt.phrase));
         if(Gdx.input.justTouched() ) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);

@@ -8,11 +8,17 @@ public class Between implements Screen {
 
     TwoDays sg;
     ScreenGame g;
+    Between(TwoDays context){
+        sg = context;
+    }
     @Override
     public void show() {
-        sg.setScreen(sg.roomOfRuna);
-        g.isGameStart = true;
-        g.timeStart = TimeUtils.millis();
+        g = new ScreenGame(sg);
+        try {
+            sg.setScreen(new RoomOfRuna(sg));
+            g.isGameStart = true;
+            g.timeStart = TimeUtils.millis();
+        }catch (NullPointerException ignored){}
     }
 
     @Override

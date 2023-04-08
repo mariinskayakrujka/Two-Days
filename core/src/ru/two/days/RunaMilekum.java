@@ -1,28 +1,21 @@
 package ru.two.days;
 
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
-
 public class RunaMilekum extends MainCharacter{
 
-    public RunaMilekum(float x, float wx) {
-        super(x, wx);
+    public RunaMilekum(float x) {
+        super(x);
     }
 
-    void moveForRuna(float hitting, float f) {
+    void moveForRuna(float hitting) {
         isWalking = true;
         if(!sg.isTalking || !sg.isReading) {
             if (y < 120 && y > 90) {
                 if (hitting > x) {
-                    x += wx;
-                    faza += f;
+                    x +=1;
                 } else if (hitting < x) {
-                    wx = -wx;
-                    x += wx;
-                    faza += f;
+                    x -=1;
                 } else {
                     isWalking = false;
-                    faza = 6;
                 }
             }
         }

@@ -8,12 +8,12 @@ import com.badlogic.gdx.math.MathUtils;
 
 public class MainCharacter {
     boolean isWalking;
-    TwoDays gg;
+    TwoDays gg = new TwoDays();
     float x, y;
     float width, height;
     float wx, rx;
     float hitting;
-    ScreenGame sg = new ScreenGame(gg);
+    ScreenGame sg;
 
     int faza, nFaz = 4;
 
@@ -21,9 +21,9 @@ public class MainCharacter {
         if (++faza == nFaz) faza = 0;
     }
 
-    public MainCharacter(float x, float wx) {
+    public MainCharacter(float x) {
+        sg = new ScreenGame(gg);
         this.x = x;
-        this.wx = wx;
         rx = 20;
     }
 
@@ -36,9 +36,10 @@ public class MainCharacter {
     }
 
 
-    void move(int wx, float f){
-        x += wx;
-        faza += f;
+    void move(){
+        x +=1;
+        faza += 1;
+        changePhase();
     }
 
     boolean isFlip() {

@@ -6,7 +6,6 @@ import static ru.two.days.TwoDays.SCR_WIDTH;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 import java.util.ArrayList;
 
@@ -58,22 +57,22 @@ public class RoomOfValo extends ScreenGame{
                 }
             } else {
                 if (radio.hit(gg.touch.x, gg.touch.y)) {
-                    runa.moveForRuna(gg.touch.x, 0.01f);
+                    runa.moveForRuna(gg.touch.x);
                     outputText("Р: Приемник? Хм, какую дорожку мне включить?");
                     isKeyboard = true;
                     isEnterWays = true;
                 }
                 if (feliopter.hit(gg.touch.x, gg.touch.y)) {
-                    runa.moveForRuna(gg.touch.x, 0.01f);
+                    runa.moveForRuna(gg.touch.x);
                     outputText(feli);
                     if (tt.phrase.equals(feli.get(2))) texR = new Texture("runa/runa4.png");
                 }
                 if (bed.hit(gg.touch.x, gg.touch.y)) {
-                    runa.moveForRuna(gg.touch.x, 0.01f);
+                    runa.moveForRuna(gg.touch.x);
                     outputText("Р: Я не имею право спать на чужой кровати.");
                 }
                 if (trash.hit(gg.touch.x, gg.touch.y)) {
-                    runa.moveForRuna(gg.touch.x, 0.01f);
+                    runa.moveForRuna(gg.touch.x);
                     outputText("Р: Мусор. Не существо же.");
                 }
                 if (fridge.hit(gg.touch.x, gg.touch.y)) {
@@ -92,7 +91,7 @@ public class RoomOfValo extends ScreenGame{
             gg.batch.setProjectionMatrix(gg.camera.combined);
             gg.batch.begin();
             gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);
-            gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
+            gg.getFont().draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
             if(runa.isWalking) gg.batch.draw(runaUsually[runa.faza], runa.getX(), runa.getY());
             else gg.batch.draw(new Texture("runa2.png"), runa.getX(), runa.getY());
             if(isReading){

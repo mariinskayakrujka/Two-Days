@@ -2,6 +2,8 @@ package ru.two.days;
 
 import static ru.two.days.TwoDays.SCR_WIDTH;
 
+import androidx.annotation.NonNull;
+
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
@@ -27,7 +29,7 @@ public class Text {
         this.phrase = text;
         this.x = x;
         this.y = y;
-        GlyphLayout gl = new GlyphLayout(font, text);
+        @NonNull GlyphLayout gl = new GlyphLayout(font, text);
         width = gl.width;
         height = gl.height;
     }
