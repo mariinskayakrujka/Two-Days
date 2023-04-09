@@ -33,15 +33,15 @@ public class RoomOfRuna extends ScreenGame{
 
         intro.add("Р: ...");intro.add("К: Проснулась наконец, пьянь.");intro.add("Р: ...");
         intro.add("К: А я ведь говорила тебе, что до добра это никогда не доведет.");intro.add("К: Но нет же, «поверьте, Морэм, я успею все сделать и со всем справлюсь»!");
-        intro.add("Р: «Это кто?..»"); intro.add("К: Что смотришь на меня такими невинными глазами?");
+        intro.add("Р: \"Это кто?..\""); intro.add("К: Что смотришь на меня такими невинными глазами?");
         intro.add("К: Думаешь, тебя не заметили ночью? Вся общага видела.");intro.add("К: Вало рассказала все. Сдала с потрохами тебя.");
         intro.add("Р: ...");intro.add("К: Зачем же ты жизнь свою губишь? Алкоголь этот...");intro.add("К: У тебя ведь послезавтра...");
         intro.add("К: *вздох* А ты... Тьфу!");intro.add("К: Вставай, приводи себя в порядок и готовься.");intro.add("К: Глаза б мои тебя не видели.");
         intro.add("the end of intro");
 
-        afterintro.add("Р:...");afterintro.add("Р: «Где я?..»");afterintro.add("Р: «Эта женщина... Она меня знает...»");
-        afterintro.add("Р: «А я...»");afterintro.add("Р: ...");afterintro.add("Р: «Я ничего не понимаю...»");
-        afterintro.add("Р: «...и не помню?..»");afterintro.add("Р: «Ужас какой-то, если это действительно от алкоголя»");afterintro.add("Р: «Я должна все вспомнить»");
+        afterintro.add("Р:...");afterintro.add("Р: \"Где я?..\"");afterintro.add("Р: \"Эта женщина... Она меня знает...\"");
+        afterintro.add("Р: \"А я...\"");afterintro.add("Р: ...");afterintro.add("Р: \"Я ничего не понимаю...\"");
+        afterintro.add("Р: \"...и не помню?..\"");afterintro.add("Р: \"Ужас какой-то, если это действительно от алкоголя\"");afterintro.add("Р: \"Я должна все вспомнить\"");
         afterintro.add("The end of afterintro");
 
         feli.add("Р: Прикольное устройство.");
@@ -112,20 +112,21 @@ public class RoomOfRuna extends ScreenGame{
                     changeTexture();
                 }
                 if(!isIntro && !isAfterIntro) {
+
                     if(!tt.phrase.equals(feli.get(0)) && !tt.phrase.equals(feli.get(1))&&
                             !tt.phrase.equals(feli.get(2)))tt.phrase = "";
                     if (feliopter.hit(gg.touch.x, gg.touch.y)) {
-                        runa.moveForRuna(gg.touch.x);
+                        //runa.moveForRuna(gg.touch.x);
                         outputText(feli);
                         if (tt.phrase.equals(feli.get(2)))
                             texR = texRuna[4];//серьезность
                     }
                     if (clothes.hit(gg.touch.x, gg.touch.y)) {
-                        runa.moveForRuna(gg.touch.x);
+                        //runa.moveForRuna(gg.touch.x);
                         outputText("Р: Мне сейчас не до того, чтобы разбирать эту кучу.");
                     }
                     if (bed.hit(gg.touch.x, gg.touch.y)) {
-                        runa.moveForRuna(gg.touch.x);
+                        //runa.moveForRuna(gg.touch.x);
                         if (timeCurrent < 1000 * 60 * 3) outputText("Р: Пока я не хочу спать.");
                         else {
                             outputText("Р: Мне правда стоит передохнуть.");

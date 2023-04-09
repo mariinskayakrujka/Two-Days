@@ -65,7 +65,7 @@ public class TwoDays extends Game {
 		setFont(generator.generateFont(parameter));
 
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("speech.ttf"));
-		parameter.size = 100;
+		parameter.size = 60;
 
 		//создание фонта для Руны
 		parameter.color = new Color(0.66f, 0.412f, 1, 1);

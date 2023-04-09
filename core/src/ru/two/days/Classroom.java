@@ -4,6 +4,7 @@ import static ru.two.days.TwoDays.SCR_HEIGHT;
 import static ru.two.days.TwoDays.SCR_WIDTH;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,8 +12,11 @@ import java.util.List;
 
 public class Classroom extends ScreenGame{
 
+    Texture imgBG;
+
     public Classroom(TwoDays context) {
         super(context);
+        imgBG = new Texture("bg/bg4.png");
     }
 
 
@@ -27,6 +31,7 @@ public class Classroom extends ScreenGame{
         if(Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
+
         }
 
         // события
@@ -35,7 +40,7 @@ public class Classroom extends ScreenGame{
         gg.camera.update();
         gg.batch.setProjectionMatrix(gg.camera.combined);
         gg.batch.begin();
-        //gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);
+        gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);
         
         gg.batch.end();
 
@@ -65,6 +70,8 @@ public class Classroom extends ScreenGame{
 
     @Override
     public void dispose() {
+        super.dispose();
+        imgBG.dispose();
 
     }
 }

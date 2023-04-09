@@ -29,7 +29,7 @@ public class ScreenGame implements Screen {
     public static final int END_OF_SCREEN_RIGHT = SCR_WIDTH*19/20,END_OF_SCREEN_LEFT = SCR_WIDTH/20;
     boolean isGameStart;
 
-    boolean isTalking, isEnd, isReading;
+    boolean isTalking, isReading;
 
     Texture texK, texR;
 
@@ -45,7 +45,7 @@ public class ScreenGame implements Screen {
         try {
 
             gg = context;
-            tt = new Text(gg.font, "", SCR_WIDTH*15/20f, SCR_HEIGHT / 2f);
+            tt = new Text(gg.font, "", SCR_WIDTH/4f, SCR_HEIGHT/ 11f);
         /*button = new Texture("button.png");
         button1 = new Texture("button1.png");*/
             runa = new RunaMilekum(SCR_WIDTH / 2f);

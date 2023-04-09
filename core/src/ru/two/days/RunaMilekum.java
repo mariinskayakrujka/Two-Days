@@ -10,16 +10,15 @@ public class RunaMilekum extends MainCharacter{
         isWalking = true;
             if (!sg.isTalking && !sg.isReading) {
                 System.out.println(x);
-                if (hitting > x) {
-                    x += 30;
+                if (hitting >= x-10) {
+                    x += 30f;
                     faza++;
                     changePhase();
-                } else if (hitting < x) {
-                    x -= 30;
+                } else if (hitting <= x+10) {
+                    x -= 30f;
                     faza++;
                     changePhase();
-                } else if (hitting == x)
-                    isWalking = false;
+                } else isWalking = false;
         }
     }
 }
