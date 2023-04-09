@@ -86,14 +86,14 @@ public class RoomOfValo extends ScreenGame{
                 gg.setScreen(new RoomOfRuna(gg));
             }
             isThreeMinutes();
-
+            //отрисовка
             gg.camera.update();
             gg.batch.setProjectionMatrix(gg.camera.combined);
             gg.batch.begin();
             gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);
             gg.getFont().draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
-            if(runa.isWalking) gg.batch.draw(runaUsually[runa.faza], runa.getX(), runa.getY());
-            else gg.batch.draw(new Texture("runa2.png"), runa.getX(), runa.getY());
+            if(runa.isWalking) gg.batch.draw(texR, runa.getX(), runa.getY());
+            else gg.batch.draw(texR, runa.getX(), runa.getY());
             /*if(isReading){
                 gg.batch.draw(texPaper, 0, 20);
                 gg.batch.draw(button, SCR_WIDTH*7/8f, 0, 250, 250);

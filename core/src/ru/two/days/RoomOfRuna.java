@@ -17,7 +17,7 @@ public class RoomOfRuna extends ScreenGame{
     Texture imgBG;
     Texture atlasDocWithDairy;
     TwoDays gg;
-    Texture[] texRuna = new Texture[16], texKaiden = new Texture[11];
+
 
     ArrayList<String> intro = new ArrayList<>(), afterintro = new ArrayList<>(), feli = new ArrayList<>(),
                             paperi = new ArrayList<>(), docs = new ArrayList<>();
@@ -51,12 +51,7 @@ public class RoomOfRuna extends ScreenGame{
         paperi.add("Р:..."); paperi.add("Р: Что это могло быть?");
         docs.add("Р:...");docs.add("Р: Это стоило бы и выкинуть из памяти.");docs.add("Р:...");
 
-        for (int i = 0; i < texRuna.length; i++) {
-            texRuna[i] = new Texture("runa/runa" + i + ".png");
-        }
-        for (int i = 0; i < texKaiden.length; i++) {
-            texKaiden[i] = new Texture("kaiden/kaiden" + i + ".png");
-        }
+
 
     }
 
@@ -99,7 +94,8 @@ public class RoomOfRuna extends ScreenGame{
             //основные события игры
         if(isAfterIntro) kaiden.move(30);
         if(!isIntro && !isAfterIntro) {
-            if (tt.phrase.equals("") && gg.touch.x != runa.x) runa.moveForRuna(gg.touch.x);
+            if (tt.phrase.equals("") && gg.touch.x != runa.x && !tt.phrase.equals(feli.get(0)) && !tt.phrase.equals(feli.get(1))&&
+                    !tt.phrase.equals(feli.get(2))) runa.moveForRuna(gg.touch.x);
         }
         if(Gdx.input.justTouched() ) {
                 gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);

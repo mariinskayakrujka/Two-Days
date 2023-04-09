@@ -23,8 +23,7 @@ public class ScreenGame implements Screen {
     boolean soundOn = true;
     Sound[] sounds = new Sound[6];
     //Texture texPaper, button, button1;
-    Texture[] runaUsually = new Texture[22];
-
+    Texture[] texRuna = new Texture[16], texKaiden = new Texture[11];
     long timeStart, timeCurrent;
 
     public static final int END_OF_SCREEN_RIGHT = SCR_WIDTH*19/20,END_OF_SCREEN_LEFT = SCR_WIDTH/20;
@@ -44,6 +43,7 @@ public class ScreenGame implements Screen {
 
     public ScreenGame(@NonNull TwoDays context){
         try {
+
             gg = context;
             tt = new Text(gg.font, "", SCR_WIDTH*15/20f, SCR_HEIGHT / 2f);
         /*button = new Texture("button.png");
@@ -59,6 +59,12 @@ public class ScreenGame implements Screen {
             sounds[3] = Gdx.audio.newSound(Gdx.files.internal("sounds/WalkingKover.mp3"));
             sounds[4] = Gdx.audio.newSound(Gdx.files.internal("sounds/WalkingRuna.mp3"));
             sounds[5] = Gdx.audio.newSound(Gdx.files.internal("sounds/withoutUn.mp3"));*/
+            for (int i = 0; i < texRuna.length; i++) {
+                texRuna[i] = new Texture("runa/runa" + i + ".png");
+            }
+            for (int i = 0; i < texKaiden.length; i++) {
+                texKaiden[i] = new Texture("kaiden/kaiden" + i + ".png");
+            }
         }catch (NullPointerException ignored){}
         //возможно, перетащить все из рендера
 
