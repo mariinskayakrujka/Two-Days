@@ -14,7 +14,6 @@ public class Text {
     String phrase;
     float x, y;
     float width, height;
-    boolean clear = true;
 
     float getX(){
         return x-width/2;

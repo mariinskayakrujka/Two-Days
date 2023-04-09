@@ -5,19 +5,21 @@ public class RunaMilekum extends MainCharacter{
     public RunaMilekum(float x) {
         super(x);
     }
-
+    int nfaz = 2;
     void moveForRuna(float hitting) {
         isWalking = true;
-        if(!sg.isTalking || !sg.isReading) {
-            if (y < 120 && y > 90) {
+            if (!sg.isTalking && !sg.isReading) {
+                System.out.println(x);
                 if (hitting > x) {
-                    x +=1;
+                    x += 30;
+                    faza++;
+                    changePhase();
                 } else if (hitting < x) {
-                    x -=1;
-                } else {
+                    x -= 30;
+                    faza++;
+                    changePhase();
+                } else if (hitting == x)
                     isWalking = false;
-                }
-            }
         }
     }
 }

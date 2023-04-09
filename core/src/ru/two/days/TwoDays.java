@@ -16,7 +16,7 @@ public class TwoDays extends Game {
 	SpriteBatch batch;
 	OrthographicCamera camera;
 	Vector3 touch;
-	private BitmapFont font;
+	BitmapFont font;
 	BitmapFont fontLarge;
 	BitmapFont fontRuna;
 	BitmapFont fontPoliam;
@@ -29,7 +29,6 @@ public class TwoDays extends Game {
 	ScreenSettings screenSettings;
 	ScreenAbout screenAbout;
 
-	@SuppressWarnings("SuspiciousIndentation")
 	@Override
 	public void create () {
 		// создание системных объектов
@@ -51,7 +50,7 @@ public class TwoDays extends Game {
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		// создание фонта для игры
 		parameter.color = new Color(0.51f, 0.4f, 0.65f, 1);
-		parameter.size = 60;
+		parameter.size = 100;
 		parameter.borderColor = Color.BLACK;
 		parameter.borderWidth = 2;
 		parameter.borderStraight = true;
@@ -62,11 +61,11 @@ public class TwoDays extends Game {
 		for (char i = 0x401; i < 0x452; i++) str += i;
 		parameter.characters = str;
 		fontLarge = generator.generateFont(parameter);
-		parameter.size = 45;
+		parameter.size = 100;
 		setFont(generator.generateFont(parameter));
 
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("speech.ttf"));
-		parameter.size = 30;
+		parameter.size = 100;
 
 		//создание фонта для Руны
 		parameter.color = new Color(0.66f, 0.412f, 1, 1);
@@ -95,7 +94,7 @@ public class TwoDays extends Game {
 	public void dispose () {
 		fontRuna.dispose();
 		fontLarge.dispose();
-		getFont().dispose();
+		font.dispose();
 		fontMassovka.dispose();
 		fontPoliam.dispose();
 		fontValo.dispose();

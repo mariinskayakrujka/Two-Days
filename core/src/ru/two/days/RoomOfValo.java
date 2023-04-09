@@ -94,11 +94,11 @@ public class RoomOfValo extends ScreenGame{
             gg.getFont().draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
             if(runa.isWalking) gg.batch.draw(runaUsually[runa.faza], runa.getX(), runa.getY());
             else gg.batch.draw(new Texture("runa2.png"), runa.getX(), runa.getY());
-            if(isReading){
+            /*if(isReading){
                 gg.batch.draw(texPaper, 0, 20);
                 gg.batch.draw(button, SCR_WIDTH*7/8f, 0, 250, 250);
                 gg.batch.draw(button1, SCR_WIDTH/8f, 0, 250, 250);
-            }
+            }*/
             if(isEnterWays) keyboard.draw(gg.batch);
         }
     }

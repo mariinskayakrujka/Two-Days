@@ -36,13 +36,9 @@ public class MainCharacter {
     }
 
 
-    void move(){
-        x +=1;
+    void move(int x){
+        this.x +=x;
         faza += 1;
         changePhase();
-    }
-
-    boolean isFlip() {
-        return wx>0;
     }
 }

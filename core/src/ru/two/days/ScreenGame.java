@@ -20,10 +20,9 @@ public class ScreenGame implements Screen {
 
     TwoDays gg;
     Text tt;
-    SpeechCharacters scc;
     boolean soundOn = true;
     Sound[] sounds = new Sound[6];
-    Texture texPaper, button, button1;
+    //Texture texPaper, button, button1;
     Texture[] runaUsually = new Texture[22];
 
     long timeStart, timeCurrent;
@@ -41,24 +40,25 @@ public class ScreenGame implements Screen {
     PoliamSt poliam;
     KaidenMorem kaiden;
 
+    int count;
+
     public ScreenGame(@NonNull TwoDays context){
         try {
             gg = context;
-            scc = new SpeechCharacters();
-            tt = new Text(gg.getFont(), "", 50, SCR_HEIGHT / 2f);
+            tt = new Text(gg.font, "", SCR_WIDTH*15/20f, SCR_HEIGHT / 2f);
         /*button = new Texture("button.png");
         button1 = new Texture("button1.png");*/
-            runa = new RunaMilekum(SCR_WIDTH / 2);
-            kaiden = new KaidenMorem(SCR_WIDTH / 3);
-            poliam = new PoliamSt(SCR_WIDTH / 20);
-            //end = new Endings(this);
+            runa = new RunaMilekum(SCR_WIDTH / 2f);
+            kaiden = new KaidenMorem(SCR_WIDTH / 3f);
+            poliam = new PoliamSt(SCR_WIDTH / 20f);
+            end = new Endings(this);
+            /*end = new Endings(this);
             sounds[0] = Gdx.audio.newSound(Gdx.files.internal("sounds/beg-v-kablukah.mp3"));
             sounds[1] = Gdx.audio.newSound(Gdx.files.internal("sounds/Ringings in ye.mp3"));
             sounds[2] = Gdx.audio.newSound(Gdx.files.internal("sounds/shelest.mp3"));
             sounds[3] = Gdx.audio.newSound(Gdx.files.internal("sounds/WalkingKover.mp3"));
             sounds[4] = Gdx.audio.newSound(Gdx.files.internal("sounds/WalkingRuna.mp3"));
-            sounds[5] = Gdx.audio.newSound(Gdx.files.internal("sounds/withoutUn.mp3"));
-            scc = new SpeechCharacters();
+            sounds[5] = Gdx.audio.newSound(Gdx.files.internal("sounds/withoutUn.mp3"));*/
         }catch (NullPointerException ignored){}
         //возможно, перетащить все из рендера
 
@@ -82,45 +82,43 @@ public class ScreenGame implements Screen {
         }
     }
 
-    public BitmapFont whatIsFont(String phrase){
-        switch (phrase.charAt(0)){
-            case 'Р': return gg.fontRuna;
-            case 'П': return gg.fontPoliam;
-            case 'К': return gg.fontKaiden;
-            case 'В': return gg.fontValo;
-            case ':': return gg.fontMassovka;
-            default: return gg.getFont();
-        }
-    }
-    public void outputText(List<String> list){
-        Iterator<String> it = list.iterator();
-        if(Gdx.input.justTouched()) {
-            gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            gg.camera.unproject(gg.touch);
-            isTalking = true;
-            if(!tt.clear && scc.it.hasNext()) {
-                tt.phrase = it.next();
-                gg.setFont(whatIsFont(tt.phrase));
-            }else {
-                tt.phrase = "";
-                isTalking = false;
+    public BitmapFont whatIsFont(String phrase) {
+        if (!phrase.equals("")) {
+            switch (phrase.charAt(0)) {
+                case 'Р':
+                    return gg.fontRuna;
+                case 'П':
+                    return gg.fontPoliam;
+                case 'К':
+                    return gg.fontKaiden;
+                case 'В':
+                    return gg.fontValo;
+                case ':':
+                    return gg.fontMassovka;
+                default:
+                    return gg.font;
             }
+        }else return gg.font;
+    }
+
+    public void outputText(List<String> list){
+        isTalking = true;
+        runa.isWalking = false;
+        tt.phrase = list.get(count);
+        gg.setFont(whatIsFont(tt.phrase));
+        if(++count == list.size()) {
+            tt.phrase = "";
+            isTalking = false;
+            runa.isWalking = true;
+            count = 0;
         }
     }
+
     public void outputText(String phrase){
         tt.phrase = phrase;
+        isTalking = true;
+        runa.isWalking = false;
         gg.setFont(whatIsFont(tt.phrase));
-        if(Gdx.input.justTouched() ) {
-            gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            gg.camera.unproject(gg.touch);
-                if(!isEnd) {
-                isTalking = true;
-                isEnd = true;
-            }else {
-                tt.phrase = "";
-                isTalking = false;
-            }
-        }
     }
 
 
