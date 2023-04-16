@@ -9,37 +9,50 @@ import com.badlogic.gdx.graphics.Texture;
 
 import java.util.ArrayList;
 
-public class RoomOfValo extends ScreenGame{
+public class RoomOfValo extends ScreenGame {
     Objects feliopter, bed, radio, trash, fridge, posters, closer;
-    InputKeyboard keyboard;
+    //InputKeyboard keyboard;
     ArrayList<String> feli = new ArrayList<>(), poste = new ArrayList<>(),
-                        history = new ArrayList<>();
+            history = new ArrayList<>();
 
     boolean isEnterWays, isKeyboard;
     String numberOfWays;
     Texture imgBG;
+
     public RoomOfValo(TwoDays context) {
         super(context);
-        keyboard = new InputKeyboard(SCR_WIDTH, SCR_HEIGHT/2f, 15);
+        //keyboard = new InputKeyboard(SCR_WIDTH, SCR_HEIGHT/2f, 15);
         feli.add("Р: Прикольное устройство.");
-        feli.add("Р: Он пишет, что у меня почти все в норме. Никаких повреждений.");feli.add("Р: С печенью только... неполадки.");
+        feli.add("Р: Он пишет, что у меня почти все в норме. Никаких повреждений.");
+        feli.add("Р: С печенью только... неполадки.");
         feli.add("Р: ...");
+        imgBG = new Texture("bg/bg1.jpg");
+        poste.add("");
+        poste.add("");
+        poste.add("");
 
-        poste.add("");poste.add("");poste.add("");
-
-        history.add("Р:..."); history.add("Р: Это помогло мне многое вспомнить.");
+        history.add("Р:...");
+        history.add("Р: Это помогло мне многое вспомнить.");
         history.add("Р: Все же я очень удачливая.");
+        //keyboard = new InputKeyboard(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 4);
     }
 
+    @Override
+    public void show() {
+        Gdx.input.setCatchKey(Input.Keys.BACK, true);
+        gg.touch.x=0;
+        runa.vx = 0;
+        runa.x = 200;
+    }
 
-
-   @Override
+    @Override
     public void render(float delta) {
-
-        if(Gdx.input.justTouched()) {
+        if (tt.phrase.equals("") && gg.touch.x != 0 && gg.touch.x != runa.x) runa.moveForRuna(gg.touch.x);
+        if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
-            if (isKeyboard) {
+
+            /*if (isKeyboard) {
                 if (keyboard.endOfEdit(gg.touch.x, gg.touch.y)) {
                     numberOfWays = keyboard.getText();
                     isEnterWays = false;
@@ -85,27 +98,32 @@ public class RoomOfValo extends ScreenGame{
             if (gg.touch.y < 120 && gg.touch.y > 90 && gg.touch.x <= END_OF_SCREEN_LEFT){
                 gg.setScreen(new RoomOfRuna(gg));
             }
-            isThreeMinutes();
-            //отрисовка
-            gg.camera.update();
-            gg.batch.setProjectionMatrix(gg.camera.combined);
-            gg.batch.begin();
-            gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);
-            gg.getFont().draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
-            if(runa.isWalking) gg.batch.draw(texR, runa.getX(), runa.getY());
-            else gg.batch.draw(texR, runa.getX(), runa.getY());
+
+            isThreeMinutes();*/
+            if (runa.x < END_OF_SCREEN_LEFT) {
+                gg.setScreen(gg.roomOfRuna);
+
+            }
+        }
+        //отрисовка
+        gg.camera.update();
+        gg.batch.setProjectionMatrix(gg.camera.combined);
+        gg.batch.begin();
+        gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);
+        if (runa.isWalking) {
+            changePose();
+            gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
+        } else gg.batch.draw(texRuna[4], runa.getX(), runa.getY());//спокойствие
             /*if(isReading){
                 gg.batch.draw(texPaper, 0, 20);
                 gg.batch.draw(button, SCR_WIDTH*7/8f, 0, 250, 250);
                 gg.batch.draw(button1, SCR_WIDTH/8f, 0, 250, 250);
             }*/
-            if(isEnterWays) keyboard.draw(gg.batch);
-        }
+        gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
+        //if(isEnterWays) keyboard.draw(gg.batch);
+        gg.batch.end();
     }
-    @Override
-    public void show() {
 
-    }
     @Override
     public void resize(int width, int height) {
 
@@ -123,11 +141,11 @@ public class RoomOfValo extends ScreenGame{
 
     @Override
     public void hide() {
-        Gdx.input.setCatchKey(Input.Keys.BACK, false);    }
+    }
 
     @Override
     public void dispose() {
-        super.dispose();
-        keyboard.dispose();
+        //super.dispose();
+        //keyboard.dispose();
     }
 }

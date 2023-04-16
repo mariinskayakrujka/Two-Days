@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -29,6 +30,9 @@ public class TwoDays extends Game {
 	ScreenSettings screenSettings;
 	ScreenAbout screenAbout;
 
+	RoomOfValo roomOfValo;
+	RoomOfRuna roomOfRuna;
+
 	@Override
 	public void create () {
 		// создание системных объектов
@@ -41,6 +45,8 @@ public class TwoDays extends Game {
 		screenIntro = new ScreenIntro(this);
 		screenSettings = new ScreenSettings(this);
 		screenAbout = new ScreenAbout(this);
+		roomOfRuna = new RoomOfRuna(this);
+		roomOfValo = new RoomOfValo(this);
 		setScreen(screenIntro);
 
 	}
@@ -94,12 +100,13 @@ public class TwoDays extends Game {
 	public void dispose () {
 		fontRuna.dispose();
 		fontLarge.dispose();
-		font.dispose();
+		//font.dispose();
 		fontMassovka.dispose();
 		fontPoliam.dispose();
 		fontValo.dispose();
 		fontKaiden.dispose();
 		batch.dispose();
+
 	}
 
 	public BitmapFont getFont() {

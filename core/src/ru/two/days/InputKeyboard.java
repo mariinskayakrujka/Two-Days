@@ -21,7 +21,7 @@ public class InputKeyboard {
     private final int textLength; // длина вводимого текста
 
     private BitmapFont font;
-    String fontName = "crystal.ttf";
+    String fontName = "speech.ttf";
 
     private String text = ""; // вводимый текст
     private static final String LETTERS_EN_CAPS = "1234567890-~QWERTYUIOP+?^ASDFGHJKL;'`ZXCVBNM<> |";

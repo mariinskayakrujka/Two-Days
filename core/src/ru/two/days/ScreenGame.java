@@ -26,7 +26,7 @@ public class ScreenGame implements Screen {
     Texture[] texRuna = new Texture[16], texKaiden = new Texture[11];
     long timeStart, timeCurrent;
 
-    public static final int END_OF_SCREEN_RIGHT = SCR_WIDTH*19/20,END_OF_SCREEN_LEFT = SCR_WIDTH/20;
+    public static final int END_OF_SCREEN_RIGHT = SCR_WIDTH*190/200,END_OF_SCREEN_LEFT = SCR_WIDTH/10;
     boolean isGameStart;
 
     boolean isTalking, isReading;
@@ -38,6 +38,7 @@ public class ScreenGame implements Screen {
     RunaMilekum runa;
     PoliamSt poliam;
     KaidenMorem kaiden;
+
 
     int count;
 
@@ -65,6 +66,7 @@ public class ScreenGame implements Screen {
             for (int i = 0; i < texKaiden.length; i++) {
                 texKaiden[i] = new Texture("kaiden/kaiden" + i + ".png");
             }
+
         }catch (NullPointerException ignored){}
         //возможно, перетащить все из рендера
 
@@ -138,6 +140,10 @@ public class ScreenGame implements Screen {
         timeStart = TimeUtils.millis();
         isGameStart = true;
     }
+
+    void changePose(){
+        texR = texRuna[runa.faza + 10];
+    }
     @Override
     public void resize(int width, int height) {
 
@@ -159,6 +165,11 @@ public class ScreenGame implements Screen {
 
     @Override
     public void dispose() {
-
+        for (Texture texture : texKaiden) {
+            texture.dispose();
+        }
+        for (Texture texture : texRuna) {
+            texture.dispose();
+        }
     }
 }

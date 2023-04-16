@@ -5,20 +5,26 @@ import static ru.two.days.TwoDays.SCR_WIDTH;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class MainCharacter {
     boolean isWalking;
     TwoDays gg = new TwoDays();
     float x, y;
-    float width, height;
+    float width=640, height=640;
     float wx, rx;
     float hitting;
     ScreenGame sg;
 
     int faza, nFaz = 4;
 
+    long timeLastPhase, timePhaseInterval = 300;
+
     void changePhase() {
-        if (++faza == nFaz) faza = 0;
+        if(TimeUtils.millis() > timeLastPhase+timePhaseInterval) {
+            if (++faza == nFaz) faza = 0;
+            timeLastPhase= TimeUtils.millis();
+        }
     }
 
     public MainCharacter(float x) {
@@ -32,13 +38,12 @@ public class MainCharacter {
     }
 
     float getY(){
-        return y-height/2;
+        return 1440-1231;
     }
 
 
-    void move(int x){
-        this.x +=x;
-        faza += 1;
+    void move(int vx){
+        x +=vx;
         changePhase();
     }
 }
