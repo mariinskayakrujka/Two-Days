@@ -2,6 +2,7 @@ package ru.two.days;
 
 import static ru.two.days.TwoDays.SCR_HEIGHT;
 import static ru.two.days.TwoDays.SCR_WIDTH;
+import static ru.two.days.TwoDays.timeCurrent;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -77,8 +78,12 @@ public class RoomOfRuna extends ScreenGame {
     @Override
     public void show() {
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
-        if(isIntro)runa.x = 400;
-        else runa.x = 1600;
+        if(isIntro) runa.x = 400;
+        //runa.y = 450;
+        else {
+            if (gg.touch.x > 1600) runa.x = 400;
+            else runa.x = 1600;
+        }
         gg.touch.x=0;
         runa.vx = 0;
         texR = texRuna[6];
@@ -115,6 +120,9 @@ public class RoomOfRuna extends ScreenGame {
         }
         if (runa.x >= END_OF_SCREEN_RIGHT) {
             gg.setScreen(gg.roomOfValo);
+        }
+        if (runa.x < END_OF_SCREEN_LEFT) {
+            gg.setScreen(gg.classroom);//временная мера
         }
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -173,9 +181,6 @@ public class RoomOfRuna extends ScreenGame {
                     isReading = true;
                     texPaper = new Texture("paper.png");
                 }
-                if (runa.getX() <= END_OF_SCREEN_LEFT){
-                    gg.setScreen(new Hall(gg));
-                }
                     if (isReading && (gg.touch.x < SCR_WIDTH / 8f) || (gg.touch.x > SCR_WIDTH / 8f + 250 &&
                             gg.touch.x < SCR_WIDTH * 7 / 8f) || (gg.touch.x > SCR_WIDTH * 7 / 8f + 250)) {
                         isReading = false;
@@ -196,8 +201,8 @@ public class RoomOfRuna extends ScreenGame {
                 }*/
             }
             isThreeMinutes();
-
         }
+        times();
 
         //отрисовка
         gg.camera.update();
@@ -227,6 +232,7 @@ public class RoomOfRuna extends ScreenGame {
             gg.batch.draw(button1, SCR_WIDTH/8f, 0, 250, 250);
         }*/
         gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
+
         gg.batch.end();
 
     }

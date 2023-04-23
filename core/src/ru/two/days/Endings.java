@@ -14,7 +14,6 @@ public class Endings {
     Text tt;
     List<String> endfOfGame = new ArrayList<>();
     public Endings(ScreenGame scn){
-        scn.isGameStart = false;
         if((countKeys == 7) || (countKeys == 6 && !dairy)) goodEnding();
         else if((countKeys == 0) ||
                 (countKeys == 1 && (sleeping || dairy)) ||

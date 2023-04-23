@@ -46,4 +46,7 @@ public class MainCharacter {
         x +=vx;
         changePhase();
     }
+    boolean interaction(float tx, float ty){
+        return x < tx && tx < x+width && y+height > ty && ty > y;
+    }
 }

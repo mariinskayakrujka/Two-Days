@@ -2,6 +2,9 @@ package ru.two.days;
 
 import static ru.two.days.TwoDays.SCR_HEIGHT;
 import static ru.two.days.TwoDays.SCR_WIDTH;
+import static ru.two.days.TwoDays.isGameStart;
+import static ru.two.days.TwoDays.timeCurrent;
+import static ru.two.days.TwoDays.timeStart;
 
 import androidx.annotation.NonNull;
 
@@ -13,7 +16,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.TimeUtils;
 
-import java.util.Iterator;
 import java.util.List;
 
 public class ScreenGame implements Screen {
@@ -24,10 +26,8 @@ public class ScreenGame implements Screen {
     Sound[] sounds = new Sound[6];
     //Texture texPaper, button, button1;
     Texture[] texRuna = new Texture[16], texKaiden = new Texture[11];
-    long timeStart, timeCurrent;
 
     public static final int END_OF_SCREEN_RIGHT = SCR_WIDTH*190/200,END_OF_SCREEN_LEFT = SCR_WIDTH/10;
-    boolean isGameStart;
 
     boolean isTalking, isReading;
 
@@ -40,7 +40,7 @@ public class ScreenGame implements Screen {
     KaidenMorem kaiden;
 
 
-    int count;
+    int count = 0;
 
     public ScreenGame(@NonNull TwoDays context){
         try {
@@ -53,6 +53,7 @@ public class ScreenGame implements Screen {
             kaiden = new KaidenMorem(SCR_WIDTH / 3f);
             poliam = new PoliamSt(SCR_WIDTH / 20f);
             end = new Endings(this);
+            end.countKeys=0;
             /*end = new Endings(this);
             sounds[0] = Gdx.audio.newSound(Gdx.files.internal("sounds/beg-v-kablukah.mp3"));
             sounds[1] = Gdx.audio.newSound(Gdx.files.internal("sounds/Ringings in ye.mp3"));
@@ -79,10 +80,12 @@ public class ScreenGame implements Screen {
 
     @Override
     public void render(float delta) {
-        if(isGameStart) {
-            timeCurrent = TimeUtils.millis() - timeStart;
-        }
 
+        /*gg.camera.update();
+        gg.batch.setProjectionMatrix(gg.camera.combined);
+        gg.batch.begin();
+
+        gg.batch.end();*/
     }
     void isThreeMinutes(){
         if (timeCurrent >= 180000){
@@ -121,6 +124,11 @@ public class ScreenGame implements Screen {
             count = 0;
         }
     }
+    void times(){
+        if(isGameStart) {
+            TwoDays.timeCurrent = TimeUtils.millis() - timeStart;
+        }
+    }
 
     public void outputText(String phrase){
         tt.phrase = phrase;
@@ -134,11 +142,6 @@ public class ScreenGame implements Screen {
         if (y < 120 && y > 90 && (x >= END_OF_SCREEN_RIGHT || x <= END_OF_SCREEN_LEFT)){
             changed = changing;
         }
-    }
-
-    void gameStart(){
-        timeStart = TimeUtils.millis();
-        isGameStart = true;
     }
 
     void changePose(){

@@ -1,5 +1,8 @@
 package ru.two.days;
 
+import static ru.two.days.TwoDays.isGameStart;
+import static ru.two.days.TwoDays.timeStart;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -7,31 +10,30 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
+
 public class Between implements Screen {
 
-    TwoDays sg;
-    ScreenGame g;
+    TwoDays gg;
     Between(TwoDays context){
-        sg = context;
+        gg = context;
     }
     @Override
     public void show() {
-        g = new ScreenGame(sg);
         try {
-            sg.setScreen(sg.roomOfRuna);
-            g.isGameStart = true;
-            g.timeStart = TimeUtils.millis();
+            gg.setScreen(gg.roomOfRuna);
+            isGameStart = true;
+            timeStart = TimeUtils.millis();
         }catch (NullPointerException ignored){}
     }
 
     @Override
     public void render(float delta) {
         ScreenUtils.clear(Color.BLACK);
-        sg.camera.update();
-        sg.batch.setProjectionMatrix(sg.camera.combined);
-        sg.batch.begin();
-        sg.font.draw(sg.batch, "Load...", Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        sg.batch.end();
+        gg.camera.update();
+        gg.batch.setProjectionMatrix(gg.camera.combined);
+        gg.batch.begin();
+        gg.font.draw(gg.batch, "Load...", Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        gg.batch.end();
 
     }
 

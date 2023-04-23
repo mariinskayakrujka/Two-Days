@@ -9,10 +9,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class TwoDays extends Game {
 	//static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final int SCR_WIDTH = 2560, SCR_HEIGHT = 1440;
+
+	public static long timeStart, timeCurrent;
+	public static boolean isGameStart;
 
 	SpriteBatch batch;
 	OrthographicCamera camera;
@@ -33,6 +37,7 @@ public class TwoDays extends Game {
 	RoomOfValo roomOfValo;
 	RoomOfRuna roomOfRuna;
 	Hall hall;
+	Classroom classroom;
 
 	@Override
 	public void create () {
@@ -49,6 +54,7 @@ public class TwoDays extends Game {
 		roomOfRuna = new RoomOfRuna(this);
 		roomOfValo = new RoomOfValo(this);
 		hall =new Hall(this);
+		classroom = new Classroom(this);
 		setScreen(screenIntro);
 
 	}

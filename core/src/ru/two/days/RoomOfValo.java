@@ -2,6 +2,7 @@ package ru.two.days;
 
 import static ru.two.days.TwoDays.SCR_HEIGHT;
 import static ru.two.days.TwoDays.SCR_WIDTH;
+import static ru.two.days.TwoDays.timeCurrent;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -18,6 +19,7 @@ public class RoomOfValo extends ScreenGame {
     boolean isEnterWays, isKeyboard;
     String numberOfWays;
     Texture imgBG;
+    boolean endOfHistory, listenHistory;
 
     public RoomOfValo(TwoDays context) {
         super(context);
@@ -47,6 +49,7 @@ public class RoomOfValo extends ScreenGame {
         afterHistory.add("Р:...");
         afterHistory.add("Р: Это помогло мне многое вспомнить.");
         afterHistory.add("Р: Все же я очень удачливая.");
+        afterHistory.add("...");
 
 
         history.add(":...мы медленно подходим к самому главному.");history.add(":К устройству Вселенной.");
@@ -92,19 +95,18 @@ public class RoomOfValo extends ScreenGame {
             gg.camera.unproject(gg.touch);
             System.out.println("VALO " + gg.touch.x + " " + gg.touch.y);
             if (!feli.contains(tt.phrase) && !poste.contains(tt.phrase) &&
-                    !clos.contains(tt.phrase)) tt.phrase = "";
+                    !clos.contains(tt.phrase) && !history.contains(tt.phrase)) tt.phrase = "";
             if(history.contains(tt.phrase) && count!=0) outputText(history);
-
-            if(tt.phrase.equals(history.get(29))){
-                outputText(afterHistory);
-            }
-
             if (isKeyboard) {
                 runa.vx=0;
                 if (keyboard.endOfEdit(gg.touch.x, gg.touch.y)) {
                     numberOfWays = keyboard.getText();
                     isEnterWays = false;
                     if (numberOfWays.equals("4413")) {
+                        if(!listenHistory){
+                            end.countKeys++;
+                            listenHistory=true;
+                        }
                         outputText(history);
                     } else if (numberOfWays.equals("666")) {
                         outputText("Р: Не работает. Похоже, тут нет записей от Академии Дыма.");
@@ -113,7 +115,15 @@ public class RoomOfValo extends ScreenGame {
                     }
                     isKeyboard = false;
                 }
-            } else {
+            } else if(tt.phrase.equals(history.get(31))) {
+                endOfHistory = true;
+                runa.isWalking = false;
+            }
+            else if(endOfHistory){
+                outputText(afterHistory);
+                if(tt.phrase.equals(afterHistory.get(2))) endOfHistory=false;
+            }
+            else {
                 if (radio.hit(gg.touch.x, gg.touch.y)) {
                     outputText("Р: Приемник? Хм, какую дорожку мне включить?");
                     isKeyboard = true;
@@ -141,6 +151,7 @@ public class RoomOfValo extends ScreenGame {
             }
             isThreeMinutes();
         }
+        times();
 
             //отрисовка
             gg.camera.update();
