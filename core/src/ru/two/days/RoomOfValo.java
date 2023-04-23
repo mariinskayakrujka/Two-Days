@@ -165,7 +165,7 @@ public class RoomOfValo extends ScreenGame {
             if (runa.isWalking) {
                 changePose();
                 gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
-            } else gg.batch.draw(texRuna[4], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
+            } else gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
             /*if(isReading){
                 gg.batch.draw(texPaper, 0, 20);
                 gg.batch.draw(button, SCR_WIDTH*7/8f, 0, 250, 250);

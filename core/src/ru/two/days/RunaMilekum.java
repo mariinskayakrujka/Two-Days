@@ -1,14 +1,32 @@
 package ru.two.days;
 
-public class RunaMilekum extends MainCharacter{
+import com.badlogic.gdx.utils.TimeUtils;
 
-    int vx;
+public class RunaMilekum{
+
+    int vx, nFaz = 3, faza;
+    boolean isWalking;
+    TwoDays gg = new TwoDays();
+    float x, y;
+    float width=640, height=640;
+    float hitting;
+    ScreenGame sg;
+
+    long timeLastPhase, timePhaseInterval = 300;
+
+    void changePhase() {
+        if(TimeUtils.millis() > timeLastPhase+timePhaseInterval) {
+            if (++faza == nFaz) faza = 0;
+            timeLastPhase= TimeUtils.millis();
+        }
+    }
 
     public RunaMilekum(float x) {
-        super(x);
-        timePhaseInterval=90;
+        sg = new ScreenGame(gg);
+        this.x = x;
+        timePhaseInterval=150;
     }
-    int nfaz = 2;
+    int nfaz = 3;
     void moveForRuna(float hitting) {
         isWalking = true;
             if (!sg.isTalking && !sg.isReading) {
@@ -22,6 +40,13 @@ public class RunaMilekum extends MainCharacter{
                     changePhase();
                 } else isWalking =false;
         }else isWalking = false;
+    }
+    float getX(){
+        return x-width/2;
+    }
+
+    float getY(){
+        return 70;
     }
     boolean isFlip() {
         return vx>0;

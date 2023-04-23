@@ -114,13 +114,14 @@ public class RoomOfRuna extends ScreenGame {
         if(isIntro) kaiden.vx = -1;
         if (isAfterIntro) kaiden.move(true, 10);
         if (!isIntro && !isAfterIntro) {
-            if (tt.phrase.equals("") && gg.touch.x != runa.getX() && gg.touch.x != 0 && !feli.contains(tt.phrase)) runa.moveForRuna(gg.touch.x);
+            if (tt.phrase.equals("") && gg.touch.x != runa.getX() && gg.touch.x != 0
+                    && !feli.contains(tt.phrase)) runa.moveForRuna(gg.touch.x);
         }
         if (runa.x >= END_OF_SCREEN_RIGHT) {
             gg.setScreen(gg.roomOfValo);
         }
         if (runa.x <= END_OF_SCREEN_LEFT) {
-            gg.setScreen(gg.classroom);//временная мера, тут совершается переход на hall
+            gg.setScreen(gg.hall);//временная мера, тут совершается переход на hall
         }
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -163,7 +164,11 @@ public class RoomOfRuna extends ScreenGame {
                         outputText("Р: Мне правда стоит передохнуть.");
                         texR = texRuna[5];
                         outputText("Р: Я поспала.");
-                        end.sleeping = true; // ключевой момент
+                        if(!end.sleeping) {
+                            end.sleeping = true;
+                            end.countKeys++;
+                        }
+                        // ключевой момент
                     }
                 }
                 if(bottles.hit(gg.touch.x, gg.touch.y)){
@@ -217,7 +222,7 @@ public class RoomOfRuna extends ScreenGame {
             if (runa.isWalking) {
                 changePose();
                 gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
-            } else gg.batch.draw(texRuna[4], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
+            } else gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
         }
         /*if(isReading){
             gg.batch.draw(texPaper, 0, 20);
@@ -233,7 +238,7 @@ public class RoomOfRuna extends ScreenGame {
     public void changeTexture() {
         if (tt.phrase.equals(intro.get(12)) || tt.phrase.equals(intro.get(13)) ||
                 tt.phrase.equals(intro.get(14))) texK = texKaiden[0];//calm
-        else texK = texKaiden[1];//angry
+        else texK = texKaiden[2];//angry
 
 
         if (tt.phrase.equals(afterintro.get(2)) || tt.phrase.equals(afterintro.get(3)) ||

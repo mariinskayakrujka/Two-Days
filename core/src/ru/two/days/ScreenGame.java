@@ -25,7 +25,7 @@ public class ScreenGame implements Screen {
     boolean soundOn = true;
     Sound[] sounds = new Sound[6];
     //Texture texPaper, button, button1;
-    Texture[] texRuna = new Texture[16], texKaiden = new Texture[11];
+    Texture[] texRuna = new Texture[17], texKaiden = new Texture[11];
 
     //TextButton [] buttons = new TextButton[5];
 
