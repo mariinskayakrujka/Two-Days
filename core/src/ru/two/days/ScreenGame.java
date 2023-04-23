@@ -27,9 +27,11 @@ public class ScreenGame implements Screen {
     //Texture texPaper, button, button1;
     Texture[] texRuna = new Texture[16], texKaiden = new Texture[11];
 
+    TextButton [] buttons = new TextButton[5];
+
     public static final int END_OF_SCREEN_RIGHT = SCR_WIDTH*190/200,END_OF_SCREEN_LEFT = SCR_WIDTH/10;
 
-    boolean isTalking, isReading;
+    boolean isTalking, isReading, goOut;
 
     Texture texK, texR;
 
@@ -44,11 +46,13 @@ public class ScreenGame implements Screen {
 
     public ScreenGame(@NonNull TwoDays context){
         try {
-
             gg = context;
-            tt = new Text(gg.font, "", SCR_WIDTH/4f, SCR_HEIGHT/ 11f);
-        /*button = new Texture("button.png");
-        button1 = new Texture("button1.png");*/
+            buttons[0] = new TextButton(gg.font, "пропустить", 0, SCR_HEIGHT*15/20f);//кнопка
+            buttons[1] = new TextButton(gg.font, 0, SCR_HEIGHT/2f);//стрелки
+            buttons[2] = new TextButton(gg.font, SCR_WIDTH-100, SCR_HEIGHT/2f);//стрелки
+            buttons[3] = new TextButton(gg.font, 0, SCR_HEIGHT/2f);//при пролистывании
+            buttons[4] = new TextButton(gg.font, SCR_WIDTH-100, SCR_HEIGHT/2f);//при пролистывании
+            tt = new Text(gg.font, "", SCR_WIDTH/5f, SCR_HEIGHT/ 11f);
             runa = new RunaMilekum(SCR_WIDTH / 2f);
             kaiden = new KaidenMorem(SCR_WIDTH*3 / 4f);
             poliam = new PoliamSt(SCR_WIDTH / 20f);
@@ -112,6 +116,9 @@ public class ScreenGame implements Screen {
         }else return gg.font;
     }
 
+    void rightOutput(List<String>list){
+        if(list.contains((tt.phrase))) outputText(list);
+    }
     public void outputText(List<String> list){
         isTalking = true;
         runa.isWalking = false;

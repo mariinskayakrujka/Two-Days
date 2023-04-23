@@ -24,6 +24,7 @@ public class RoomOfValo extends ScreenGame {
     public RoomOfValo(TwoDays context) {
         super(context);
         keyboard = new InputKeyboard(SCR_WIDTH, SCR_HEIGHT/2f, 4);
+
         fridge = new Objects(788, 212, 1180 - 788, 934 - 212);
         radio = new Objects(608, 728, 716 - 608, 788 - 728);
         feliopter = new Objects(1026, 1026, 1302 - 1026, 1402 - 1026);
@@ -71,7 +72,6 @@ public class RoomOfValo extends ScreenGame {
         history.add(":Он считается поверхностным, но он устроен так, что Земля, которая обжита,");history.add(":лишь малая часть всего их огромного мира.");
         history.add(":Это создано для того, чтобы люди не могли проникнуть в наши мира без нашего согласия.");history.add("...");
 
-        keyboard = new InputKeyboard(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 4);
     }
 
     @Override
@@ -94,8 +94,10 @@ public class RoomOfValo extends ScreenGame {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
             System.out.println("VALO " + gg.touch.x + " " + gg.touch.y);
+            rightOutput(feli);rightOutput(clos);rightOutput(poste);
             if (!feli.contains(tt.phrase) && !poste.contains(tt.phrase) &&
-                    !clos.contains(tt.phrase) && !history.contains(tt.phrase)) tt.phrase = "";
+                    !clos.contains(tt.phrase) && !history.contains(tt.phrase) &&
+                    !tt.phrase.equals("Р: Приемник? Хм, какую дорожку мне включить?")) tt.phrase = "";
             if(history.contains(tt.phrase) && count!=0) outputText(history);
             if (isKeyboard) {
                 runa.vx=0;
@@ -124,10 +126,12 @@ public class RoomOfValo extends ScreenGame {
                 if(tt.phrase.equals(afterHistory.get(2))) endOfHistory=false;
             }
             else {
-                if (radio.hit(gg.touch.x, gg.touch.y)) {
-                    outputText("Р: Приемник? Хм, какую дорожку мне включить?");
+                if(tt.phrase.equals("Р: Приемник? Хм, какую дорожку мне включить?")){
                     isKeyboard = true;
                     isEnterWays = true;
+                }
+                if (radio.hit(gg.touch.x, gg.touch.y)) {
+                    outputText("Р: Приемник? Хм, какую дорожку мне включить?");
                 }
                 if (feliopter.hit(gg.touch.x, gg.touch.y)) {
                     outputText(feli);

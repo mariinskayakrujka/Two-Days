@@ -50,6 +50,9 @@ public class Classroom extends ScreenGame{
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
             tt.phrase="";
+            if(isDialog){
+
+            }
             System.out.println("CLASSROOM " + gg.touch.x + " " + gg.touch.y);
             if (behindPoliam.hit(gg.touch.x, gg.touch.y)) {
                 outputText("Р: Не надо оно мне");

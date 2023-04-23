@@ -30,6 +30,14 @@ public class TextButton {
         height = gl.height;
         this.x = SCR_WIDTH/2f - width/2;
     }
+    public TextButton(BitmapFont font, float x, float y) {
+        this.font = font;
+        this.x = x;
+        this.y = y;
+        GlyphLayout gl = new GlyphLayout(font, text);
+        width = gl.width;
+        height = gl.height;
+    }
 
     public void setText(String text) {
         this.text = text;
