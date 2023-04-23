@@ -146,7 +146,7 @@ public class RoomOfRuna extends ScreenGame {
                 }changeTexture();
             }
 
-            if (!isIntro && !isAfterIntro) {
+            if (!isIntro && !isAfterIntro) {//сделать так, чтобы без радио она не смогла выйти
                 rightOutput(feli);
                 System.out.println("RUNA" + gg.touch.x + " " + gg.touch.y);
                 if (!feli.contains(tt.phrase)) tt.phrase = "";
