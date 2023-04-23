@@ -32,6 +32,7 @@ public class TwoDays extends Game {
 
 	RoomOfValo roomOfValo;
 	RoomOfRuna roomOfRuna;
+	Hall hall;
 
 	@Override
 	public void create () {
@@ -47,6 +48,7 @@ public class TwoDays extends Game {
 		screenAbout = new ScreenAbout(this);
 		roomOfRuna = new RoomOfRuna(this);
 		roomOfValo = new RoomOfValo(this);
+		hall =new Hall(this);
 		setScreen(screenIntro);
 
 	}

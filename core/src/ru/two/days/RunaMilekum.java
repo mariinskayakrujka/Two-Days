@@ -12,7 +12,6 @@ public class RunaMilekum extends MainCharacter{
     void moveForRuna(float hitting) {
         isWalking = true;
             if (!sg.isTalking && !sg.isReading) {
-                System.out.println(x);
                 if (hitting > x+10) {
                     vx = 20;
                     x += vx;

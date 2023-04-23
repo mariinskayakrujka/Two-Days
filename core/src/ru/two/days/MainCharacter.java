@@ -38,7 +38,7 @@ public class MainCharacter {
     }
 
     float getY(){
-        return 1440-1231;
+        return 70;
     }
 
 

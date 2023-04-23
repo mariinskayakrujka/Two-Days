@@ -25,10 +25,11 @@ public class RoomOfRuna extends ScreenGame {
     public RoomOfRuna(TwoDays myGG) {
         super(myGG);
         gg = myGG;
-        feliopter = new Objects(1573, 1031, 312, 386);
-        bed = new Objects(0, 1440 - 742 - 407, 1186, 407);
-        bottles = new Objects(158, 1440 - 1200 - 43, 894, 43);
-        clothes = new Objects(1190, 1440 - 983 - 254, 424, 254);
+        feliopter = new Objects(1380, 1042, 1636-1380, 31406-1042);
+        bed = new Objects(0, 310, 1038, 602-310);
+        bottles = new Objects(0, 208, 1016, 310-208);
+        clothes = new Objects(1040, 208, 1374-1040, 454-208);
+        cup = new Objects(1648, 768, 1730-1648, 852-768);
         imgBG = new Texture("bg/bg0.png");
 
         intro.add("Р: ...");
@@ -106,16 +107,14 @@ public class RoomOfRuna extends ScreenGame {
 
     @SuppressWarnings("SuspiciousIndentation")
     public void render(float delta) {
-        if (tt.phrase.equals(intro.get(15))) {
-            isIntro = false;
-            isAfterIntro = true;
-        }
-        if (tt.phrase.equals(afterintro.get(9))) isAfterIntro = false;
         //основные события игры
         if (isAfterIntro) kaiden.move(10);
         if (!isIntro && !isAfterIntro) {
-            if (tt.phrase.equals("") && gg.touch.x != runa.x && gg.touch.x != 0 && !tt.phrase.equals(feli.get(0))
+            if (tt.phrase.equals("") && gg.touch.x != runa.getX() && gg.touch.x != 0 && !tt.phrase.equals(feli.get(0))
                     && !tt.phrase.equals(feli.get(1)) && !tt.phrase.equals(feli.get(2))) runa.moveForRuna(gg.touch.x);
+        }
+        if (runa.x >= END_OF_SCREEN_RIGHT) {
+            gg.setScreen(gg.roomOfValo);
         }
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -124,9 +123,6 @@ public class RoomOfRuna extends ScreenGame {
             if (gg.touch.y > SCR_HEIGHT - 100) {
                 isIntro = false;
                 isAfterIntro = false;
-            }
-            if (runa.x > END_OF_SCREEN_RIGHT) {
-                gg.setScreen(gg.roomOfValo);
             }
             if (isIntro) {
                 outputText(intro);
@@ -144,9 +140,8 @@ public class RoomOfRuna extends ScreenGame {
                 changeTexture();
             }
             if (!isIntro && !isAfterIntro) {
-
-                if (!tt.phrase.equals(feli.get(0)) && !tt.phrase.equals(feli.get(1)) &&
-                        !tt.phrase.equals(feli.get(2))) tt.phrase = "";
+                System.out.println("RUNA" + gg.touch.x + " " + gg.touch.y);
+                if (!feli.contains(tt.phrase)) tt.phrase = "";
                 if (feliopter.hit(gg.touch.x, gg.touch.y)) {
                     //runa.moveForRuna(gg.touch.x);
                     outputText(feli);
@@ -167,19 +162,18 @@ public class RoomOfRuna extends ScreenGame {
                         end.sleeping = true; // ключевой момент
                     }
                 }
+                if(bottles.hit(gg.touch.x, gg.touch.y)){
+                    outputText("Р: ...Мне правда стыдно.");
+                }
 
-                    /*if (cup.hit(gg.touch.x, gg.touch.y)) {
-                        runa.moveForRuna(gg.touch.x);
-                        outputText("Р: Пахнет алкоголем и чабрецом одновременно.");
-                    }*/
+                if (cup.hit(gg.touch.x, gg.touch.y)) {
+                    outputText("Р: Пахнет алкоголем и чабрецом одновременно.");
+                }
                 /*if (paper.hit(gg.touch.x, gg.touch.y)){
                     isReading = true;
                     texPaper = new Texture("paper.png");
                 }
-                if (gg.touch.y < 120 && gg.touch.y > 90 && gg.touch.x >= END_OF_SCREEN_RIGHT){
-                    gg.setScreen(new RoomOfValo(gg));
-                }
-                if (gg.touch.y < 120 && gg.touch.y > 90 && gg.touch.x <= END_OF_SCREEN_LEFT){
+                if (runa.getX() <= END_OF_SCREEN_LEFT){
                     gg.setScreen(new Hall(gg));
                 }
                     if (isReading && (gg.touch.x < SCR_WIDTH / 8f) || (gg.touch.x > SCR_WIDTH / 8f + 250 &&

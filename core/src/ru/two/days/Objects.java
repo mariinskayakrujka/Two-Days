@@ -21,6 +21,6 @@ public class Objects {
 
 
     boolean hit(float tx, float ty){
-        return x < tx && tx < x+width && y-height < ty && ty < y;
+        return x < tx && tx < x+width && y+height > ty && ty > y;
     }
 }
