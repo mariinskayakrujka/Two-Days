@@ -12,7 +12,7 @@ public class MainCharacter {
     TwoDays gg = new TwoDays();
     float x, y;
     float width=640, height=640;
-    float wx, rx;
+    float vx;
     float hitting;
     ScreenGame sg;
 
@@ -30,7 +30,6 @@ public class MainCharacter {
     public MainCharacter(float x) {
         sg = new ScreenGame(gg);
         this.x = x;
-        rx = 20;
     }
 
     float getX(){
@@ -42,11 +41,16 @@ public class MainCharacter {
     }
 
 
-    void move(int vx){
-        x +=vx;
+    void move(boolean isRight, int vx){
+        this.vx = vx;
+        if(isRight) x +=vx;
+        else x-=vx;
         changePhase();
     }
     boolean interaction(float tx, float ty){
         return x < tx && tx < x+width && y+height > ty && ty > y;
+    }
+    boolean isFlip() {
+        return vx>0;
     }
 }

@@ -26,5 +26,4 @@ public class RunaMilekum extends MainCharacter{
     boolean isFlip() {
         return vx>0;
     }
-
 }

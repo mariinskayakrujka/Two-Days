@@ -79,7 +79,6 @@ public class RoomOfRuna extends ScreenGame {
     public void show() {
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
         if(isIntro) runa.x = 400;
-        //runa.y = 450;
         else {
             if (gg.touch.x > 1600) runa.x = 400;
             else runa.x = 1600;
@@ -113,7 +112,8 @@ public class RoomOfRuna extends ScreenGame {
     @SuppressWarnings("SuspiciousIndentation")
     public void render(float delta) {
         //основные события игры
-        if (isAfterIntro) kaiden.move(10);
+        if(isIntro) kaiden.vx = -1;
+        if (isAfterIntro) kaiden.move(true, 10);
         if (!isIntro && !isAfterIntro) {
             if (tt.phrase.equals("") && gg.touch.x != runa.getX() && gg.touch.x != 0 && !tt.phrase.equals(feli.get(0))
                     && !tt.phrase.equals(feli.get(1)) && !tt.phrase.equals(feli.get(2))) runa.moveForRuna(gg.touch.x);
@@ -213,18 +213,18 @@ public class RoomOfRuna extends ScreenGame {
         if (isIntro) {
             texR = texRuna[0];
             changeTexture();
-            gg.batch.draw(texK, kaiden.getX(), kaiden.getY());
-            gg.batch.draw(texR, runa.getX(), runa.getY());
+            gg.batch.draw(texK, kaiden.getX(), kaiden.getY(), texK.getWidth(), texK.getHeight(), 0, 0, 1280, 1280, !kaiden.isFlip(), false);
+            gg.batch.draw(texR, runa.getX(), -20);
         } else if (isAfterIntro) {
             changeTexture();
             gg.batch.draw(texKaiden[kaiden.faza + 7], kaiden.getX(), kaiden.getY());
-            gg.batch.draw(texR, runa.getX(), runa.getY());
+            gg.batch.draw(texR, runa.getX(), -20);
         }
         if (!isIntro && !isAfterIntro) {
             if (runa.isWalking) {
                 changePose();
                 gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
-            } else gg.batch.draw(texRuna[4], runa.getX(), runa.getY());//спокойствие
+            } else gg.batch.draw(texRuna[4], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
         }
         /*if(isReading){
             gg.batch.draw(texPaper, 0, 20);

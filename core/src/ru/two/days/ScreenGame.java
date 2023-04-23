@@ -50,7 +50,7 @@ public class ScreenGame implements Screen {
         /*button = new Texture("button.png");
         button1 = new Texture("button1.png");*/
             runa = new RunaMilekum(SCR_WIDTH / 2f);
-            kaiden = new KaidenMorem(SCR_WIDTH / 3f);
+            kaiden = new KaidenMorem(SCR_WIDTH*3 / 4f);
             poliam = new PoliamSt(SCR_WIDTH / 20f);
             end = new Endings(this);
             end.countKeys=0;
