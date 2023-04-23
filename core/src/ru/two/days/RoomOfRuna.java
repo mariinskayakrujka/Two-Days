@@ -81,7 +81,7 @@ public class RoomOfRuna extends ScreenGame {
         else runa.x = 1600;
         gg.touch.x=0;
         runa.vx = 0;
-        //координата по y
+        texR = texRuna[6];
 
     }
 

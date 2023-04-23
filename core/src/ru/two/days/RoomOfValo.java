@@ -77,6 +77,7 @@ public class RoomOfValo extends ScreenGame {
         gg.touch.x = 0;
         runa.vx = 0;
         runa.x = 300;
+        texR = texRuna[6];
     }
 
     @Override
