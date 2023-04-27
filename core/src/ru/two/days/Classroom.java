@@ -15,11 +15,11 @@ import java.util.List;
 public class Classroom extends ScreenGame{
 
     Texture imgBG;
-    boolean isDialog = true;
+    boolean isDialog;
 
     Objects desk, behindPoliam, trash, stand, tables;
-    ArrayList<String> dialogfirst = new ArrayList<>(), dialognext = new ArrayList<>(),
-            dialogKeys = new ArrayList<>();
+    ArrayList<String> dialogfirst = new ArrayList<>(), dialognext = new ArrayList<>(), stan = new ArrayList<>(),
+            table = new ArrayList<>(), dialogKeys = new ArrayList<>();
     public Classroom(TwoDays context) {
         super(context);
         imgBG = new Texture("bg/bg4.jpg");
@@ -53,6 +53,8 @@ public class Classroom extends ScreenGame{
         dialogfirst.add("П: Только аккуратнее, пожалуйста. У меня нет копий.");dialogfirst.add("Р: Не волнуйтесь, я буду осторожна.");
         dialogfirst.add("П:...");dialogfirst.add("end");
 
+        stan.add("Р: Известный историк Руальдоф Киморович.");stan.add("Р: А, его Ст часто цитирует, я помню.");
+        table.add("Р: Плюсы изучения истории.");table.add("Р: Когда-то меня веселили эти таблички.");
 
         dialogKeys.add("П: Что-то случилось?");dialogKeys.add("Р: Не знаю...");
         dialogKeys.add("Р: Да. Случилось.");dialogKeys.add("Р: Вы мне не поверите, но я все забыла.");
@@ -119,13 +121,27 @@ public class Classroom extends ScreenGame{
         gg.touch.x=0;
         runa.vx = 0;
         texR = texRuna[6];
+        texP = texPoliam[1];
     }
 
     @Override
     public void render(float delta) {
-        if (tt.phrase.equals("") && gg.touch.x != 0 && gg.touch.x != runa.getX()) runa.moveForRuna(gg.touch.x);
+        if (!isDialog && tt.phrase.equals("") && gg.touch.x != 0 && gg.touch.x != runa.getX()) runa.moveForRuna(gg.touch.x);
+        /*else {
+            switch (tt.phrase) {
+                case (""):
+                    texK = texKaiden[0];
+                    break;
+                case (""):
+                    texK = texKaiden[4];
+                    break;
+
+                default:
+                    break;
+            }
+        }*/
         if (runa.x > END_OF_SCREEN_RIGHT) {
-            gg.setScreen(gg.roomOfRuna);
+            gg.setScreen(gg.hall);
         }
         // обработка касаний экрана
         if(Gdx.input.justTouched()) {
@@ -133,27 +149,32 @@ public class Classroom extends ScreenGame{
             gg.camera.unproject(gg.touch);
             tt.phrase="";
             if(isDialog){
-
+                outputText(dialogfirst);
+                if (count == 0) {
+                    isDialog = false;
+                    end.talkingPoliam1=true;
+                }
+            }else {
+                if (behindPoliam.hit(gg.touch.x, gg.touch.y)) {
+                    outputText("Р: Не надо оно мне");
+                }
+                if (tables.hit(gg.touch.x, gg.touch.y)) {
+                    outputText(table);
+                }
+                if (desk.hit(gg.touch.x, gg.touch.y)) {
+                    outputText("Р: \"Культ Грейс\"?");
+                }
+                if (trash.hit(gg.touch.x, gg.touch.y)) {
+                    outputText("Р: Мусор. Ничего интересного");
+                }
+                if (stand.hit(gg.touch.x, gg.touch.y)) {
+                    outputText(stan);
+                }
+                if (poliam.interaction(gg.touch.x, gg.touch.y)) {
+                    if (!end.talkingPoliam1) isDialog = true;
+                    else outputText("П: Не отвлекайте меня, пожалуйста, я занят.");
+                }
             }
-            System.out.println("CLASSROOM " + gg.touch.x + " " + gg.touch.y);
-            if (behindPoliam.hit(gg.touch.x, gg.touch.y)) {
-                outputText("Р: Не надо оно мне");
-            }
-            if (tables.hit(gg.touch.x, gg.touch.y)) {
-                outputText("some phrase");
-            }
-            if (desk.hit(gg.touch.x, gg.touch.y)) {
-                outputText("Р: some about grace");
-            }
-            if (trash.hit(gg.touch.x, gg.touch.y)) {
-                outputText("Р: Мусор. Ничего интересного");
-            }
-            if (stand.hit(gg.touch.x, gg.touch.y)) {
-                outputText("Р: some about stand");
-            }
-            /*if (poliam.interaction(gg.touch.x, gg.touch.y)) {
-                outputText(poste);
-            }*/
             isThreeMinutes();
         }
         times();
@@ -165,15 +186,14 @@ public class Classroom extends ScreenGame{
         gg.batch.setProjectionMatrix(gg.camera.combined);
         gg.batch.begin();
         gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);
-        gg.batch.draw();//poliam
-        if(isDialog){
-
-        }else {
+        gg.batch.draw(texP, poliam.getX(), poliam.getY(), texP.getWidth(), texP.getHeight(), 0, 0, 1280, 1280, false, false);//poliam
+        if(!isDialog) {
             if (runa.isWalking) {
-                changePose();
                 gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
             } else
                 gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
+        }else{
+            gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
         }
         gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
         gg.batch.end();

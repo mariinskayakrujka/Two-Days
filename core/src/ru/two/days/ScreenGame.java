@@ -25,7 +25,7 @@ public class ScreenGame implements Screen {
     boolean soundOn = true;
     Sound[] sounds = new Sound[6];
     //Texture texPaper, button, button1;
-    Texture[] texRuna = new Texture[17], texKaiden = new Texture[11];
+    Texture[] texRuna = new Texture[17], texKaiden = new Texture[11], texPoliam = new Texture[18];
 
     //TextButton [] buttons = new TextButton[5];
 
@@ -33,7 +33,7 @@ public class ScreenGame implements Screen {
 
     boolean isTalking, isReading, goOut;
 
-    Texture texK, texR;
+    Texture texK, texR, texP;
 
     Endings end;
 
@@ -71,10 +71,11 @@ public class ScreenGame implements Screen {
             for (int i = 0; i < texKaiden.length; i++) {
                 texKaiden[i] = new Texture("kaiden/kaiden" + i + ".png");
             }
+            for (int i = 0; i < texPoliam.length; i++) {
+                texPoliam[i] = new Texture("poliam/poliam" + i + ".png");
+            }
 
         }catch (NullPointerException ignored){}
-        //возможно, перетащить все из рендера
-
     }
 
     @Override
