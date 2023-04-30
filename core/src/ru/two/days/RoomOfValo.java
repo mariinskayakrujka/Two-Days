@@ -20,7 +20,7 @@ public class RoomOfValo extends ScreenGame {
     boolean isEnterWays, isKeyboard;
     String numberOfWays;
     Texture imgBG;
-    boolean endOfHistory, listenHistory;
+    boolean endOfHistory;
 
     public RoomOfValo(TwoDays context) {
         super(context);
@@ -41,7 +41,7 @@ public class RoomOfValo extends ScreenGame {
 
         imgBG = new Texture("bg/bg1.jpg");
         poste.add("Р: Точно, соседка большая любительница поп-групп.");
-        poste.add("Р: Я вспомнила. Вон тот дуэт – «Начало». Раньше я тоже слушала их.");
+        poste.add("Р: Я вспомнила. Вон тот дуэт – \"Начало\". Раньше я тоже слушала их.");
         poste.add("Р: Их фирменный знак - две четверки.");
         poste.add("...");
 

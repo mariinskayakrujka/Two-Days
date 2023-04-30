@@ -11,8 +11,8 @@ public class ScreenAbout implements Screen {
     TwoDays gg;
     Texture imgBG;
     TextButton btnBack;
-    String textAbout =  "Эта супр-игра создана\n" +
-            "в IT-школе Samsung\n";
+    String textAbout =  "Что-то о том,\n" +
+            "как работает эта игра\n";
 
     public ScreenAbout(TwoDays myGG) {
         gg = myGG;
@@ -36,9 +36,6 @@ public class ScreenAbout implements Screen {
                 gg.setScreen(gg.screenIntro);
             }
         }
-
-        // события
-
         // отрисовка всей графики
         gg.camera.update();
         gg.batch.setProjectionMatrix(gg.camera.combined);

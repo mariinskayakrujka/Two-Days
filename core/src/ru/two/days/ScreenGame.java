@@ -28,7 +28,8 @@ public class ScreenGame implements Screen {
     Music[] music = new Music[4];
 
     //Texture texPaper;
-    Texture[] texRuna = new Texture[16], texKaiden = new Texture[11]/*, texPoliam = new Texture[18]*/;
+    Texture[] texRuna = new Texture[16], texKaiden = new Texture[11]
+            /*, texPoliam = new Texture[18], texValo = new Texture[]*/;
 
     //TextButton [] buttons = new TextButton[5];
 
@@ -39,7 +40,7 @@ public class ScreenGame implements Screen {
     Texture texK, texR, texP;
 
 
-
+    MainCharacter valo;
     RunaMilekum runa;
     PoliamSt poliam;
     KaidenMorem kaiden;
@@ -59,7 +60,7 @@ public class ScreenGame implements Screen {
             runa = new RunaMilekum(703);
             kaiden = new KaidenMorem(SCR_WIDTH*3/4f);
             poliam = new PoliamSt(SCR_WIDTH / 20f);
-
+            valo = new MainCharacter(SCR_WIDTH);
             music[1] = Gdx.audio.newMusic(Gdx.files.internal("sounds/beg-v-kablukah.mp3"));
             shelest = Gdx.audio.newSound(Gdx.files.internal("sounds/shelest.mp3"));
             music[0] = Gdx.audio.newMusic(Gdx.files.internal("sounds/WalkingKover.mp3"));
@@ -73,6 +74,9 @@ public class ScreenGame implements Screen {
             }
             /*for (int i = 0; i < texPoliam.length; i++) {
                 texPoliam[i] = new Texture("poliam/poliam" + i + ".png");
+            }
+            for (int i = 0; i < texPoliam.length; i++) {
+                texValo[i] = new Texture("valo/valo" + i + ".png");
             }*/
 
         }catch (NullPointerException ignored){}

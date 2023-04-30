@@ -131,9 +131,11 @@ public class RoomOfRuna extends ScreenGame {
             gg.setScreen(gg.roomOfValo);
             music[0].stop();
         }
-        if (runa.x <= END_OF_SCREEN_LEFT && end.recordOfLesson) {
-            gg.setScreen(gg.hall);
-            music[0].stop();
+        if (runa.x <= END_OF_SCREEN_LEFT) {
+            if (end.recordOfLesson) {
+                gg.setScreen(gg.hall);
+                music[0].stop();
+            } else outputText("Р: Я не выйду. Я совсем ничего не помню и не понимаю.");
         }
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
