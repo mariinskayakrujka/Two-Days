@@ -2,6 +2,7 @@ package ru.two.days;
 
 import static ru.two.days.TwoDays.SCR_HEIGHT;
 import static ru.two.days.TwoDays.SCR_WIDTH;
+import static ru.two.days.TwoDays.timeCurrent;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -131,16 +132,16 @@ public class Hall extends ScreenGame {
                     break;
             }
         }
-        if (runa.x < END_OF_SCREEN_LEFT && numberOfHalls > 1) {
+        if (runa.x < END_OF_SCREEN_LEFT && numberOfHalls > 1) {//игрок никогда не вернется к кайден
             numberOfHalls--;
             runa.x = 1700;
             gg.touch.x = 1700;
             isClassroom = false;
-        } else if (numberOfHalls == 1) isClassroom = true;
-        else if (runa.x > END_OF_SCREEN_RIGHT && numberOfHalls < 4) {//игрок никогда не вернется к кайден
-            numberOfHalls--;
-            runa.x = 200;
-            gg.touch.x =200;
+        } else if (numberOfHalls == 4) isClassroom = true;
+        else if (runa.x > END_OF_SCREEN_RIGHT && numberOfHalls < 4) {
+            numberOfHalls++;
+            runa.x = 400;
+            gg.touch.x =600;
             isClassroom = false;
         }
         //основные события игры
@@ -149,13 +150,15 @@ public class Hall extends ScreenGame {
             gg.camera.unproject(gg.touch);
             if (gg.touch.y > SCR_HEIGHT - 100) {
                 talkingKai = false;
-                numberOfHalls = 4;
+                numberOfHalls = 1;
             }
             if (talkingKai) {
                 outputText(talkWithKaiden);
                 if (count == 0) {
                     talkingKai = false;
-                    numberOfHalls = 4;
+                    numberOfHalls = 1;
+                    end.talkingKaiden = true;
+                    end.countKeys++;
                 }
             } else {
                 System.out.println("hall " + gg.touch.x + " " + gg.touch.y);
@@ -183,6 +186,7 @@ public class Hall extends ScreenGame {
                 } else
                     gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
             }
+            gg.font.draw(gg.batch, timeCurrent+"", 200, 600);
             gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
             gg.batch.end();
 

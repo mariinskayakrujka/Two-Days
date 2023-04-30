@@ -15,10 +15,10 @@ import java.util.List;
 public class Classroom extends ScreenGame{
 
     Texture imgBG;
-    boolean isDialog;
+    boolean isDialog, isTwoDialog;
 
     Objects desk, behindPoliam, trash, stand, tables;
-    ArrayList<String> dialogfirst = new ArrayList<>(), dialognext = new ArrayList<>(), stan = new ArrayList<>(),
+    ArrayList<String> dialogfirst = new ArrayList<>(), stan = new ArrayList<>(),
             table = new ArrayList<>(), dialogKeys = new ArrayList<>();
     public Classroom(TwoDays context) {
         super(context);
@@ -121,13 +121,18 @@ public class Classroom extends ScreenGame{
         gg.touch.x=0;
         runa.vx = 0;
         texR = texRuna[6];
-        texP = texPoliam[1];
+        //texP = texPoliam[1];
     }
 
     @Override
     public void render(float delta) {
-        if (!isDialog && tt.phrase.equals("") && gg.touch.x != 0 && gg.touch.x != runa.getX()) runa.moveForRuna(gg.touch.x);
-        /*else {
+        if (!isDialog && !isTwoDialog && tt.phrase.equals("") && gg.touch.x != 0 && gg.touch.x != runa.getX()
+                && !stan.contains(tt.phrase) && !table.contains(tt.phrase))
+            runa.moveForRuna(gg.touch.x);
+        /*else if(isTwoDialog){
+
+        }                               switch-case для кат-сцен
+        else if(isDialog){
             switch (tt.phrase) {
                 case (""):
                     texK = texKaiden[0];
@@ -144,59 +149,72 @@ public class Classroom extends ScreenGame{
             gg.setScreen(gg.hall);
         }
         // обработка касаний экрана
-        if(Gdx.input.justTouched()) {
+        if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
-            tt.phrase="";
-            if(isDialog){
+            tt.phrase = "";
+            if (isDialog) {
                 outputText(dialogfirst);
                 if (count == 0) {
                     isDialog = false;
-                    end.talkingPoliam1=true;
+                    end.talkingPoliam1 = true;
+                    end.countKeys++;
+                }
+            } else if (isTwoDialog) {
+                outputText(dialogKeys);
+                if (count == 0) {
+                    isTwoDialog = false;
+                    end.talkingPoliam2 = true;
+                    end.countKeys++;
+                    gg.setScreen(gg.roomOfRuna);
                 }
             }else {
-                if (behindPoliam.hit(gg.touch.x, gg.touch.y)) {
-                    outputText("Р: Не надо оно мне");
+                    if (behindPoliam.hit(gg.touch.x, gg.touch.y)) {
+                        outputText("Р: Не надо оно мне");
+                    }
+                    if (tables.hit(gg.touch.x, gg.touch.y)) {
+                        outputText(table);
+                    }
+                    if (desk.hit(gg.touch.x, gg.touch.y)) {
+                        outputText("Р: \"Культ Грейс\"?");
+                    }
+                    if (trash.hit(gg.touch.x, gg.touch.y)) {
+                        outputText("Р: Мусор. Ничего интересного");
+                    }
+                    if (stand.hit(gg.touch.x, gg.touch.y)) {
+                        outputText(stan);
+                    }
+                    if (poliam.interaction(gg.touch.x, gg.touch.y)) {
+                        if (!end.talkingPoliam1) isDialog = true;
+                        else if (timeCurrent < 1000 * 60 && !end.talkingPoliam2) {
+                            isTwoDialog = true;
+                        } else
+                            outputText("П: Не отвлекайте меня, пожалуйста, я занят.");//тут также должно находится условие на прохождение минуты-двух
+                    }
                 }
-                if (tables.hit(gg.touch.x, gg.touch.y)) {
-                    outputText(table);
-                }
-                if (desk.hit(gg.touch.x, gg.touch.y)) {
-                    outputText("Р: \"Культ Грейс\"?");
-                }
-                if (trash.hit(gg.touch.x, gg.touch.y)) {
-                    outputText("Р: Мусор. Ничего интересного");
-                }
-                if (stand.hit(gg.touch.x, gg.touch.y)) {
-                    outputText(stan);
-                }
-                if (poliam.interaction(gg.touch.x, gg.touch.y)) {
-                    if (!end.talkingPoliam1) isDialog = true;
-                    else outputText("П: Не отвлекайте меня, пожалуйста, я занят.");
-                }
+                isThreeMinutes();
             }
-            isThreeMinutes();
-        }
-        times();
+            times();
 
-        // события
-
-        // отрисовка всей графики
-        gg.camera.update();
-        gg.batch.setProjectionMatrix(gg.camera.combined);
-        gg.batch.begin();
-        gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);
-        gg.batch.draw(texP, poliam.getX(), poliam.getY(), texP.getWidth(), texP.getHeight(), 0, 0, 1280, 1280, false, false);//poliam
-        if(!isDialog) {
-            if (runa.isWalking) {
+            // события
+            // отрисовка всей графики
+            gg.camera.update();
+            gg.batch.setProjectionMatrix(gg.camera.combined);
+            gg.batch.begin();
+            gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);
+            //gg.batch.draw(texP, poliam.getX(), poliam.getY(), texP.getWidth(), texP.getHeight(), 0, 0, 1280, 1280, false, false);//poliam
+            if (!isDialog) {
+                if (runa.isWalking) {
+                    changePose();
+                    gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
+                } else
+                    gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
+            } else {
                 gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
-            } else
-                gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
-        }else{
-            gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
-        }
-        gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
-        gg.batch.end();
+            }
+            gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
+            gg.font.draw(gg.batch, timeCurrent+"", 200, 600);
+            gg.batch.end();
     }
 
 

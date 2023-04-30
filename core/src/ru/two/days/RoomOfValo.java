@@ -173,6 +173,7 @@ public class RoomOfValo extends ScreenGame {
             }*/
             gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
             if(isEnterWays) keyboard.draw(gg.batch);
+            gg.font.draw(gg.batch, timeCurrent+"", 200, 600);
             gg.batch.end();
     }
 

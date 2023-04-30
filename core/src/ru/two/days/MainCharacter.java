@@ -8,10 +8,9 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class MainCharacter {
-    boolean isWalking;
     TwoDays gg = new TwoDays();
     float x, y;
-    float width=640, height=640;
+    float width=1280, height=1280;
     float vx;
     float hitting;
     ScreenGame sg;

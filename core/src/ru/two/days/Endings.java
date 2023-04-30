@@ -8,8 +8,13 @@ import java.util.List;
 без 2 нет 7
  */
 public class Endings {
-    boolean recordOfLesson,talkingPoliam1, docAbenrollment, dairy,
-            talkingKaiden, talkingPoliam2, sleeping;
+    boolean recordOfLesson,//+
+            talkingPoliam1,//+
+            docAbenrollment,
+            dairy,
+            talkingKaiden,//+
+            talkingPoliam2,
+            sleeping;//+
     int countKeys;
     Text tt;
     List<String> endfOfGame = new ArrayList<>();

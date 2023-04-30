@@ -229,6 +229,7 @@ public class RoomOfRuna extends ScreenGame {
             gg.batch.draw(button, SCR_WIDTH*7/8f, 0, 250, 250);
             gg.batch.draw(button1, SCR_WIDTH/8f, 0, 250, 250);
         }*/
+        gg.font.draw(gg.batch, timeCurrent+"", 200, 600);
         gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
         gg.batch.end();
 

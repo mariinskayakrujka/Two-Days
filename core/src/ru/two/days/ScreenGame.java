@@ -25,7 +25,7 @@ public class ScreenGame implements Screen {
     boolean soundOn = true;
     Sound[] sounds = new Sound[6];
     //Texture texPaper, button, button1;
-    Texture[] texRuna = new Texture[17], texKaiden = new Texture[11], texPoliam = new Texture[18];
+    Texture[] texRuna = new Texture[16], texKaiden = new Texture[11]/*, texPoliam = new Texture[18]*/;
 
     //TextButton [] buttons = new TextButton[5];
 
@@ -53,7 +53,7 @@ public class ScreenGame implements Screen {
             buttons[3] = new TextButton(gg.font, 0, SCR_HEIGHT/2f);//при пролистывании
             buttons[4] = new TextButton(gg.font, SCR_WIDTH-100, SCR_HEIGHT/2f);//при пролистывании*/
             tt = new Text(gg.font, "", SCR_WIDTH/5f, SCR_HEIGHT/ 11f);
-            runa = new RunaMilekum(SCR_WIDTH / 2f);
+            runa = new RunaMilekum(703);
             kaiden = new KaidenMorem(SCR_WIDTH*3/4f);
             poliam = new PoliamSt(SCR_WIDTH / 20f);
             end = new Endings(this);
@@ -71,9 +71,9 @@ public class ScreenGame implements Screen {
             for (int i = 0; i < texKaiden.length; i++) {
                 texKaiden[i] = new Texture("kaiden/kaiden" + i + ".png");
             }
-            for (int i = 0; i < texPoliam.length; i++) {
+            /*for (int i = 0; i < texPoliam.length; i++) {
                 texPoliam[i] = new Texture("poliam/poliam" + i + ".png");
-            }
+            }*/
 
         }catch (NullPointerException ignored){}
     }
@@ -85,7 +85,7 @@ public class ScreenGame implements Screen {
 
     @Override
     public void render(float delta) {
-
+        times();
         /*gg.camera.update();
         gg.batch.setProjectionMatrix(gg.camera.combined);
         gg.batch.begin();
@@ -143,13 +143,6 @@ public class ScreenGame implements Screen {
         isTalking = true;
         runa.isWalking = false;
         gg.setFont(whatIsFont(tt.phrase));
-    }
-
-
-    public void changeScreen(Texture changed, Texture changing, int x, int y){
-        if (y < 120 && y > 90 && (x >= END_OF_SCREEN_RIGHT || x <= END_OF_SCREEN_LEFT)){
-            changed = changing;
-        }
     }
 
     void changePose(){
