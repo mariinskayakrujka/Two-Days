@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -23,19 +24,21 @@ public class ScreenGame implements Screen {
     TwoDays gg;
     Text tt;
     boolean soundOn = true;
-    Sound[] sounds = new Sound[6];
-    //Texture texPaper, button, button1;
+    Sound shelest;
+    Music[] music = new Music[4];
+
+    //Texture texPaper;
     Texture[] texRuna = new Texture[16], texKaiden = new Texture[11]/*, texPoliam = new Texture[18]*/;
 
     //TextButton [] buttons = new TextButton[5];
 
     public static final int END_OF_SCREEN_RIGHT = SCR_WIDTH*190/200,END_OF_SCREEN_LEFT = SCR_WIDTH/10;
 
-    boolean isTalking, isReading, goOut;
+    boolean isTalking, isReading;
 
     Texture texK, texR, texP;
 
-    Endings end;
+
 
     RunaMilekum runa;
     PoliamSt poliam;
@@ -56,15 +59,12 @@ public class ScreenGame implements Screen {
             runa = new RunaMilekum(703);
             kaiden = new KaidenMorem(SCR_WIDTH*3/4f);
             poliam = new PoliamSt(SCR_WIDTH / 20f);
-            end = new Endings(this);
-            end.countKeys=0;
-            /*end = new Endings(this);
-            sounds[0] = Gdx.audio.newSound(Gdx.files.internal("sounds/beg-v-kablukah.mp3"));
-            sounds[1] = Gdx.audio.newSound(Gdx.files.internal("sounds/Ringings in ye.mp3"));
-            sounds[2] = Gdx.audio.newSound(Gdx.files.internal("sounds/shelest.mp3"));
-            sounds[3] = Gdx.audio.newSound(Gdx.files.internal("sounds/WalkingKover.mp3"));
-            sounds[4] = Gdx.audio.newSound(Gdx.files.internal("sounds/WalkingRuna.mp3"));
-            sounds[5] = Gdx.audio.newSound(Gdx.files.internal("sounds/withoutUn.mp3"));*/
+
+            music[1] = Gdx.audio.newMusic(Gdx.files.internal("sounds/beg-v-kablukah.mp3"));
+            shelest = Gdx.audio.newSound(Gdx.files.internal("sounds/shelest.mp3"));
+            music[0] = Gdx.audio.newMusic(Gdx.files.internal("sounds/WalkingKover.mp3"));
+            music[2] = Gdx.audio.newMusic(Gdx.files.internal("sounds/walkingRuna.mp3"));
+            music[3] = Gdx.audio.newMusic(Gdx.files.internal("sounds/withoutUn.mp3"));
             for (int i = 0; i < texRuna.length; i++) {
                 texRuna[i] = new Texture("runa/runa" + i + ".png");
             }
@@ -77,12 +77,10 @@ public class ScreenGame implements Screen {
 
         }catch (NullPointerException ignored){}
     }
-
     @Override
     public void show() {
 
     }
-
     @Override
     public void render(float delta) {
         times();
@@ -150,23 +148,15 @@ public class ScreenGame implements Screen {
     }
     @Override
     public void resize(int width, int height) {
-
     }
-
     @Override
     public void pause() {
-
     }
-
     @Override
     public void resume() {
-
     }
-
     @Override
-    public void hide() {
-        Gdx.input.setCatchKey(Input.Keys.BACK, false);    }
-
+    public void hide() {Gdx.input.setCatchKey(Input.Keys.BACK, false); }
     @Override
     public void dispose() {
         for (Texture texture : texKaiden) {
@@ -174,6 +164,10 @@ public class ScreenGame implements Screen {
         }
         for (Texture texture : texRuna) {
             texture.dispose();
+        }
+        shelest.dispose();
+        for (Music music : music) {
+            music.dispose();
         }
     }
 }

@@ -2,6 +2,7 @@ package ru.two.days;
 
 import static ru.two.days.TwoDays.SCR_HEIGHT;
 import static ru.two.days.TwoDays.SCR_WIDTH;
+import static ru.two.days.TwoDays.end;
 import static ru.two.days.TwoDays.timeCurrent;
 
 import com.badlogic.gdx.Gdx;
@@ -88,6 +89,8 @@ public class Hall extends ScreenGame {
         if (!talkingKai) {
             if (tt.phrase.equals("") && gg.touch.x != runa.getX() && gg.touch.x != 0)
                 runa.moveForRuna(gg.touch.x);
+            if(soundOn && runa.isWalking) music[2].play();
+            else music[2].stop();
         } else {
             switch (tt.phrase) {
                 case ("Р: Вы можете мне помочь? Скажите, кто я?"):
@@ -131,13 +134,20 @@ public class Hall extends ScreenGame {
                 default:
                     break;
             }
+
         }
         if (runa.x < END_OF_SCREEN_LEFT && numberOfHalls > 1) {//игрок никогда не вернется к кайден
             numberOfHalls--;
             runa.x = 1700;
             gg.touch.x = 1700;
             isClassroom = false;
-        } else if (numberOfHalls == 4) isClassroom = true;
+        } else if (numberOfHalls == 4){
+            isClassroom = true;
+            if(runa.x > END_OF_SCREEN_RIGHT){
+                gg.setScreen(gg.roomOfRuna);
+                music[2].stop();
+            }
+        }
         else if (runa.x > END_OF_SCREEN_RIGHT && numberOfHalls < 4) {
             numberOfHalls++;
             runa.x = 400;
@@ -190,5 +200,10 @@ public class Hall extends ScreenGame {
             gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
             gg.batch.end();
 
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
     }
 }

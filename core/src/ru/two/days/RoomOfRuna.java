@@ -2,6 +2,7 @@ package ru.two.days;
 
 import static ru.two.days.TwoDays.SCR_HEIGHT;
 import static ru.two.days.TwoDays.SCR_WIDTH;
+import static ru.two.days.TwoDays.end;
 import static ru.two.days.TwoDays.timeCurrent;
 
 import com.badlogic.gdx.Gdx;
@@ -86,6 +87,7 @@ public class RoomOfRuna extends ScreenGame {
         gg.touch.x=0;
         runa.vx = 0;
         texR = texRuna[6];
+        music[0].stop();
     }
 
     @Override
@@ -112,21 +114,30 @@ public class RoomOfRuna extends ScreenGame {
     public void render(float delta) {
         //основные события игры
         if(isIntro) kaiden.vx = -1;
-        if (isAfterIntro) kaiden.move(true, 10);
+        if (isAfterIntro){
+            kaiden.move(true, 10);
+            if(soundOn && kaiden.x < SCR_WIDTH) music[0].play();
+            else music[0].stop();
+        }
         if (!isIntro && !isAfterIntro) {
             if (tt.phrase.equals("") && gg.touch.x != runa.getX() && gg.touch.x != 0
-                    && !feli.contains(tt.phrase)) runa.moveForRuna(gg.touch.x);
+                    && !feli.contains(tt.phrase)) {
+                runa.moveForRuna(gg.touch.x);
+            }
+            if (soundOn && runa.isWalking) music[0].play();
+            else music[0].stop();
         }
         if (runa.x >= END_OF_SCREEN_RIGHT) {
             gg.setScreen(gg.roomOfValo);
+            music[0].stop();
         }
-        if (runa.x <= END_OF_SCREEN_LEFT) {
-            gg.setScreen(gg.hall);//временная мера, тут совершается переход на hall
+        if (runa.x <= END_OF_SCREEN_LEFT && end.recordOfLesson) {
+            gg.setScreen(gg.hall);
+            music[0].stop();
         }
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
-
             //интро
             if (gg.touch.y > SCR_HEIGHT - 100) {
                 isIntro = false;
@@ -146,7 +157,7 @@ public class RoomOfRuna extends ScreenGame {
                 }changeTexture();
             }
 
-            if (!isIntro && !isAfterIntro) {//сделать так, чтобы без радио она не смогла выйти
+            if (!isIntro && !isAfterIntro) {
                 rightOutput(feli);
                 System.out.println("RUNA" + gg.touch.x + " " + gg.touch.y);
                 if (!feli.contains(tt.phrase)) tt.phrase = "";
@@ -251,6 +262,6 @@ public class RoomOfRuna extends ScreenGame {
 
     @Override
     public void dispose() {
-
+        super.dispose();
     }
 }

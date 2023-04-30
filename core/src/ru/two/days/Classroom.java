@@ -2,6 +2,7 @@ package ru.two.days;
 
 import static ru.two.days.TwoDays.SCR_HEIGHT;
 import static ru.two.days.TwoDays.SCR_WIDTH;
+import static ru.two.days.TwoDays.end;
 import static ru.two.days.TwoDays.timeCurrent;
 
 import com.badlogic.gdx.Gdx;
@@ -145,6 +146,8 @@ public class Classroom extends ScreenGame{
                     break;
             }
         }*/
+        if(soundOn && runa.isWalking) music[2].play();
+        else music[2].stop();
         if (runa.x > END_OF_SCREEN_RIGHT) {
             gg.setScreen(gg.hall);
         }

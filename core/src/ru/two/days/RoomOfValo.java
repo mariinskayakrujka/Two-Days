@@ -2,6 +2,7 @@ package ru.two.days;
 
 import static ru.two.days.TwoDays.SCR_HEIGHT;
 import static ru.two.days.TwoDays.SCR_WIDTH;
+import static ru.two.days.TwoDays.end;
 import static ru.two.days.TwoDays.timeCurrent;
 
 import com.badlogic.gdx.Gdx;
@@ -87,8 +88,11 @@ public class RoomOfValo extends ScreenGame {
     public void render(float delta) {
         if (tt.phrase.equals("") && gg.touch.x != 0 && gg.touch.x != runa.getX() && !isKeyboard)
             runa.moveForRuna(gg.touch.x);
-        if (runa.x < END_OF_SCREEN_LEFT) {
+        if(soundOn && runa.isWalking) music[0].play();
+        else music[0].stop();
+        if (runa.x <= END_OF_SCREEN_LEFT) {
             gg.setScreen(gg.roomOfRuna);
+            music[0].stop();
         }
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -105,11 +109,11 @@ public class RoomOfValo extends ScreenGame {
                     numberOfWays = keyboard.getText();
                     isEnterWays = false;
                     if (numberOfWays.equals("4413")) {
-                        if(!listenHistory){
-                            end.countKeys++;
-                            listenHistory=true;
-                        }
                         outputText(history);
+                        if(!end.recordOfLesson){
+                            end.countKeys++;
+                            end.recordOfLesson=true;
+                        }
                     } else if (numberOfWays.equals("666")) {
                         outputText("Р: Не работает. Похоже, тут нет записей от Академии Дыма.");
                     } else {
@@ -123,7 +127,10 @@ public class RoomOfValo extends ScreenGame {
             }
             else if(endOfHistory){
                 outputText(afterHistory);
-                if(tt.phrase.equals(afterHistory.get(2))) endOfHistory=false;
+
+                if(tt.phrase.equals(afterHistory.get(2))){
+                    endOfHistory=false;
+                }
             }
             else {
                 if(tt.phrase.equals("Р: Приемник? Хм, какую дорожку мне включить?")){
@@ -200,5 +207,6 @@ public class RoomOfValo extends ScreenGame {
     public void dispose() {
         //super.dispose();
         //keyboard.dispose();
+        super.dispose();
     }
 }

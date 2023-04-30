@@ -18,7 +18,7 @@ public class Endings {
     int countKeys;
     Text tt;
     List<String> endfOfGame = new ArrayList<>();
-    public Endings(ScreenGame scn){
+    public Endings(TwoDays twoDays){
         if((countKeys == 7) || (countKeys == 6 && !dairy)) goodEnding();
         else if((countKeys == 0) ||
                 (countKeys == 1 && (sleeping || dairy)) ||

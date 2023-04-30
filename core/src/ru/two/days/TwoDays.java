@@ -33,6 +33,7 @@ public class TwoDays extends Game {
 	ScreenIntro screenIntro;
 	ScreenSettings screenSettings;
 	ScreenAbout screenAbout;
+	public static Endings end;
 
 	RoomOfValo roomOfValo;
 	RoomOfRuna roomOfRuna;
@@ -48,6 +49,8 @@ public class TwoDays extends Game {
 		touch = new Vector3();
 		generateFont();
 
+		end = new Endings(this);
+		end.countKeys=0;
 		screenIntro = new ScreenIntro(this);
 		screenSettings = new ScreenSettings(this);
 		screenAbout = new ScreenAbout(this);
