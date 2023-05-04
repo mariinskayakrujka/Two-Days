@@ -15,18 +15,21 @@ import java.util.List;
 
 public class Classroom extends ScreenGame {
 
-    Texture imgBG, imgBasement, imgHall;
+    Texture imgBG, imgHall;
     boolean isDialog, isDialogTwo, isKeysStage;
 
+    Texture[] texPoliam = new Texture[18];
     Objects desk, behindPoliam, trash, stand, tables;
     ArrayList<String> dialogfirst = new ArrayList<>(), stan = new ArrayList<>(),
             table = new ArrayList<>(), dialogKeys = new ArrayList<>(), dialogNext = new ArrayList<>();
 
     public Classroom(TwoDays context) {
         super(context);
+        for (int i = 0; i < texPoliam.length; i++) {
+            texPoliam[i] = new Texture("poliam/poliam" + i + ".png");
+        }
         imgBG = new Texture("bg/bg4.jpg");
         imgHall = new Texture("bg/hall4.png");
-        //imgBasement
         behindPoliam = new Objects(0, 0, 702, 1426);
         tables = new Objects(764, 950, 1148 - 764, 1380 - 950);
         desk = new Objects(1180, 708, 2066 - 1180, 1340 - 708);
@@ -116,7 +119,7 @@ public class Classroom extends ScreenGame {
         gg.touch.x = 0;
         runa.vx = 0;
         texR = texRuna[6];
-        //texP = texPoliam[1];
+        texP = texPoliam[1];
     }
 
     @Override
@@ -150,6 +153,7 @@ public class Classroom extends ScreenGame {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
             tt.phrase = "";
+            isThreeMinutes();
             if (isDialog) {
                 outputText(dialogfirst);
                 if (count == 0) {
@@ -196,23 +200,22 @@ public class Classroom extends ScreenGame {
                         outputText("П: Не отвлекайте меня, пожалуйста, я занят.");
                 }
             }
-            isThreeMinutes();
+
         }
         times();
-
-        // события
         // отрисовка всей графики
         gg.camera.update();
         gg.batch.setProjectionMatrix(gg.camera.combined);
         gg.batch.begin();
         gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);//рисовка холла\подвала в кат-сцене
-        //gg.batch.draw(texP, poliam.getX(), poliam.getY(), texP.getWidth(), texP.getHeight(), 0, 0, 1280, 1280, false, false);//poliam
+        gg.batch.draw(texP, poliam.getX(), poliam.getY(), texP.getWidth(), texP.getHeight(), 0, 0, 1280, 1280, false, false);//poliam
         if (!isDialog) {
             if (runa.isWalking) {
                 changePose();
                 gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
             } else
                 gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
+            gg.batch.draw(forButtons[2], SCR_WIDTH-400, SCR_HEIGHT/2f-350, 500, 500);
         } else {
             gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
         }
@@ -246,6 +249,9 @@ public class Classroom extends ScreenGame {
     public void dispose() {
         super.dispose();
         imgBG.dispose();
+        for (Texture texture : texPoliam) {
+            texture.dispose();
+        }
 
     }
 }

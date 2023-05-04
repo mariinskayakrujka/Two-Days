@@ -29,10 +29,10 @@ public class ScreenGame implements Screen {
 
     //Texture texPaper;
     Texture[] texRuna = new Texture[16], texKaiden = new Texture[11]
-            /*, texPoliam = new Texture[18], texValo = new Texture[]*/;
+            /*,texValo = new Texture[]*/;
 
-    //TextButton [] buttons = new TextButton[5];  неплоха идея у стрелочек оставлять иногда надписи, куда это ведет, чтобы у игроков
-                                                // не было недопонимания
+    //TextButton [] buttons = new TextButton[5];
+    Texture[] forButtons = new Texture[5];
 
     public static final int END_OF_SCREEN_RIGHT = SCR_WIDTH*190/200,END_OF_SCREEN_LEFT = SCR_WIDTH/10;
 
@@ -67,15 +67,19 @@ public class ScreenGame implements Screen {
             music[0] = Gdx.audio.newMusic(Gdx.files.internal("sounds/WalkingKover.mp3"));
             music[2] = Gdx.audio.newMusic(Gdx.files.internal("sounds/walkingRuna.mp3"));
             music[3] = Gdx.audio.newMusic(Gdx.files.internal("sounds/withoutUn.mp3"));
+
+            forButtons[0] = new Texture("buttons/buttonRestrt.png");
+            forButtons[1] = new Texture("buttons/lScreen.png");
+            forButtons[2] = new Texture("buttons/rScreen.png");
+            forButtons[3] = new Texture("buttons/left.png");
+            forButtons[4] = new Texture("buttons/right.png");
             for (int i = 0; i < texRuna.length; i++) {
                 texRuna[i] = new Texture("runa/runa" + i + ".png");
             }
             for (int i = 0; i < texKaiden.length; i++) {
                 texKaiden[i] = new Texture("kaiden/kaiden" + i + ".png");
             }
-            /*for (int i = 0; i < texPoliam.length; i++) {
-                texPoliam[i] = new Texture("poliam/poliam" + i + ".png");
-            }
+            /*
             for (int i = 0; i < texPoliam.length; i++) {
                 texValo[i] = new Texture("valo/valo" + i + ".png");
             }*/
@@ -174,5 +178,6 @@ public class ScreenGame implements Screen {
         for (Music music : music) {
             music.dispose();
         }
+
     }
 }

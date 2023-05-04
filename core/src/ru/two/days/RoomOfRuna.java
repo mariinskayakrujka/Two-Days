@@ -160,6 +160,7 @@ public class RoomOfRuna extends ScreenGame {
             }
 
             if (!isIntro && !isAfterIntro) {
+                isThreeMinutes();
                 rightOutput(feli);
                 System.out.println("RUNA" + gg.touch.x + " " + gg.touch.y);
                 if (!feli.contains(tt.phrase)) tt.phrase = "";
@@ -212,7 +213,7 @@ public class RoomOfRuna extends ScreenGame {
                     isReading = true;
                     texPaper = new Texture("docWithDairy1.png");
                 }*/
-            }isThreeMinutes();
+            }
         }times();
 
         //отрисовка
@@ -236,6 +237,8 @@ public class RoomOfRuna extends ScreenGame {
                 changePose();
                 gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
             } else gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
+            gg.batch.draw(forButtons[1], 0, SCR_HEIGHT/2f-350, 500, 500);
+            gg.batch.draw(forButtons[2], SCR_WIDTH-400, SCR_HEIGHT/2f-350, 500, 500);
         }
         /*if(isReading){
             gg.batch.draw(texPaper, 0, 20);

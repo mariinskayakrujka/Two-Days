@@ -158,6 +158,7 @@ public class Hall extends ScreenGame {
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
+            isThreeMinutes();
             if (gg.touch.y > SCR_HEIGHT - 100) {
                 talkingKai = false;
                 numberOfHalls = 1;
@@ -177,7 +178,6 @@ public class Hall extends ScreenGame {
                     if (isClassroom) gg.setScreen(gg.classroom);
                     else outputText("Р: Не лучшая идея вламываться к кому-то посреди урока");
                 }
-                isThreeMinutes();
             }
         }
             times();
@@ -190,11 +190,15 @@ public class Hall extends ScreenGame {
                 gg.batch.draw(texK, 200, kaiden.getY());
                 gg.batch.draw(texR, 800, runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
             } else {
+                gg.batch.draw(forButtons[1], 0, SCR_HEIGHT/2f);
+                gg.batch.draw(forButtons[2], SCR_WIDTH-100, SCR_HEIGHT/2f);
                 if (runa.isWalking) {
                     changePose();
                     gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
                 } else
                     gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
+                if(numberOfHalls != 1) gg.batch.draw(forButtons[1], 0, SCR_HEIGHT/2f-350, 500, 500);
+                gg.batch.draw(forButtons[2], SCR_WIDTH-400, SCR_HEIGHT/2f-350, 500, 500);
             }
             gg.font.draw(gg.batch, timeCurrent+"", 200, 600);
             gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
