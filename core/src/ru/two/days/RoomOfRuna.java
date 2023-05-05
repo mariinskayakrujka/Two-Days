@@ -14,10 +14,9 @@ import java.util.ArrayList;
 public class RoomOfRuna extends ScreenGame {
     Objects feliopter, bed, bottles, clothes, cup, paper, docWithDairy;
 
-    boolean isIntro = true, isAfterIntro, dairyNotPaper;
+    boolean isIntro = true, isAfterIntro, havingKeys;//havingKeys меняется только после кат-сцены в подвале
 
     Texture imgBG;
-    Texture atlasDocWithDairy;
     TwoDays gg;
 
     String dairy = " 1.4\n" +

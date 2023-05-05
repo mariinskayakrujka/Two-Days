@@ -82,6 +82,7 @@ public class RoomOfValo extends ScreenGame {
         runa.vx = 0;
         runa.x = 300;
         texR = texRuna[6];
+        music[0].stop();
     }
 
     @Override

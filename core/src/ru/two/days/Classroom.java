@@ -8,6 +8,7 @@ import static ru.two.days.TwoDays.timeCurrent;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,11 +16,16 @@ import java.util.List;
 
 public class Classroom extends ScreenGame {
 
-    Texture imgBG, imgHall;
+    Texture imgBG;
     boolean isDialog, isDialogTwo, isKeysStage;
 
+    long timeAfterDialog;
     Texture[] texPoliam = new Texture[18];
+    Texture[] texValo = new Texture[5];
+    Texture[] bg = new Texture[2];
     Objects desk, behindPoliam, trash, stand, tables;
+    PoliamSt poliam;
+    MainCharacter valo;
     ArrayList<String> dialogfirst = new ArrayList<>(), stan = new ArrayList<>(),
             table = new ArrayList<>(), dialogKeys = new ArrayList<>(), dialogNext = new ArrayList<>();
 
@@ -28,13 +34,20 @@ public class Classroom extends ScreenGame {
         for (int i = 0; i < texPoliam.length; i++) {
             texPoliam[i] = new Texture("poliam/poliam" + i + ".png");
         }
-        imgBG = new Texture("bg/bg4.jpg");
-        imgHall = new Texture("bg/hall4.png");
+        for (int i = 0; i < texValo.length; i++) {
+            texValo[i] = new Texture("valo/valo" + i + ".png");
+        }
+        bg[0] = new Texture("bg/bg4.jpg");
+        bg[1] = new Texture("bg/hall4.png");
         behindPoliam = new Objects(0, 0, 702, 1426);
         tables = new Objects(764, 950, 1148 - 764, 1380 - 950);
         desk = new Objects(1180, 708, 2066 - 1180, 1340 - 708);
         stand = new Objects(2158, 758, 2506 - 2158, 1314 - 758);
         trash = new Objects(2288, 210, 2418 - 2288, 456 - 210);
+
+        poliam = new PoliamSt(802);
+        valo = new MainCharacter(SCR_WIDTH);
+
         dialogfirst.add("Р: Здравствуйте, Ст.");dialogfirst.add("П: Я занят, Милекум. Позже.");dialogfirst.add("Р: \"Ага, занят\"");
         dialogfirst.add("Р: \"Ему точно не стоит говорить, что я все забыла\"");dialogfirst.add("Р: \"Но это... странное чувство...\"");
         dialogfirst.add("Р: Морэм сказала, что удивлена, как вы со мной решили работать.");
@@ -120,6 +133,9 @@ public class Classroom extends ScreenGame {
         runa.vx = 0;
         texR = texRuna[6];
         texP = texPoliam[1];
+        texV = texValo[0];
+        music[2].stop();
+        imgBG = bg[0];
     }
 
     @Override
@@ -127,26 +143,45 @@ public class Classroom extends ScreenGame {
         if (!isDialog && !isKeysStage && tt.phrase.equals("") && gg.touch.x != 0 && gg.touch.x != runa.getX()
                 && !stan.contains(tt.phrase) && !table.contains(tt.phrase))
             runa.moveForRuna(gg.touch.x);
-        /*else if(isTwoDialog){
-
-        }                               switch-case для кат-сцен
         else if(isDialog){
             switch (tt.phrase) {
-                case (""):
-                    texK = texKaiden[0];
+                case ("Р: \"Ага, занят\""):
+                    texP = texPoliam[1];
                     break;
-                case (""):
-                    texK = texKaiden[4];
+                case("Р: \"Но это... странное чувство...\""):
+                    texR = texRuna[15];
                     break;
-
+                case ("П: Вашу дипломную по истории Объединенного III ведь я тяну."):
+                case("П: Я занят, Милекум. Позже."):
+                    texP = texPoliam[5];
+                    break;
+                case("П: *вздох* Просто защитите ее, ладно? Не так ведь сложно запомнить текст."):
+                case("Р: Весьма."):
+                case("П: Так ведь нельзя..."):
+                    texP = texPoliam[11];
+                    break;
+                case("Р: Можете показать мою дипломную? Она же у вас?"):
+                case("П: Я понимаю, что у нас разница всего в 500 лет, но грань должна быть."):
+                case("П: Но это полбеды."):
+                case("Р: Я признавалась вам в любви?"):
+                    texP = texPoliam[10];
+                    break;
+                case("П: Вы, извините, лезете с объятьями и поцелуями."):
+                case("П: Ваше отношение к учебе и к жизни ужасно."):
+                    texP = texPoliam[13];
+                    break;
                 default:
                     break;
             }
-        }*/
+        }/*else if(isTwoDialog){
+
+        }                               switch-case для кат-сцен
+        */
         if (soundOn && runa.isWalking) music[2].play();
         else music[2].stop();
         if (runa.x > END_OF_SCREEN_RIGHT) {
             gg.setScreen(gg.hall);
+            music[2].stop();
         }
         // обработка касаний экрана
         if (Gdx.input.justTouched()) {
@@ -159,7 +194,9 @@ public class Classroom extends ScreenGame {
                 if (count == 0) {
                     isDialog = false;
                     end.talkingPoliam1 = true;
+                    dialogfirst.clear();
                     end.countKeys++;
+                    timeAfterDialog = TimeUtils.millis();
                 }
             } else if (isDialogTwo) {
                 outputText(dialogKeys);
@@ -177,6 +214,7 @@ public class Classroom extends ScreenGame {
                     gg.setScreen(gg.roomOfRuna);
                 }
             } else {
+                rightOutput(stan);rightOutput(table);
                 if (behindPoliam.hit(gg.touch.x, gg.touch.y)) {
                     outputText("Р: Не надо оно мне");
                 }
@@ -192,9 +230,9 @@ public class Classroom extends ScreenGame {
                 if (stand.hit(gg.touch.x, gg.touch.y)) {
                     outputText(stan);
                 }
-                if (poliam.interaction(gg.touch.x, gg.touch.y)) {
+                if (poliam.interaction(gg.touch.x+500, gg.touch.y-600)) {
                     if (!end.talkingPoliam1) isDialog = true;
-                    else if (timeCurrent < 1000 * 60 && !end.talkingPoliam2) {
+                    else if (timeCurrent-timeAfterDialog == 1000*60*1.5 && !end.talkingPoliam2) {
                         isDialogTwo = true;
                     } else
                         outputText("П: Не отвлекайте меня, пожалуйста, я занят.");
@@ -209,15 +247,20 @@ public class Classroom extends ScreenGame {
         gg.batch.begin();
         gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);//рисовка холла\подвала в кат-сцене
         gg.batch.draw(texP, poliam.getX(), poliam.getY(), texP.getWidth(), texP.getHeight(), 0, 0, 1280, 1280, false, false);//poliam
-        if (!isDialog) {
+        if (!isDialog && !isDialogTwo && !isKeysStage) {
+            imgBG = bg[0];
             if (runa.isWalking) {
                 changePose();
                 gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
             } else
                 gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
             gg.batch.draw(forButtons[2], SCR_WIDTH-400, SCR_HEIGHT/2f-350, 500, 500);
-        } else {
+        } else if(isDialog || isDialogTwo){
+            imgBG = bg[0];
             gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
+        }else if (isKeysStage){
+            imgBG = bg[1];
+            gg.batch.draw(texV, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
         }
         gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
         gg.font.draw(gg.batch, timeCurrent + "", 200, 600);
@@ -252,7 +295,6 @@ public class Classroom extends ScreenGame {
         for (Texture texture : texPoliam) {
             texture.dispose();
         }
-
     }
 }
 

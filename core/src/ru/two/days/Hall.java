@@ -190,8 +190,6 @@ public class Hall extends ScreenGame {
                 gg.batch.draw(texK, 200, kaiden.getY());
                 gg.batch.draw(texR, 800, runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
             } else {
-                gg.batch.draw(forButtons[1], 0, SCR_HEIGHT/2f);
-                gg.batch.draw(forButtons[2], SCR_WIDTH-100, SCR_HEIGHT/2f);
                 if (runa.isWalking) {
                     changePose();
                     gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);

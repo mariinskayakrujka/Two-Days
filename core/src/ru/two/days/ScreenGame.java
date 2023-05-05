@@ -38,12 +38,10 @@ public class ScreenGame implements Screen {
 
     boolean isTalking, isReading;
 
-    Texture texK, texR, texP;
+    Texture texK, texR, texP, texV;
 
-
-    MainCharacter valo;
     RunaMilekum runa;
-    PoliamSt poliam;
+
     KaidenMorem kaiden;
 
 
@@ -60,8 +58,7 @@ public class ScreenGame implements Screen {
             tt = new Text(gg.font, "", SCR_WIDTH/5f, SCR_HEIGHT/ 11f);
             runa = new RunaMilekum(703);
             kaiden = new KaidenMorem(SCR_WIDTH*3/4f);
-            poliam = new PoliamSt(SCR_WIDTH / 20f);
-            valo = new MainCharacter(SCR_WIDTH);
+
             music[1] = Gdx.audio.newMusic(Gdx.files.internal("sounds/beg-v-kablukah.mp3"));
             shelest = Gdx.audio.newSound(Gdx.files.internal("sounds/shelest.mp3"));
             music[0] = Gdx.audio.newMusic(Gdx.files.internal("sounds/WalkingKover.mp3"));
