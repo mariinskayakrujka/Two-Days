@@ -140,6 +140,7 @@ public class RoomOfRuna extends ScreenGame {
     @Override
     public void show() {
         Gdx.input.setCatchKey(Input.Keys.BACK, true);
+        music[0].stop();
         if(isIntro) runa.x = 400;
         else {
             if (gg.touch.x > 1600) runa.x = 400;
@@ -148,7 +149,7 @@ public class RoomOfRuna extends ScreenGame {
         gg.touch.x=0;
         runa.vx = 0;
         texR = texRuna[6];
-        music[0].stop();
+
     }
 
     @Override

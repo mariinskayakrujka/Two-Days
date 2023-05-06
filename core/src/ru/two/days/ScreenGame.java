@@ -97,7 +97,7 @@ public class ScreenGame implements Screen {
         gg.batch.end();*/
     }
     void isThreeMinutes(){
-        if (timeCurrent >= 180000){
+        if (timeCurrent == 180000){
             outputText("Р: Что-то я так устала...");
         }
     }
@@ -125,15 +125,19 @@ public class ScreenGame implements Screen {
         if(list.contains((tt.phrase))) outputText(list);
     }
     public void outputText(List<String> list){
-        isTalking = true;
-        runa.isWalking = false;
-        tt.phrase = list.get(count);
-        gg.setFont(whatIsFont(tt.phrase));
-        if(++count == list.size()) {
-            tt.phrase = "";
-            isTalking = false;
-            runa.isWalking = true;
-            count = 0;
+        try {
+            isTalking = true;
+            runa.isWalking = false;
+            tt.phrase = list.get(count);
+            gg.setFont(whatIsFont(tt.phrase));
+            if (++count == list.size()) {
+                tt.phrase = "";
+                isTalking = false;
+                runa.isWalking = true;
+                count = 0;
+            }
+        }catch(IndexOutOfBoundsException e){
+            count =0;
         }
     }
     void times(){
