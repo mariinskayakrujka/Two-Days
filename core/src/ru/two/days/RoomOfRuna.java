@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class RoomOfRuna extends ScreenGame {
     Objects feliopter, bed, bottles, clothes, cup, paper, docWithDairy;
 
-    boolean isIntro = true, isAfterIntro,
+    boolean isIntro = true, isAfterIntro, isReading,
             isPaper;//havingKeys меняется только после кат-сцены в подвале
 
     Texture imgBG;
@@ -79,12 +79,11 @@ public class RoomOfRuna extends ScreenGame {
             "Он – единственное, что у меня осталось... Поэтому и иду на такие риски. Мама бы прибила меня за это,\n" +
             " но она не рядом: мне никто не помешает. Только бы дождаться... только бы...\n";
 
-    String pape = "Я собрала все необходимое: четыре свечи, красный мелок(пришлось стащить у Ст), немного черной соли.\n " +
-            "На этот раз все должно получится. \n" +
+    String pape = "Я собрала все необходимое: четыре свечи, красный мелок(пришлось стащить у Ст),\n " +
+            "немного черной соли. На этот раз все должно получится. \n" +
             "Если не получится, то я не знаю, что мне еще сделать.\n";
 
-    ArrayList<String> intro = new ArrayList<>(), afterintro = new ArrayList<>(), feli = new ArrayList<>(),
-            paperi = new ArrayList<>(), docs = new ArrayList<>();
+    ArrayList<String> intro = new ArrayList<>(), afterintro = new ArrayList<>(), feli = new ArrayList<>(), docs = new ArrayList<>();
 
     public RoomOfRuna(TwoDays myGG) {
         super(myGG);
@@ -131,8 +130,6 @@ public class RoomOfRuna extends ScreenGame {
         feli.add("Р: С печенью только... неполадки.");
         feli.add("Р: ...");
 
-        paperi.add("Р:...");
-        paperi.add("Р: Что это могло быть?");
 
         docs.add("Р:...");
         docs.add("Р: Это стоило бы и выкинуть из памяти.");
@@ -187,7 +184,7 @@ public class RoomOfRuna extends ScreenGame {
         }
         if (!isIntro && !isAfterIntro) {
             if (tt.phrase.equals("") && gg.touch.x != runa.getX() && gg.touch.x != 0
-                    && !feli.contains(tt.phrase)) {
+                    && !feli.contains(tt.phrase) && !docs.contains(tt.phrase) && !isReading) {
                 runa.moveForRuna(gg.touch.x);
             }
             if (soundOn && runa.isWalking) music[0].play();
@@ -200,7 +197,7 @@ public class RoomOfRuna extends ScreenGame {
         if (runa.x <= END_OF_SCREEN_LEFT) {
             //if (end.recordOfLesson) {
                 gg.setScreen(gg.hall);
-             //   music[0].stop();
+                music[0].stop();
             //} else outputText("Р: Я не выйду. Я совсем ничего не помню и не понимаю.");
         }
         if (Gdx.input.justTouched()) {
@@ -225,11 +222,16 @@ public class RoomOfRuna extends ScreenGame {
                     isAfterIntro = false;
                 }changeTexture();
             }
-
             if (!isIntro && !isAfterIntro) {
+
+                if(isReading){
+                    outputText("Р: Что это могло быть?");
+                    isReading=false;
+                }
+
                 isThreeMinutes();
-                rightOutput(feli);
-                if (!feli.contains(tt.phrase)) tt.phrase = "";
+                rightOutput(feli);rightOutput(docs);
+                if (!isReading && !feli.contains(tt.phrase) && !docs.contains(tt.phrase)) tt.phrase = "";
                 if (feliopter.hit(gg.touch.x, gg.touch.y)) {
                     outputText(feli);
                     if (tt.phrase.equals(feli.get(2)))
@@ -238,12 +240,19 @@ public class RoomOfRuna extends ScreenGame {
                 if(paper.hit(gg.touch.x, gg.touch.y)){
                     isReading=true;
                     isPaper=true;
-                    outputText("Р: Что это могло быть?");
+                    if(!end.dairy) {
+                        end.dairy = true;
+                        end.countKeys++;
+                    }
                 }
                 if(docWithDairy.hit(gg.touch.x, gg.touch.y)){
                     if(gg.basement.ishavingKey){
                         isReading=true;
                         isPaper=false;
+                        if(!end.docAbenrollment) {
+                            end.docAbenrollment= true;
+                            end.countKeys++;
+                        }
                     }else{
                         outputText("Р: Здесь книжка, но... она закрыта на замочек.");
                     }
@@ -297,17 +306,18 @@ public class RoomOfRuna extends ScreenGame {
             gg.batch.draw(forButtons[1], 0, SCR_HEIGHT/2f-350, 500, 500);
             gg.batch.draw(forButtons[2], SCR_WIDTH-400, SCR_HEIGHT/2f-350, 500, 500);
         }
+
         if(isReading){
             if(isPaper){
                 ScreenUtils.clear(1, 1, 1, 1);
-                gg.font.draw(gg.batch, pape, SCR_HEIGHT, 100);
+                gg.fontMassovka.draw(gg.batch, pape, 100, 1000);
             }else {
                 ScreenUtils.clear(1, 1, 1, 1);
-                gg.font.draw(gg.batch, dairy, SCR_HEIGHT, 100);
+                gg.fontMassovka.draw(gg.batch, dairy, SCR_WIDTH, 100);
             }
         }
-        gg.font.draw(gg.batch, timeCurrent+"", 200, 600);
         gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
+        gg.font.draw(gg.batch, timeCurrent+"", 200, 600);
         gg.batch.end();
 
     }

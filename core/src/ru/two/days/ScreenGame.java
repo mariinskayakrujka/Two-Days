@@ -36,7 +36,7 @@ public class ScreenGame implements Screen {
 
     public static final int END_OF_SCREEN_RIGHT = SCR_WIDTH*190/200,END_OF_SCREEN_LEFT = SCR_WIDTH/10;
 
-    boolean isTalking, isReading;
+    boolean isTalking;
 
     Texture texK, texR, texP, texV;
 

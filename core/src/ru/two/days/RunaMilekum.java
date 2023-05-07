@@ -34,7 +34,7 @@ public class RunaMilekum{
     int nfaz = 3;
     void moveForRuna(float hitting) {
         isWalking = true;
-            if (!sg.isTalking && !sg.isReading) {
+            if (!sg.isTalking) {
                 if (hitting > x+10) {
                     vx = 20;
                     x += vx;

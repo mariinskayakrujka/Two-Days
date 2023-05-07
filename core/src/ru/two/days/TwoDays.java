@@ -104,7 +104,9 @@ public class TwoDays extends Game {
 		fontValo = generator.generateFont(parameter);
 
 		//создание фонта для массовки
-		parameter.color = new Color(1, 1, 1, 1);
+		generator = new FreeTypeFontGenerator(Gdx.files.internal("forLetter.ttf"));
+		parameter.size = 60;
+		parameter.color = new Color(0.1f, 0.1f, 1, 1);
 		fontMassovka = generator.generateFont(parameter);
 
 		generator.dispose();
