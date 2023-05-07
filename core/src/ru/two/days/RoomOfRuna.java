@@ -17,6 +17,7 @@ public class RoomOfRuna extends ScreenGame {
 
     boolean isIntro = true, isAfterIntro, isReading,
             isPaper;//havingKeys меняется только после кат-сцены в подвале
+    boolean isTextAfterReading;
 
     Texture imgBG;
     TwoDays gg;
@@ -222,11 +223,14 @@ public class RoomOfRuna extends ScreenGame {
                     isAfterIntro = false;
                 }changeTexture();
             }
+            if(isTextAfterReading) {
+                isTextAfterReading = false;
+            }
             if (!isIntro && !isAfterIntro) {
 
                 if(isReading){
-                    outputText("Р: Что это могло быть?");
                     isReading=false;
+                    isTextAfterReading = true;
                 }
 
                 isThreeMinutes();
@@ -240,6 +244,7 @@ public class RoomOfRuna extends ScreenGame {
                 if(paper.hit(gg.touch.x, gg.touch.y)){
                     isReading=true;
                     isPaper=true;
+
                     if(!end.dairy) {
                         end.dairy = true;
                         end.countKeys++;
@@ -314,6 +319,10 @@ public class RoomOfRuna extends ScreenGame {
             }else {
                 ScreenUtils.clear(1, 1, 1, 1);
                 gg.fontMassovka.draw(gg.batch, dairy, SCR_WIDTH, 100);
+            }
+        } else {
+            if(isPaper && isTextAfterReading){
+                outputText("Р: Привет алкоголикам.");
             }
         }
         gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
