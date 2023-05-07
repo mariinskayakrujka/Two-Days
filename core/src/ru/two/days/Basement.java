@@ -46,7 +46,7 @@ public class Basement extends ScreenGame{
         runa.vx = 0;
         runa.x = 400;
         texR = texRuna[5];
-        music[3].stop();
+        music[1].stop();
     }
 
     @Override
@@ -56,11 +56,13 @@ public class Basement extends ScreenGame{
                 case("Р: Так, так-так, я смогу это решить, я вспомнила..."):
                 case("Р: Как я могла так необдуманно поступить?.."):
                 case("Р: Но теперь он обезврежен."):
-                    texR = texRuna[10];
+                    texR = texRuna[4];
                     break;
                 case("Р: Вот так."):
                 case("Р: Вызвать духа, чтобы он помог защитить дипломную. Это гениально."):
                     texR=texRuna[6];
+                    break;
+                default:
                     break;
             }
         }else{
@@ -77,6 +79,7 @@ public class Basement extends ScreenGame{
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
+            rightOutput(aboutKey);
             if(!aboutKey.contains(tt.phrase)) tt.phrase="";
             System.out.println("BASEMENT: "+ gg.touch.x + gg.touch.y);
             if (isKeyStage) {
@@ -103,8 +106,11 @@ public class Basement extends ScreenGame{
                 changePose();
                 gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
             } else
+
                 gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
-            gg.batch.draw(forButtons[2], SCR_WIDTH-400, SCR_HEIGHT/2f-350, 500, 500);
+            gg.batch.draw(forButtons[1], 0, SCR_HEIGHT/2f-350, 500, 500);
+            gg.batch.draw(forButtons[0], 0, SCR_HEIGHT-300, 400, 400);
+            gg.fontSimple.draw(gg.batch, "готово", 130, SCR_HEIGHT-50);
         }
         gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
         gg.font.draw(gg.batch, timeCurrent+"", 200, 600);

@@ -22,7 +22,7 @@ public class RunaMilekum{
     }
     void changePhase(boolean run){
         if(TimeUtils.millis() > timeLastPhase+timePhaseInterval) {
-            if (++faza == nFaz) faza = 0;//тут будет смена фаз для для бега с другими текстурами
+            if (++faza == 2) faza = 0;//тут будет смена фаз для для бега с другими текстурами
             timeLastPhase= TimeUtils.millis();
         }
     }

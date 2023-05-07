@@ -46,8 +46,8 @@ public class MainCharacter {
         else x-=vx;
         changePhase();
     }
-    boolean interaction(float tx, float ty){
-        return x < tx && tx < x+width && y+height > ty && ty > y;
+    boolean interaction(float tx){
+        return x+400 < tx && tx < x+width-400;
     }
     boolean isFlip() {
         return vx>0;

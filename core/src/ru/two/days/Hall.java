@@ -211,6 +211,8 @@ public class Hall extends ScreenGame {
                     gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
                 if(numberOfHalls != 1) gg.batch.draw(forButtons[1], 0, SCR_HEIGHT/2f-350, 500, 500);
                 gg.batch.draw(forButtons[2], SCR_WIDTH-400, SCR_HEIGHT/2f-350, 500, 500);
+                gg.batch.draw(forButtons[0], 0, SCR_HEIGHT-300, 400, 400);
+                gg.fontSimple.draw(gg.batch, "готово", 130, SCR_HEIGHT-50);
             }
             gg.font.draw(gg.batch, timeCurrent+"", 200, 600);
             gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());

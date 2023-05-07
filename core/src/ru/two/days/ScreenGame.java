@@ -2,6 +2,7 @@ package ru.two.days;
 
 import static ru.two.days.TwoDays.SCR_HEIGHT;
 import static ru.two.days.TwoDays.SCR_WIDTH;
+import static ru.two.days.TwoDays.end;
 import static ru.two.days.TwoDays.isGameStart;
 import static ru.two.days.TwoDays.timeCurrent;
 import static ru.two.days.TwoDays.timeStart;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.List;
@@ -26,9 +28,10 @@ public class ScreenGame implements Screen {
     boolean soundOn = true;
     Sound shelest;
     Music[] music = new Music[4];
+    String endPhrase;
 
     //Texture texPaper;
-    Texture[] texRuna = new Texture[16], texKaiden = new Texture[11]
+    Texture[] texRuna = new Texture[18], texKaiden = new Texture[11]
             /*,texValo = new Texture[]*/;
 
     //TextButton [] buttons = new TextButton[5];
@@ -113,9 +116,10 @@ public class ScreenGame implements Screen {
                 case 'В':
                     return gg.fontValo;
                 case ':':
-                    return gg.fontMassovka;
+                    return gg.fontSimple;
+                case 'З':
                 default:
-                    return gg.font;
+                    return gg.fontMassovka;
             }
         }else return gg.font;
     }
@@ -144,7 +148,23 @@ public class ScreenGame implements Screen {
             TwoDays.timeCurrent = TimeUtils.millis() - timeStart;
         }
     }
-
+    public void nowIsEnd(){
+        ScreenUtils.clear(0,0,0,1);
+        try {
+            gg.touch.x=0;
+            runa.vx=0;
+            runa.isWalking = false;
+            endPhrase = end.endfOfGame.get(count);
+            gg.setFont(whatIsFont(tt.phrase));
+            if (++count == end.endfOfGame.size()) {
+                endPhrase = "";
+                isTalking = false;
+                count = 0;
+            }
+        }catch(IndexOutOfBoundsException e){
+            count =0;
+        }
+    }
     public void outputText(String phrase){
         tt.phrase = phrase;
         isTalking = true;
@@ -154,6 +174,9 @@ public class ScreenGame implements Screen {
 
     void changePose(){
         texR = texRuna[runa.faza + 10];
+    }
+    void changePoseForRunning(){
+        texR = texRuna[runa.faza + 16];
     }
     @Override
     public void resize(int width, int height) {

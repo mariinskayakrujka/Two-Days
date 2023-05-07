@@ -7,6 +7,7 @@ import static ru.two.days.TwoDays.timeCurrent;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -205,6 +206,9 @@ public class RoomOfRuna extends ScreenGame {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
             //интро
+            if(tt.phrase.equals("Вы уверенны?")){
+                nowIsEnd();
+            }
             System.out.println(gg.touch.x + " " + gg.touch.y);
             if (gg.touch.y > SCR_HEIGHT - 100) {
                 isIntro = false;
@@ -227,7 +231,6 @@ public class RoomOfRuna extends ScreenGame {
                 isTextAfterReading = false;
             }
             if (!isIntro && !isAfterIntro) {
-
                 if(isReading){
                     isReading=false;
                     isTextAfterReading = true;
@@ -244,7 +247,6 @@ public class RoomOfRuna extends ScreenGame {
                 if(paper.hit(gg.touch.x, gg.touch.y)){
                     isReading=true;
                     isPaper=true;
-
                     if(!end.dairy) {
                         end.dairy = true;
                         end.countKeys++;
@@ -304,6 +306,8 @@ public class RoomOfRuna extends ScreenGame {
             gg.batch.draw(texR, runa.getX(), -20);
         }
         if (!isIntro && !isAfterIntro) {
+            gg.batch.draw(forButtons[0], 0, SCR_HEIGHT-300, 400, 400);
+            gg.fontSimple.draw(gg.batch, "готово", 130, SCR_HEIGHT-50);
             if (runa.isWalking) {
                 changePose();
                 gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
@@ -321,11 +325,16 @@ public class RoomOfRuna extends ScreenGame {
                 gg.fontMassovka.draw(gg.batch, dairy, SCR_WIDTH, 100);
             }
         } else {
-            if(isPaper && isTextAfterReading){
-                outputText("Р: Привет алкоголикам.");
+            if (isTextAfterReading) {
+                if (isPaper) outputText("Р: Что бы это могло быть?..");
+                else outputText(docs);
             }
         }
-        gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
+        if(0 < gg.touch.x && gg.touch.x < 399 && SCR_HEIGHT-300 < gg.touch.y && gg.touch.y < SCR_HEIGHT){
+            gg.fontSimple.draw(gg.batch, "Вы уверенны?", 1000, 600);
+            runa.vx=0;
+        }
+        gg.font.draw(gg.batch, tt.phrase, 200, 600);
         gg.font.draw(gg.batch, timeCurrent+"", 200, 600);
         gg.batch.end();
 

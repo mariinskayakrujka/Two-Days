@@ -177,6 +177,8 @@ public class RoomOfValo extends ScreenGame {
         gg.batch.draw(forButtons[1], 0, SCR_HEIGHT/2f-350, 500, 500);
             gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
             if(isEnterWays) keyboard.draw(gg.batch);
+        gg.batch.draw(forButtons[0], 0, SCR_HEIGHT-300, 400, 400);
+        gg.fontSimple.draw(gg.batch, "готово", 130, SCR_HEIGHT-50);
             gg.font.draw(gg.batch, timeCurrent+"", 200, 600);
             gg.batch.end();
     }

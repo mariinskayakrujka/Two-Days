@@ -21,7 +21,7 @@ public class Classroom extends ScreenGame {
     boolean isDialog, isDialogTwo, isKeysStage;
 
     long timeAfterDialog;
-    Texture[] texPoliam = new Texture[18];
+    Texture[] texPoliam = new Texture[20];
     Texture[] texValo = new Texture[5];
     Texture[] bg = new Texture[2];
     Objects desk, behindPoliam, trash, stand, tables;
@@ -191,7 +191,7 @@ public class Classroom extends ScreenGame {
                 case("П: Если бы врали, у вас была на то причина."):
                 case("П: Как много вы не помните, как вы думаете?"):
                 case("П: Если есть сомнения, что вы не до конца вспомнили дипломную, тоже повремените."):
-                    texP=texPoliam[1];//заменить 0 и 1 полиама,  у него тапка торчит
+                    texP=texPoliam[19];
                     break;
                 case("Р: Не перебивайте... пожалуйста. Я не поверхностна и не глупа, правда."):
                 case("Р:... пожалуйста..."):
@@ -213,13 +213,14 @@ public class Classroom extends ScreenGame {
                 else music[2].stop();
                 if(valo.x >= 2200){
                     valo.move(false, 10);
-                }else texV=texValo[1];
-            }
-            switch(tt.phrase){
-                case("\"В: Ой, прости, пожалуйста!\""):
+                    if(soundOn) music[1].play();
+                    else music[1].stop();
+                }else{
                     texV=texValo[1];
                     texR = texRuna[5];
-                    break;
+                }
+            }
+            switch(tt.phrase){
                 case("Р: Все в порядке, Вало!"):
                     texR = texRuna[6];
                     texV = texValo[2];
@@ -229,6 +230,8 @@ public class Classroom extends ScreenGame {
                     break;
                 case("В: Что? Руна!"):
                     runa.runForRuna(2800);
+                    if(soundOn && runa.isWalking) music[1].play();
+                    else music[1].stop();
                     texV=texValo[4];
                     break;
                 case("В: Это ничего! Ты что в подвале забыла?"):
@@ -298,7 +301,7 @@ public class Classroom extends ScreenGame {
                 if (stand.hit(gg.touch.x, gg.touch.y)) {
                     outputText(stan);
                 }
-                if (poliam.interaction(gg.touch.x+500, gg.touch.y-600)) {
+                if (poliam.interaction(gg.touch.x+500)) {
                     if (!end.talkingPoliam1) isDialog = true;
                     else if ((timeCurrent-timeAfterDialog >= 1000*60*1.5 && !end.talkingPoliam2) || gg.touch.y > SCR_HEIGHT - 100) {
                         isDialogTwo = true;
@@ -316,6 +319,8 @@ public class Classroom extends ScreenGame {
         gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);//рисовка холла\подвала в кат-сцене
         if (!isDialog && !isDialogTwo && !isKeysStage) {
             imgBG = bg[0];
+            gg.batch.draw(forButtons[0], 0, SCR_HEIGHT-300, 400, 400);
+            gg.fontSimple.draw(gg.batch, "готово", 130, SCR_HEIGHT-50);
             gg.batch.draw(texP, poliam.getX(), poliam.getY(), texP.getWidth(), texP.getHeight(), 0, 0, 1280, 1280, false, false);//poliam
             if (runa.isWalking) {
                 changePose();
@@ -330,7 +335,8 @@ public class Classroom extends ScreenGame {
         }else if (isKeysStage){
             imgBG = bg[1];
             if (runa.isWalking) {
-                changePose();
+                if(tt.phrase.equals("")) changePose();
+                else changePoseForRunning();
                 gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
                 gg.batch.draw(texV, valo.getX(), valo.getY(), texV.getWidth(), texV.getHeight(), 0, 0, 1280, 1280, false, false);
             }else {
@@ -340,7 +346,6 @@ public class Classroom extends ScreenGame {
         }
         gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
         gg.font.draw(gg.batch, timeCurrent + "", 200, 600);
-        //gg.font.draw(gg.batch, timeAfterDialog + "", 200, 1000);
         gg.batch.end();
     }
 

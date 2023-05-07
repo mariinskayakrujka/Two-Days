@@ -29,6 +29,7 @@ public class TwoDays extends Game {
 	BitmapFont fontKaiden;
 	BitmapFont fontValo;
 	BitmapFont fontMassovka;
+	BitmapFont fontSimple;
 	boolean soundOn = true;
 
 	ScreenIntro screenIntro;
@@ -103,6 +104,9 @@ public class TwoDays extends Game {
 		parameter.color = new Color(0.941f, 0.518f, 0.196f, 1);
 		fontValo = generator.generateFont(parameter);
 
+		parameter.color = new Color(1,1,1,1);
+		fontSimple = generator.generateFont(parameter);
+
 		//создание фонта для массовки
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("forLetter.ttf"));
 		parameter.size = 60;
@@ -114,15 +118,17 @@ public class TwoDays extends Game {
 	
 	@Override
 	public void dispose () {
-		fontRuna.dispose();
-		fontLarge.dispose();
-		//font.dispose();
-		fontMassovka.dispose();
-		fontPoliam.dispose();
-		fontValo.dispose();
-		fontKaiden.dispose();
-		batch.dispose();
-
+		try {
+			fontRuna.dispose();
+			fontLarge.dispose();
+			fontMassovka.dispose();
+			fontPoliam.dispose();
+			fontValo.dispose();
+			fontSimple.dispose();
+			fontKaiden.dispose();
+			batch.dispose();
+			font.dispose();
+		}catch(RuntimeException ignored){}
 	}
 
 	public BitmapFont getFont() {
