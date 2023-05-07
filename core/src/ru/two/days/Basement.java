@@ -14,23 +14,29 @@ import java.util.ArrayList;
 
 public class Basement extends ScreenGame{
 
-    boolean isKeyStage = true;
+    boolean isKeyStage = true, ishavingKey;
     Texture imgBG;
+    Objects key;
     Texture[] imgBg = new Texture[2];
-    ArrayList<String> baseStage = new ArrayList<>();
+    ArrayList<String> baseStage = new ArrayList<>(), aboutKey = new ArrayList<>();
     public Basement(@NonNull TwoDays context) {
         super(context);
         for (int i = 0; i < imgBg.length; i++) {
-            imgBg[i] = new Texture("basement"+i+".png");
+            imgBg[i] = new Texture("bg/basement"+i+".png");
         }
         imgBG=imgBg[0];
+        key=new Objects(2112, 766, 2294-2112, 880-766);
         baseStage.add("Р:...");baseStage.add("Р: Твою ж...");
         baseStage.add("Р: Так, так-так, я смогу это решить, я вспомнила...");baseStage.add("Р: Нужно лишь...");
 
+        baseStage.add("Р: *заклинание, обезвреживающее призрака*");
         baseStage.add("Р: Вот так.");baseStage.add("Р: Как я могла так необдуманно поступить?..");
         baseStage.add("Р: Вызвать духа, чтобы он помог защитить дипломную. Это гениально.");baseStage.add("Р: Я из-за этого лишилась памяти, конечно!");
         baseStage.add("Р: Но теперь он обезврежен.");baseStage.add("Р:...");
         baseStage.add("Р: Так, теперь тут нужно прибраться. Не дай Верховный это кто-нибудь увидит.");baseStage.add("..");
+
+        aboutKey.add("Р: Так, что это?");aboutKey.add("Р: Ключ? От чего это?..");
+
     }
 
     @Override
@@ -39,19 +45,26 @@ public class Basement extends ScreenGame{
         gg.touch.x = 0;
         runa.vx = 0;
         runa.x = 400;
-        texR = texRuna[6];
+        texR = texRuna[5];
         music[3].stop();
     }
 
     @Override
     public void render(float delta) {
         if (isKeyStage) {
-            texR = texRuna[8];
-            if(tt.phrase.equals(baseStage.get(5))){
-                imgBG=imgBg[1];
+            switch (tt.phrase){
+                case("Р: Так, так-так, я смогу это решить, я вспомнила..."):
+                case("Р: Как я могла так необдуманно поступить?.."):
+                case("Р: Но теперь он обезврежен."):
+                    texR = texRuna[10];
+                    break;
+                case("Р: Вот так."):
+                case("Р: Вызвать духа, чтобы он помог защитить дипломную. Это гениально."):
+                    texR=texRuna[6];
+                    break;
             }
         }else{
-            if (tt.phrase.equals("") && gg.touch.x != runa.getX() && gg.touch.x != 0) {
+            if (tt.phrase.equals("") && gg.touch.x != runa.getX() && gg.touch.x != 0 && !aboutKey.contains(tt.phrase)) {
                 runa.moveForRuna(gg.touch.x);
             }
             if (soundOn && runa.isWalking) music[2].play();
@@ -64,12 +77,18 @@ public class Basement extends ScreenGame{
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
+            if(!aboutKey.contains(tt.phrase)) tt.phrase="";
+            System.out.println("BASEMENT: "+ gg.touch.x + gg.touch.y);
             if (isKeyStage) {
                 outputText(baseStage);
-
                 if (count == 0) {
                     isKeyStage = false;
+                    imgBG=imgBg[1];
                 }
+            }
+            if(key.hit(gg.touch.x, gg.touch.y)){
+                outputText(aboutKey);
+                ishavingKey=true;
             }
         }
         times();
@@ -78,7 +97,7 @@ public class Basement extends ScreenGame{
         gg.batch.begin();
         gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);
         if (isKeyStage) {
-            gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
+            gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, false, false);
         }else{
             if (runa.isWalking) {
                 changePose();

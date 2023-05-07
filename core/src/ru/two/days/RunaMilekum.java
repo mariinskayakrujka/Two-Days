@@ -20,7 +20,12 @@ public class RunaMilekum{
             timeLastPhase= TimeUtils.millis();
         }
     }
-
+    void changePhase(boolean run){
+        if(TimeUtils.millis() > timeLastPhase+timePhaseInterval) {
+            if (++faza == nFaz) faza = 0;//тут будет смена фаз для для бега с другими текстурами
+            timeLastPhase= TimeUtils.millis();
+        }
+    }
     public RunaMilekum(float x) {
         sg = new ScreenGame(gg);
         this.x = x;
@@ -40,6 +45,18 @@ public class RunaMilekum{
                     changePhase();
                 } else isWalking =false;
         }else isWalking = false;
+    }
+    void runForRuna(float hitting){
+        isWalking = true;
+        if (hitting > x+10) {
+            vx = 30;
+            x += vx;
+            changePhase(true);
+        } else if (hitting < x-10) {
+            vx = -30;
+            x += vx;
+            changePhase(true);
+        } else isWalking =false;
     }
     float getX(){
         return x-width/2;

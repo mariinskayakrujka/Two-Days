@@ -16,7 +16,7 @@ public class Hall extends ScreenGame {
     List<String> talkWithKaiden = new ArrayList<>();
     Texture[] imgBG = new Texture[5];
     int numberOfHalls = 0;
-    boolean talkingKai = true, isClassroom;
+    boolean talkingKai = true, isClassroom, outOfdoor;
 
     public Hall(TwoDays context) {
         super(context);
@@ -85,6 +85,19 @@ public class Hall extends ScreenGame {
         texR = texRuna[3];
     }
 
+    @Override
+    public void show() {
+        if(numberOfHalls==4){
+            if(outOfdoor){
+                runa.x = 1609;
+                outOfdoor=false;
+            }else if (gg.touch.x > 1600) runa.x = 400;
+            else runa.x = 1600;
+            gg.touch.x = 0;
+            runa.vx = 0;
+        }
+    }
+
     public void render(float delta) {
         if (!talkingKai) {
             if (tt.phrase.equals("") && gg.touch.x != runa.getX() && gg.touch.x != 0)
@@ -146,6 +159,7 @@ public class Hall extends ScreenGame {
             if(runa.x > END_OF_SCREEN_RIGHT){
                 gg.setScreen(gg.roomOfRuna);
                 music[2].stop();
+                outOfdoor=true;
             }
         }
         else if (runa.x > END_OF_SCREEN_RIGHT && numberOfHalls < 4) {

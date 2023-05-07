@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.compression.lzma.Base;
 
 public class TwoDays extends Game {
 	//static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -39,6 +40,7 @@ public class TwoDays extends Game {
 	RoomOfRuna roomOfRuna;
 	Hall hall;
 	Classroom classroom;
+	Basement basement;
 
 	@Override
 	public void create () {
@@ -58,6 +60,7 @@ public class TwoDays extends Game {
 		roomOfValo = new RoomOfValo(this);
 		hall =new Hall(this);
 		classroom = new Classroom(this);
+		basement= new Basement(this);
 		setScreen(screenIntro);
 
 	}

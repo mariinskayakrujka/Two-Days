@@ -8,13 +8,15 @@ import static ru.two.days.TwoDays.timeCurrent;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
 
 public class RoomOfRuna extends ScreenGame {
     Objects feliopter, bed, bottles, clothes, cup, paper, docWithDairy;
 
-    boolean isIntro = true, isAfterIntro, havingKeys;//havingKeys меняется только после кат-сцены в подвале
+    boolean isIntro = true, isAfterIntro,
+            isPaper;//havingKeys меняется только после кат-сцены в подвале
 
     Texture imgBG;
     TwoDays gg;
@@ -89,10 +91,12 @@ public class RoomOfRuna extends ScreenGame {
         gg = myGG;
         feliopter = new Objects(1380, 1042, 1636-1380, 31406-1042);
         bed = new Objects(0, 310, 1038, 602-310);
-        bottles = new Objects(0, 208, 1016, 310-208);
+        bottles = new Objects(0, 256, 1016, 310-256);
         clothes = new Objects(1040, 208, 1374-1040, 454-208);
         cup = new Objects(1648, 768, 1730-1648, 852-768);
         imgBG = new Texture("bg/bg0.png");
+        paper = new Objects(622, 198, 744-622, 256-198);
+        docWithDairy = new Objects(1508, 246, 1714-1508, 384-246);
 
         intro.add("Р: ...");
         intro.add("К: Проснулась наконец, пьянь.");
@@ -194,15 +198,16 @@ public class RoomOfRuna extends ScreenGame {
             music[0].stop();
         }
         if (runa.x <= END_OF_SCREEN_LEFT) {
-            if (end.recordOfLesson) {
+            //if (end.recordOfLesson) {
                 gg.setScreen(gg.hall);
-                music[0].stop();
-            } else outputText("Р: Я не выйду. Я совсем ничего не помню и не понимаю.");
+             //   music[0].stop();
+            //} else outputText("Р: Я не выйду. Я совсем ничего не помню и не понимаю.");
         }
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
             //интро
+            System.out.println(gg.touch.x + " " + gg.touch.y);
             if (gg.touch.y > SCR_HEIGHT - 100) {
                 isIntro = false;
                 isAfterIntro = false;
@@ -224,12 +229,24 @@ public class RoomOfRuna extends ScreenGame {
             if (!isIntro && !isAfterIntro) {
                 isThreeMinutes();
                 rightOutput(feli);
-                System.out.println("RUNA" + gg.touch.x + " " + gg.touch.y);
                 if (!feli.contains(tt.phrase)) tt.phrase = "";
                 if (feliopter.hit(gg.touch.x, gg.touch.y)) {
                     outputText(feli);
                     if (tt.phrase.equals(feli.get(2)))
                         texR = texRuna[4];//серьезность
+                }
+                if(paper.hit(gg.touch.x, gg.touch.y)){
+                    isReading=true;
+                    isPaper=true;
+                    outputText("Р: Что это могло быть?");
+                }
+                if(docWithDairy.hit(gg.touch.x, gg.touch.y)){
+                    if(gg.basement.ishavingKey){
+                        isReading=true;
+                        isPaper=false;
+                    }else{
+                        outputText("Р: Здесь книжка, но... она закрыта на замочек.");
+                    }
                 }
                 if (clothes.hit(gg.touch.x, gg.touch.y)) {
                     outputText("Р: Мне сейчас не до того, чтобы разбирать эту кучу.");
@@ -253,28 +270,6 @@ public class RoomOfRuna extends ScreenGame {
                 if (cup.hit(gg.touch.x, gg.touch.y)) {
                     outputText("Р: Пахнет алкоголем и чабрецом одновременно.");
                 }
-                /*if (paper.hit(gg.touch.x, gg.touch.y)){
-                    isReading = true;
-                    texPaper = new Texture("paper.png");
-                }
-                    if (isReading && (gg.touch.x < SCR_WIDTH / 8f) || (gg.touch.x > SCR_WIDTH / 8f + 250 &&
-                            gg.touch.x < SCR_WIDTH * 7 / 8f) || (gg.touch.x > SCR_WIDTH * 7 / 8f + 250)) {
-                        isReading = false;
-                        if (dairyNotPaper) {
-                            outputText(docs);
-                            end.docAbenrollment = true;
-                            end.countKeys++;
-                        } else {
-                            texR = new Texture("runa/runa4.png");//удивление
-                            outputText(paperi);
-                            end.dairy = true;
-                            end.countKeys++;
-                        }
-                    }
-                if(docWithDairy.hit(gg.touch.x, gg.touch.y)) {
-                    isReading = true;
-                    texPaper = new Texture("docWithDairy1.png");
-                }*/
             }
         }times();
 
@@ -302,11 +297,15 @@ public class RoomOfRuna extends ScreenGame {
             gg.batch.draw(forButtons[1], 0, SCR_HEIGHT/2f-350, 500, 500);
             gg.batch.draw(forButtons[2], SCR_WIDTH-400, SCR_HEIGHT/2f-350, 500, 500);
         }
-        /*if(isReading){
-            gg.batch.draw(texPaper, 0, 20);
-            gg.batch.draw(button, SCR_WIDTH*7/8f, 0, 250, 250);
-            gg.batch.draw(button1, SCR_WIDTH/8f, 0, 250, 250);
-        }*/
+        if(isReading){
+            if(isPaper){
+                ScreenUtils.clear(1, 1, 1, 1);
+                gg.font.draw(gg.batch, pape, SCR_HEIGHT, 100);
+            }else {
+                ScreenUtils.clear(1, 1, 1, 1);
+                gg.font.draw(gg.batch, dairy, SCR_HEIGHT, 100);
+            }
+        }
         gg.font.draw(gg.batch, timeCurrent+"", 200, 600);
         gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
         gg.batch.end();
