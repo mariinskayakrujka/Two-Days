@@ -39,7 +39,7 @@ public class ScreenGame implements Screen {
 
     public static final int END_OF_SCREEN_RIGHT = SCR_WIDTH*190/200,END_OF_SCREEN_LEFT = SCR_WIDTH/10;
 
-    boolean isTalking;
+    boolean isTalking, isEnd;
 
     Texture texK, texR, texP, texV;
 
@@ -48,7 +48,7 @@ public class ScreenGame implements Screen {
     KaidenMorem kaiden;
 
 
-    int count = 0;
+    int count = 0, countForEnd=0;
 
     public ScreenGame(@NonNull TwoDays context){
         try {
@@ -148,23 +148,23 @@ public class ScreenGame implements Screen {
             TwoDays.timeCurrent = TimeUtils.millis() - timeStart;
         }
     }
+    public void whatIsFontEnd(){
+        end.whatIsEnd();
+        /*if(endPhrase.equals("День защиты.") || endPhrase.equals("Дух остался в академии.")
+                    || endPhrase.equals("Академия спасена от духа.")) gg.setFont(gg.fontScary);*/
+        gg.setFont(gg.fontLarge);
+    }
     public void nowIsEnd(){
-        ScreenUtils.clear(0,0,0,1);
-        try {
-            gg.touch.x=0;
             runa.vx=0;
             runa.isWalking = false;
-            endPhrase = end.endfOfGame.get(count);
-            gg.setFont(whatIsFont(tt.phrase));
-            if (++count == end.endfOfGame.size()) {
+            endPhrase = end.endfOfGame.get(countForEnd);
+            if (++countForEnd == end.endfOfGame.size()) {
                 endPhrase = "";
                 isTalking = false;
-                count = 0;
+                countForEnd = 0;
             }
-        }catch(IndexOutOfBoundsException e){
-            count =0;
         }
-    }
+
     public void outputText(String phrase){
         tt.phrase = phrase;
         isTalking = true;

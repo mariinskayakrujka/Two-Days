@@ -3,70 +3,73 @@ package ru.two.days;
 import java.util.ArrayList;
 import java.util.List;
 
-/*без 1 нет 2,5 и 7
-без 5 нет 2 и 7
-без 2 нет 7
- */
+
 public class Endings {
     boolean recordOfLesson,//+
             talkingPoliam1,//+
             docAbenrollment,
-            dairy,
+            dairy,//+
             talkingKaiden,//+
-            talkingPoliam2,
+            talkingPoliam2,//+
             sleeping;//+
     int countKeys;
     Text tt;
-    List<String> endfOfGame = new ArrayList<>();
-    public Endings(TwoDays twoDays){
+    public ArrayList<String> endfOfGame = new ArrayList<>();
+    public Endings(){
         endfOfGame.add("Собрано"+ countKeys + "из 7 ключевых моментов.");
         endfOfGame.add("День защиты.");
 
     }
     public void whatIsEnd(){
         if((countKeys == 7) || (countKeys == 6 && !dairy)) goodEnding();
+        else if(countKeys == 6 && !sleeping) sleepWithPoliam();
 
         else if((countKeys == 0) ||
                 (countKeys == 1 && (sleeping || dairy)) ||
                 (countKeys == 2 && sleeping && dairy)) badEnding();
 
-        else if(recordOfLesson && !talkingPoliam1 && !dairy && !sleeping) faintingAfterTravel();
-        else if(recordOfLesson && !talkingPoliam1 && dairy && !sleeping) faintingToParents();
-        else if(talkingPoliam1 && !sleeping && !talkingPoliam2) memoriesWithoutPoliam();
-        else if(talkingPoliam1 && !sleeping && talkingPoliam2 && !docAbenrollment) faintingInProtection();
-        else if(countKeys == 6 && !sleeping) sleepWithPoliam();
-        else if(countKeys == 5 && !talkingPoliam1 && !talkingPoliam2){
-            if(dairy)
-                welcomeHomeThink();
-            else welcomeHomeWithoutThink();
+        else if(recordOfLesson && !talkingKaiden) {
+            if (sleeping) faintingAfterTravel();
+            else faintingInTravel();
         }
-        else if (!talkingPoliam2 && (countKeys == 5 && !dairy || countKeys == 6)) areYouSure();
-        else if (talkingPoliam1 && !talkingPoliam2 &&
+
+        else if(talkingKaiden && !talkingPoliam1){
+            if(sleeping) {
+                if (dairy)
+                    welcomeHomeThink();
+                else welcomeHomeWithoutThink();
+            }else faintingToParents();
+        }
+
+        else if(talkingPoliam1 && !talkingPoliam2 && sleeping) memoriesWithoutPoliam();
+        else if(talkingPoliam1 && !sleeping && !talkingPoliam2) faintingInProtection();
+
+        else if (!docAbenrollment && talkingPoliam2 && !sleeping &&
                 (countKeys == 5 || countKeys == 4 && !dairy)) memories();
         else if(!docAbenrollment &&(countKeys == 6 || countKeys == 5 && !dairy)) maybeHappiness();
     }
-
-    void memoriesWithoutPoliam(){
-        endfOfGame.add("Руна отлично защитила дипломную, хоть было страшно.");endfOfGame.add("");
-        endfOfGame.add("");endfOfGame.add("");
-        endfOfGame.add("");endfOfGame.add("");
-        endfOfGame.add("");endfOfGame.add("");
-        endfOfGame.add("");endfOfGame.add("");
+    void faintingInTravel(){
+        endfOfGame.add("Руна даже не пришла в академию.");endfOfGame.add("Всю ночь она не спала, сидела как на иголках.");
+        endfOfGame.add("Только солнце вышло из-за горизонта, она распахнула двери и выбежала прочь из общежития.");
+        endfOfGame.add("Но упала, только вышла за ворота академии.");endfOfGame.add("Без сознания.");
+        endfOfGame.add("Ее быстро нашла Кайден, как раз приходящая на работу.");
+        endfOfGame.add("Цокнув, сказав что-то про образ жизни Руны, вызвала скорую.");
+        endfOfGame.add(" ");endfOfGame.add("Дух остался в академии.");
     }
 
-    Она смотрела на Ст, сидевшего на первых рядах и внимательно глядя прямо ей в глаза.
-    Он был напряжен,
-    Потому что боялся провала своей нерадивой студентки.
-    Только луч солнца упал на ее дрожащие руки, держащие бумаги,
-    И словно весь мир заглох.
-    Она прижала руку ко рту, бросилась прочь из аудитории.
-    Она вспоминает.
-    Она вспоминает.
-    Она вспоминает.
-    Перед глазами мельтешит, пульсирует в такт сердцебиению.
-    Наверное, это и помешало увидеть косяк и вовремя повернуть.
+    void memoriesWithoutPoliam(){
+        endfOfGame.add("Руна отлично защитила дипломную, хоть было страшно.");
+        endfOfGame.add("Она смотрела на Ст, сидевшего на первых рядах и внимательно глядя прямо ей в глаза.");
+        endfOfGame.add("Он был напряжен,");endfOfGame.add("Потому что боялся провала своей нерадивой студентки.");
+        endfOfGame.add("Только луч солнца упал на ее дрожащие руки, держащие бумаги,");endfOfGame.add("И словно весь мир заглох.");
+        endfOfGame.add("Она прижала руку ко рту, бросилась прочь из аудитории.");endfOfGame.add("");
+        endfOfGame.add("Она вспоминает.");endfOfGame.add("Она вспоминает.");
+        endfOfGame.add("Она вспоминает.");endfOfGame.add("Перед глазами мельтешит, пульсирует в такт сердцебиению.");
+        endfOfGame.add("Наверное, это и помешало увидеть косяк и вовремя повернуть.");endfOfGame.add("Дух остается в академии.");
+    }
 
-    Дух остается в академии.
+
+
 
     void goodEnding(){
         endfOfGame.add("Руна отлично защитила дипломную, хоть было страшно.");
@@ -141,18 +144,6 @@ public class Endings {
         endfOfGame.add("Она возвращается домой. Его-то она помнит.");endfOfGame.add("Помнит ведь?..");
         endfOfGame.add(" ");endfOfGame.add("Дух остается в академии.");
 
-    }
-    void areYouSure(){
-        endfOfGame.add("Руна отлично защитила дипломную, хоть было страшно.");
-        endfOfGame.add("Она смотрела на Ст, сидевшего на первых рядах и внимательно глядя прямо ей в глаза.");endfOfGame.add("Он был напряжен,");
-        endfOfGame.add("Потому что боялся провала своей нерадивой студентки.");
-        endfOfGame.add("После защиты она поговорила с Полиамом, похвалившего ее за отличную работу.");
-        endfOfGame.add("Извинилась за все, что делала прежде, на что он лишь отмахнулся.");
-        endfOfGame.add("Нашла Кайден, нехотя извинилась и перед ней за свое поведение.");
-        endfOfGame.add("Та того не ожидала, но словам Руны улыбнулась.");endfOfGame.add("В конце Руна взялась уже за телефон, чтобы набрать родителей, но вдруг боль ударила в голову.");
-        endfOfGame.add("Словно кто-то с остервенением вмазал кулаком по виску.");
-        endfOfGame.add("Она приняла это как знак, что не стоит.");endfOfGame.add("А на самом деле...");
-        endfOfGame.add(" ");endfOfGame.add("Дух остается в академии.");
     }
     void memories(){
         endfOfGame.add("Последние несколько часов Руна судорожно перечитывала дипломную,");

@@ -206,9 +206,7 @@ public class RoomOfRuna extends ScreenGame {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
             //интро
-            if(tt.phrase.equals("Вы уверенны?")){
-                nowIsEnd();
-            }
+
             System.out.println(gg.touch.x + " " + gg.touch.y);
             if (gg.touch.y > SCR_HEIGHT - 100) {
                 isIntro = false;
@@ -230,12 +228,17 @@ public class RoomOfRuna extends ScreenGame {
             if(isTextAfterReading) {
                 isTextAfterReading = false;
             }
+
+            if(isEnd) nowIsEnd();
             if (!isIntro && !isAfterIntro) {
                 if(isReading){
                     isReading=false;
                     isTextAfterReading = true;
                 }
-
+                if((0 < gg.touch.x && gg.touch.x < 399 && SCR_HEIGHT-300 < gg.touch.y && gg.touch.y < SCR_HEIGHT) || timeCurrent==1000*60*36){
+                    isEnd=true;
+                    runa.vx=0;
+                }
                 isThreeMinutes();
                 rightOutput(feli);rightOutput(docs);
                 if (!isReading && !feli.contains(tt.phrase) && !docs.contains(tt.phrase)) tt.phrase = "";
@@ -330,11 +333,14 @@ public class RoomOfRuna extends ScreenGame {
                 else outputText(docs);
             }
         }
-        if(0 < gg.touch.x && gg.touch.x < 399 && SCR_HEIGHT-300 < gg.touch.y && gg.touch.y < SCR_HEIGHT){
-            gg.fontSimple.draw(gg.batch, "Вы уверенны?", 1000, 600);
-            runa.vx=0;
+        if(isEnd){
+            whatIsFontEnd();
+            System.out.println(end.endfOfGame);
+            ScreenUtils.clear(0, 0, 0, 1);
+            gg.font.draw(gg.batch, endPhrase, 200, 600);
         }
-        gg.font.draw(gg.batch, tt.phrase, 200, 600);
+
+        gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
         gg.font.draw(gg.batch, timeCurrent+"", 200, 600);
         gg.batch.end();
 

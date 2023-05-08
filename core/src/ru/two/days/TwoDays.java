@@ -24,6 +24,7 @@ public class TwoDays extends Game {
 	Vector3 touch;
 	BitmapFont font;
 	BitmapFont fontLarge;
+	BitmapFont fontScary;
 	BitmapFont fontRuna;
 	BitmapFont fontPoliam;
 	BitmapFont fontKaiden;
@@ -51,8 +52,7 @@ public class TwoDays extends Game {
 		camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
 		touch = new Vector3();
 		generateFont();
-
-		end = new Endings(this);
+		end = new Endings();
 		end.countKeys=0;
 		screenIntro = new ScreenIntro(this);
 		screenSettings = new ScreenSettings(this);
@@ -82,6 +82,7 @@ public class TwoDays extends Game {
 		for (char i = 0x401; i < 0x452; i++) str += i;
 		parameter.characters = str;
 		fontLarge = generator.generateFont(parameter);
+
 		parameter.size = 100;
 		setFont(generator.generateFont(parameter));
 
