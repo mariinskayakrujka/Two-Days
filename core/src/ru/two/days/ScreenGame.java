@@ -28,7 +28,9 @@ public class ScreenGame implements Screen {
     boolean soundOn = true;
     Sound shelest;
     Music[] music = new Music[4];
-    String endPhrase;
+    public static String endPhrase;
+
+    public static TextButton yes, no;
 
     //Texture texPaper;
     Texture[] texRuna = new Texture[18], texKaiden = new Texture[11]
@@ -39,7 +41,7 @@ public class ScreenGame implements Screen {
 
     public static final int END_OF_SCREEN_RIGHT = SCR_WIDTH*190/200,END_OF_SCREEN_LEFT = SCR_WIDTH/10;
 
-    boolean isTalking, isEnd;
+    boolean isTalking, isStop, isEnd;
 
     Texture texK, texR, texP, texV;
 
@@ -53,11 +55,8 @@ public class ScreenGame implements Screen {
     public ScreenGame(@NonNull TwoDays context){
         try {
             gg = context;
-            /*buttons[0] = new TextButton(gg.font, "пропустить", 0, SCR_HEIGHT*15/20f);//кнопка
-            buttons[1] = new TextButton(gg.font, 0, SCR_HEIGHT/2f);//стрелки
-            buttons[2] = new TextButton(gg.font, SCR_WIDTH-100, SCR_HEIGHT/2f);//стрелки
-            buttons[3] = new TextButton(gg.font, 0, SCR_HEIGHT/2f);//при пролистывании
-            buttons[4] = new TextButton(gg.font, SCR_WIDTH-100, SCR_HEIGHT/2f);//при пролистывании*/
+            yes = new TextButton(gg.fontLarge, "ДА", 300);
+            no = new TextButton(gg.fontLarge, "НЕТ", 200);
             tt = new Text(gg.font, "", SCR_WIDTH/5f, SCR_HEIGHT/ 11f);
             runa = new RunaMilekum(703);
             kaiden = new KaidenMorem(SCR_WIDTH*3/4f);
@@ -148,23 +147,25 @@ public class ScreenGame implements Screen {
             TwoDays.timeCurrent = TimeUtils.millis() - timeStart;
         }
     }
-    public void whatIsFontEnd(){
-        end.whatIsEnd();
-        /*if(endPhrase.equals("День защиты.") || endPhrase.equals("Дух остался в академии.")
-                    || endPhrase.equals("Академия спасена от духа.")) gg.setFont(gg.fontScary);*/
-        gg.setFont(gg.fontLarge);
-    }
     public void nowIsEnd(){
-            runa.vx=0;
-            runa.isWalking = false;
-            endPhrase = end.endfOfGame.get(countForEnd);
-            if (++countForEnd == end.endfOfGame.size()) {
-                endPhrase = "";
-                isTalking = false;
-                countForEnd = 0;
-            }
+        for (Music value : music) {
+            value.stop();
         }
-
+        runa.vx=0;
+        runa.isWalking = false;
+        gg.setFont(gg.fontLarge);
+        endPhrase = end.endfOfGame.get(countForEnd);
+        if (++countForEnd == end.endfOfGame.size()) {
+            endPhrase = "";
+            countForEnd = 0;
+        }
+    }
+    public void nowIsStop(){
+        gg.touch.x=0;
+        runa.isWalking=false;
+        runa.vx = 0;
+        end.whatIsEnd();
+    }
     public void outputText(String phrase){
         tt.phrase = phrase;
         isTalking = true;
@@ -175,8 +176,12 @@ public class ScreenGame implements Screen {
     void changePose(){
         texR = texRuna[runa.faza + 10];
     }
-    void changePoseForRunning(){
-        texR = texRuna[runa.faza + 16];
+    void changePoseForRunning() {
+        try {
+            texR = texRuna[runa.faza + 16];
+        }catch (IndexOutOfBoundsException e){
+            runa.faza=0;
+        }
     }
     @Override
     public void resize(int width, int height) {

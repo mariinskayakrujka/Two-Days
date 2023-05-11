@@ -64,7 +64,7 @@ public class RoomOfValo extends ScreenGame {
         history.add("Кто-то: Межмирье трескается, и существо попадает в Ничего.");history.add("Кто-то: Потому в Межмирье нельзя долго быть.");
         history.add(":А что с Ничего?");history.add("Кто-то:...");
         history.add("Кто-то: Мы ничего о нем не знаем. Предполагается, что там все умирают.");
-        history.add(":Верно, Пенни, молодец.");history.add("Запуск второй дорожки...");
+        history.add(":Верно, Пенни, молодец.");history.add(":Запуск второй дорожки...");
         history.add(":Все миры делятся на верхние, поверхностные и подземные.");history.add(":Мы с вами живем в Объединенном III. Это поверхностный мир.");
         history.add(":Поверхностные миры есть целостная открытая территория.");history.add(": Есть небо, но чуть выше – Межмирье. Ниже земли тоже Межмирье.");
         history.add(":Когда как у Верхних еще есть часть пространства. Верхние – воздушные острова.");
@@ -179,7 +179,6 @@ public class RoomOfValo extends ScreenGame {
             if(isEnterWays) keyboard.draw(gg.batch);
         gg.batch.draw(forButtons[0], 0, SCR_HEIGHT-300, 400, 400);
         gg.fontSimple.draw(gg.batch, "готово", 130, SCR_HEIGHT-50);
-            gg.font.draw(gg.batch, timeCurrent+"", 200, 600);
             gg.batch.end();
     }
 

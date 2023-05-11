@@ -210,7 +210,10 @@ public class Classroom extends ScreenGame {
             if(tt.phrase.equals("")){
                 runa.moveForRuna(1600);
                 if(soundOn && runa.isWalking) music[2].play();
-                else music[2].stop();
+                else{
+                    music[2].stop();
+                    music[1].stop();
+                }
                 if(valo.x >= 2200){
                     valo.move(false, 10);
                     if(soundOn) music[1].play();
@@ -345,7 +348,6 @@ public class Classroom extends ScreenGame {
             }
         }
         gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
-        gg.font.draw(gg.batch, timeCurrent + "", 200, 600);
         gg.batch.end();
     }
 

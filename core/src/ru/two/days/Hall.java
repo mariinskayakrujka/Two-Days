@@ -182,8 +182,10 @@ public class Hall extends ScreenGame {
                 if (count == 0) {
                     talkingKai = false;
                     numberOfHalls = 1;
-                    end.talkingKaiden = true;
-                    end.countKeys++;
+                    if(!end.talkingKaiden) {
+                        end.talkingKaiden = true;
+                        end.countKeys++;
+                    }
                 }
             } else {
                 System.out.println("hall " + gg.touch.x + " " + gg.touch.y);
@@ -214,7 +216,6 @@ public class Hall extends ScreenGame {
                 gg.batch.draw(forButtons[0], 0, SCR_HEIGHT-300, 400, 400);
                 gg.fontSimple.draw(gg.batch, "готово", 130, SCR_HEIGHT-50);
             }
-            gg.font.draw(gg.batch, timeCurrent+"", 200, 600);
             gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
             gg.batch.end();
 

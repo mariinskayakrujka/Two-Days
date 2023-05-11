@@ -113,7 +113,6 @@ public class Basement extends ScreenGame{
             gg.fontSimple.draw(gg.batch, "готово", 130, SCR_HEIGHT-50);
         }
         gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
-        gg.font.draw(gg.batch, timeCurrent+"", 200, 600);
         gg.batch.end();
     }
 

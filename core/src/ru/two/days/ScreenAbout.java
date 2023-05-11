@@ -11,8 +11,16 @@ public class ScreenAbout implements Screen {
     TwoDays gg;
     Texture imgBG;
     TextButton btnBack;
-    String textAbout =  "Что-то о том,\n" +
-            "как работает эта игра\n";
+    String textAbout =  "\"У меня так болела голова, казалось,\n" +
+            " она вот-вот треснет пополам, но нет, боль только усиливалась.\n" +
+            " К горлу подкатывала мнимая тошнота,\n" +
+            "мельтешило в глазах и звенело в ушах.\n" +
+            " Это росло понимание,\n" +
+            " что есть моя жизнь.\" - Р.М.\n\n\n\n" +
+
+            "Проект создан в IT-школе Samsung\n " +
+            "и готов к употреблению:)";
+
 
     public ScreenAbout(TwoDays myGG) {
         gg = myGG;
@@ -41,7 +49,7 @@ public class ScreenAbout implements Screen {
         gg.batch.setProjectionMatrix(gg.camera.combined);
         gg.batch.begin();
         gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);
-        gg.getFont().draw(gg.batch, textAbout, 100, 650);
+        gg.getFont().draw(gg.batch, textAbout, 100, 1000);
         btnBack.font.draw(gg.batch, btnBack.text, btnBack.x, btnBack.y);
         gg.batch.end();
     }

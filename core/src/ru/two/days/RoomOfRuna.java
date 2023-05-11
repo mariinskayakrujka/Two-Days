@@ -4,6 +4,7 @@ import static ru.two.days.TwoDays.SCR_HEIGHT;
 import static ru.two.days.TwoDays.SCR_WIDTH;
 import static ru.two.days.TwoDays.end;
 import static ru.two.days.TwoDays.timeCurrent;
+import static ru.two.days.TwoDays.timeStart;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -184,7 +185,8 @@ public class RoomOfRuna extends ScreenGame {
             if(soundOn && kaiden.x < SCR_WIDTH) music[0].play();
             else music[0].stop();
         }
-        if (!isIntro && !isAfterIntro) {
+
+        if (!isIntro && !isAfterIntro & !isEnd & !isStop) {
             if (tt.phrase.equals("") && gg.touch.x != runa.getX() && gg.touch.x != 0
                     && !feli.contains(tt.phrase) && !docs.contains(tt.phrase) && !isReading) {
                 runa.moveForRuna(gg.touch.x);
@@ -197,16 +199,34 @@ public class RoomOfRuna extends ScreenGame {
             music[0].stop();
         }
         if (runa.x <= END_OF_SCREEN_LEFT) {
-            //if (end.recordOfLesson) {
+            if (end.recordOfLesson) {
                 gg.setScreen(gg.hall);
                 music[0].stop();
-            //} else outputText("Р: Я не выйду. Я совсем ничего не помню и не понимаю.");
+            } else outputText("Р: Я не выйду. Я совсем ничего не помню и не понимаю.");
         }
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
-            //интро
-
+            /**КОНЦОВКА**/
+            if(yes.hit(gg.touch.x, gg.touch.y) && isStop) {
+                isEnd = true;
+            }
+            if(no.hit(gg.touch.x, gg.touch.y) && isStop) {
+                isStop=false;
+            }
+            if(isStop){
+                nowIsStop();
+            }
+            if(isEnd){
+                nowIsEnd();
+                if(endPhrase.equals(end.endfOfGame.get(end.endfOfGame.size()-1))){
+                    gg.setScreen(gg.screenIntro);
+                    end.clearing();
+                    timeStart=0;
+                    timeCurrent=0;
+                }
+            }
+            /**КОНЦОВКА**/
             System.out.println(gg.touch.x + " " + gg.touch.y);
             if (gg.touch.y > SCR_HEIGHT - 100) {
                 isIntro = false;
@@ -229,15 +249,13 @@ public class RoomOfRuna extends ScreenGame {
                 isTextAfterReading = false;
             }
 
-            if(isEnd) nowIsEnd();
             if (!isIntro && !isAfterIntro) {
                 if(isReading){
                     isReading=false;
                     isTextAfterReading = true;
                 }
                 if((0 < gg.touch.x && gg.touch.x < 399 && SCR_HEIGHT-300 < gg.touch.y && gg.touch.y < SCR_HEIGHT) || timeCurrent==1000*60*36){
-                    isEnd=true;
-                    runa.vx=0;
+                    isStop=true;
                 }
                 isThreeMinutes();
                 rightOutput(feli);rightOutput(docs);
@@ -297,7 +315,6 @@ public class RoomOfRuna extends ScreenGame {
         gg.batch.setProjectionMatrix(gg.camera.combined);
         gg.batch.begin();
         gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);
-        //отрисовка интро
         if (isIntro) {
             texR = texRuna[0];
             changeTexture();
@@ -315,8 +332,10 @@ public class RoomOfRuna extends ScreenGame {
                 changePose();
                 gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
             } else gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
-            gg.batch.draw(forButtons[1], 0, SCR_HEIGHT/2f-350, 500, 500);
-            gg.batch.draw(forButtons[2], SCR_WIDTH-400, SCR_HEIGHT/2f-350, 500, 500);
+            if(!isEnd) {
+                gg.batch.draw(forButtons[1], 0, SCR_HEIGHT / 2f - 350, 500, 500);
+                gg.batch.draw(forButtons[2], SCR_WIDTH - 400, SCR_HEIGHT / 2f - 350, 500, 500);
+            }
         }
 
         if(isReading){
@@ -325,7 +344,7 @@ public class RoomOfRuna extends ScreenGame {
                 gg.fontMassovka.draw(gg.batch, pape, 100, 1000);
             }else {
                 ScreenUtils.clear(1, 1, 1, 1);
-                gg.fontMassovka.draw(gg.batch, dairy, SCR_WIDTH, 100);
+                gg.fontMassovka.draw(gg.batch, dairy, 100, 100);
             }
         } else {
             if (isTextAfterReading) {
@@ -333,15 +352,17 @@ public class RoomOfRuna extends ScreenGame {
                 else outputText(docs);
             }
         }
-        if(isEnd){
-            whatIsFontEnd();
-            System.out.println(end.endfOfGame);
-            ScreenUtils.clear(0, 0, 0, 1);
-            gg.font.draw(gg.batch, endPhrase, 200, 600);
+        if(isStop && !isEnd){
+            gg.fontLarge.draw(gg.batch, "Вы уверенны?", SCR_WIDTH/2f-200, SCR_HEIGHT/2f);
+            yes.font.draw(gg.batch, yes.text, yes.x, yes.y);
+            no.font.draw(gg.batch, no.text, no.x, no.y);
+        }
+        if (isEnd){
+            ScreenUtils.clear(Color.BLACK);
+            gg.font.draw(gg.batch, endPhrase, 50, SCR_HEIGHT/2f);
         }
 
         gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
-        gg.font.draw(gg.batch, timeCurrent+"", 200, 600);
         gg.batch.end();
 
     }

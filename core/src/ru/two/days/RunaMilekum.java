@@ -4,7 +4,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 public class RunaMilekum{
 
-    int vx, nFaz = 3, faza;
+    int vx, nFaz = 3, nFazForRunning=2, faza;
     boolean isWalking;
     TwoDays gg = new TwoDays();
     float x, y;
@@ -22,7 +22,7 @@ public class RunaMilekum{
     }
     void changePhase(boolean run){
         if(TimeUtils.millis() > timeLastPhase+timePhaseInterval) {
-            if (++faza == 2) faza = 0;//тут будет смена фаз для для бега с другими текстурами
+            if (++faza == nFazForRunning) faza = 0;//тут будет смена фаз для для бега с другими текстурами
             timeLastPhase= TimeUtils.millis();
         }
     }
@@ -31,7 +31,6 @@ public class RunaMilekum{
         this.x = x;
         timePhaseInterval=150;
     }
-    int nfaz = 3;
     void moveForRuna(float hitting) {
         isWalking = true;
             if (!sg.isTalking) {
