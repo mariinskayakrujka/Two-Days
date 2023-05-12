@@ -68,7 +68,7 @@ public class Hall extends ScreenGame {
         talkWithKaiden.add("К: Не дерзи. Он уважаем в том числе оттого, что к тебе холоден.");
         talkWithKaiden.add("Р: Правда?");
         talkWithKaiden.add("К: А ты думала, он в тебя влюблен? Ради Верховного, откуда такие мысли?");
-        talkWithKaiden.add(" К: Он ведь с тобой однажды говорил об этом, ты рассказывала. Забыла?");
+        talkWithKaiden.add("К: Он ведь с тобой однажды говорил об этом, ты рассказывала. Забыла?");
         talkWithKaiden.add("Р: \"Забыла\"");
         talkWithKaiden.add("К: Не трогай его хотя бы сегодня, дай отдохнуть мужчине.");
         talkWithKaiden.add("Р: Как, еще раз, его найти?");

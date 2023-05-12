@@ -16,7 +16,7 @@ public class ScreenAbout implements Screen {
             " К горлу подкатывала мнимая тошнота,\n" +
             "мельтешило в глазах и звенело в ушах.\n" +
             " Это росло понимание,\n" +
-            " что есть моя жизнь.\" - Р.М.\n\n\n\n" +
+            " что есть моя жизнь.\" - Р.М.\n\n\n" +
 
             "Проект создан в IT-школе Samsung\n " +
             "и готов к употреблению:)";
@@ -49,7 +49,7 @@ public class ScreenAbout implements Screen {
         gg.batch.setProjectionMatrix(gg.camera.combined);
         gg.batch.begin();
         gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);
-        gg.getFont().draw(gg.batch, textAbout, 100, 1000);
+        gg.getFont().draw(gg.batch, textAbout, 100, 1400);
         btnBack.font.draw(gg.batch, btnBack.text, btnBack.x, btnBack.y);
         gg.batch.end();
     }
