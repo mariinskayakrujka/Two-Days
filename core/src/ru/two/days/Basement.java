@@ -2,19 +2,25 @@ package ru.two.days;
 
 import static ru.two.days.TwoDays.SCR_HEIGHT;
 import static ru.two.days.TwoDays.SCR_WIDTH;
+import static ru.two.days.TwoDays.end;
+import static ru.two.days.TwoDays.soundOn;
 import static ru.two.days.TwoDays.timeCurrent;
+import static ru.two.days.TwoDays.timeStart;
 
 import androidx.annotation.NonNull;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
 
 public class Basement extends ScreenGame{
 
-    boolean isKeyStage = true, ishavingKey;
+    boolean isKeyStage = true;
+    public static boolean ishavingKey;
     Texture imgBG;
     Objects key;
     Texture[] imgBg = new Texture[2];
@@ -66,7 +72,7 @@ public class Basement extends ScreenGame{
                     break;
             }
         }else{
-            if (tt.phrase.equals("") && gg.touch.x != runa.getX() && gg.touch.x != 0 && !aboutKey.contains(tt.phrase)) {
+            if (tt.phrase.equals("") && gg.touch.x != runa.getX() && gg.touch.x != 0 && !aboutKey.contains(tt.phrase)  & !isEnd & !isStop) {
                 runa.moveForRuna(gg.touch.x);
             }
             if (soundOn && runa.isWalking) music[2].play();
@@ -79,35 +85,65 @@ public class Basement extends ScreenGame{
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
-            rightOutput(aboutKey);
+            /**КОНЦОВКА**/
+            if(yes.hit(gg.touch.x, gg.touch.y) && isStop) {
+                isEnd = true;
+            }
+            if(no.hit(gg.touch.x, gg.touch.y) && isStop) {
+                isStop=false;
+            }
+            if(isStop){
+                nowIsStop();
+            }
+            if(isEnd){
+                nowIsEnd();
+                if(endPhrase.equals(end.endfOfGame.get(end.endfOfGame.size()-1))){
+                    restart();
+                }
+            }
+            /**КОНЦОВКА**/
             if(!aboutKey.contains(tt.phrase)) tt.phrase="";
-            System.out.println("BASEMENT: "+ gg.touch.x + gg.touch.y);
             if (isKeyStage) {
                 outputText(baseStage);
                 if (count == 0) {
                     isKeyStage = false;
                     imgBG=imgBg[1];
                 }
-            }
-            if(key.hit(gg.touch.x, gg.touch.y)){
-                outputText(aboutKey);
-                ishavingKey=true;
+            }else {
+                rightOutput(aboutKey);
+                if((0 < gg.touch.x && gg.touch.x < 399 && SCR_HEIGHT-300 < gg.touch.y && gg.touch.y < SCR_HEIGHT) || timeCurrent==1000*60*36){
+                    isStop=true;
+                }
+                if (key.hit(gg.touch.x, gg.touch.y)) {
+                    outputText(aboutKey);
+                    ishavingKey = true;
+                }
             }
         }
         times();
         gg.camera.update();
         gg.batch.setProjectionMatrix(gg.camera.combined);
         gg.batch.begin();
-        gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);
+        if(!isEnd) gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);
         if (isKeyStage) {
             gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, false, false);
         }else{
             if (runa.isWalking) {
                 changePose();
                 gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
-            } else
+            } else if(!isEnd) gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
 
-                gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
+        }
+        if(isStop && !isEnd){
+            gg.fontLarge.draw(gg.batch, "Вы уверенны?", SCR_WIDTH/2f-200, SCR_HEIGHT/2f);
+            yes.font.draw(gg.batch, yes.text, yes.x, yes.y);
+            no.font.draw(gg.batch, no.text, no.x, no.y);
+        }
+        if (isEnd){
+            ScreenUtils.clear(Color.BLACK);
+            gg.font.draw(gg.batch, endPhrase, 50, SCR_HEIGHT/2f);
+        }
+        else{
             gg.batch.draw(forButtons[1], 0, SCR_HEIGHT/2f-350, 500, 500);
             gg.batch.draw(forButtons[0], 0, SCR_HEIGHT-300, 400, 400);
             gg.fontSimple.draw(gg.batch, "готово", 130, SCR_HEIGHT-50);

@@ -2,6 +2,7 @@ package ru.two.days;
 
 import static ru.two.days.TwoDays.SCR_HEIGHT;
 import static ru.two.days.TwoDays.SCR_WIDTH;
+import static ru.two.days.TwoDays.soundOn;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -34,8 +35,8 @@ public class ScreenSettings implements Screen {
             c.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             c.camera.unproject(c.touch);
             if(btnSound.hit(c.touch.x, c.touch.y)) {
-                c.soundOn = !c.soundOn;
-                btnSound.setText(c.soundOn ? "ЗВУК ВКЛ" : "ЗВУК ВЫКЛ");
+                soundOn = !soundOn;
+                btnSound.setText(soundOn ? "ЗВУК ВКЛ" : "ЗВУК ВЫКЛ");
             }
             if(btnExit.hit(c.touch.x, c.touch.y)) {
                 c.setScreen(c.screenIntro);

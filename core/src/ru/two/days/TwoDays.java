@@ -24,14 +24,13 @@ public class TwoDays extends Game {
 	Vector3 touch;
 	BitmapFont font;
 	BitmapFont fontLarge;
-	BitmapFont fontScary;
 	BitmapFont fontRuna;
 	BitmapFont fontPoliam;
 	BitmapFont fontKaiden;
 	BitmapFont fontValo;
 	BitmapFont fontMassovka;
 	BitmapFont fontSimple;
-	boolean soundOn = true;
+	public static boolean soundOn = true;
 
 	ScreenIntro screenIntro;
 	ScreenSettings screenSettings;

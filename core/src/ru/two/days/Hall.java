@@ -3,10 +3,14 @@ package ru.two.days;
 import static ru.two.days.TwoDays.SCR_HEIGHT;
 import static ru.two.days.TwoDays.SCR_WIDTH;
 import static ru.two.days.TwoDays.end;
+import static ru.two.days.TwoDays.soundOn;
 import static ru.two.days.TwoDays.timeCurrent;
+import static ru.two.days.TwoDays.timeStart;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,7 +104,7 @@ public class Hall extends ScreenGame {
 
     public void render(float delta) {
         if (!talkingKai) {
-            if (tt.phrase.equals("") && gg.touch.x != runa.getX() && gg.touch.x != 0)
+            if (tt.phrase.equals("") && gg.touch.x != runa.getX() && gg.touch.x != 0  & !isEnd & !isStop)
                 runa.moveForRuna(gg.touch.x);
             if(soundOn && runa.isWalking) music[2].play();
             else music[2].stop();
@@ -172,6 +176,23 @@ public class Hall extends ScreenGame {
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
+            /**КОНЦОВКА**/
+            if(yes.hit(gg.touch.x, gg.touch.y) && isStop) {
+                isEnd = true;
+            }
+            if(no.hit(gg.touch.x, gg.touch.y) && isStop) {
+                isStop=false;
+            }
+            if(isStop){
+                nowIsStop();
+            }
+            if(isEnd){
+                nowIsEnd();
+                if(endPhrase.equals(end.endfOfGame.get(end.endfOfGame.size()-1))){
+                    restart();
+                }
+            }
+            /**КОНЦОВКА**/
             isThreeMinutes();
             if (gg.touch.y > SCR_HEIGHT - 100) {
                 talkingKai = false;
@@ -188,7 +209,9 @@ public class Hall extends ScreenGame {
                     }
                 }
             } else {
-                System.out.println("hall " + gg.touch.x + " " + gg.touch.y);
+                if((0 < gg.touch.x && gg.touch.x < 399 && SCR_HEIGHT-300 < gg.touch.y && gg.touch.y < SCR_HEIGHT) || timeCurrent==1000*60*36){
+                    isStop=true;
+                }
                 if (!talkWithKaiden.contains(tt.phrase)) tt.phrase = "";
                 if (door.hit(gg.touch.x, gg.touch.y)) {
                     if (isClassroom) gg.setScreen(gg.classroom);
@@ -201,7 +224,7 @@ public class Hall extends ScreenGame {
             gg.camera.update();
             gg.batch.setProjectionMatrix(gg.camera.combined);
             gg.batch.begin();
-            gg.batch.draw(imgBG[numberOfHalls], 0, 0, SCR_WIDTH, SCR_HEIGHT);
+        if(!isEnd) gg.batch.draw(imgBG[numberOfHalls], 0, 0, SCR_WIDTH, SCR_HEIGHT);
             if (talkingKai) {
                 gg.batch.draw(texK, 200, kaiden.getY());
                 gg.batch.draw(texR, 800, runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
@@ -209,13 +232,25 @@ public class Hall extends ScreenGame {
                 if (runa.isWalking) {
                     changePose();
                     gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
-                } else
+                } else if(!isEnd)
                     gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
                 if(numberOfHalls != 1) gg.batch.draw(forButtons[1], 0, SCR_HEIGHT/2f-350, 500, 500);
-                gg.batch.draw(forButtons[2], SCR_WIDTH-400, SCR_HEIGHT/2f-350, 500, 500);
-                gg.batch.draw(forButtons[0], 0, SCR_HEIGHT-300, 400, 400);
-                gg.fontSimple.draw(gg.batch, "готово", 130, SCR_HEIGHT-50);
+
             }
+        if(isStop && !isEnd){
+            gg.fontLarge.draw(gg.batch, "Вы уверенны?", SCR_WIDTH/2f-200, SCR_HEIGHT/2f);
+            yes.font.draw(gg.batch, yes.text, yes.x, yes.y);
+            no.font.draw(gg.batch, no.text, no.x, no.y);
+        }
+        if (isEnd){
+            ScreenUtils.clear(Color.BLACK);
+            gg.font.draw(gg.batch, endPhrase, 50, SCR_HEIGHT/2f);
+        }
+        else{
+            gg.batch.draw(forButtons[2], SCR_WIDTH-400, SCR_HEIGHT/2f-350, 500, 500);
+            gg.batch.draw(forButtons[0], 0, SCR_HEIGHT-300, 400, 400);
+            gg.fontSimple.draw(gg.batch, "готово", 130, SCR_HEIGHT-50);
+        }
             gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
             gg.batch.end();
 

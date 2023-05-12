@@ -3,6 +3,7 @@ package ru.two.days;
 import static ru.two.days.TwoDays.SCR_HEIGHT;
 import static ru.two.days.TwoDays.SCR_WIDTH;
 import static ru.two.days.TwoDays.end;
+import static ru.two.days.TwoDays.soundOn;
 import static ru.two.days.TwoDays.timeCurrent;
 import static ru.two.days.TwoDays.timeStart;
 
@@ -220,14 +221,10 @@ public class RoomOfRuna extends ScreenGame {
             if(isEnd){
                 nowIsEnd();
                 if(endPhrase.equals(end.endfOfGame.get(end.endfOfGame.size()-1))){
-                    gg.setScreen(gg.screenIntro);
-                    end.clearing();
-                    timeStart=0;
-                    timeCurrent=0;
+                    restart();
                 }
             }
             /**КОНЦОВКА**/
-            System.out.println(gg.touch.x + " " + gg.touch.y);
             if (gg.touch.y > SCR_HEIGHT - 100) {
                 isIntro = false;
                 isAfterIntro = false;
@@ -274,7 +271,7 @@ public class RoomOfRuna extends ScreenGame {
                     }
                 }
                 if(docWithDairy.hit(gg.touch.x, gg.touch.y)){
-                    if(gg.basement.ishavingKey){
+                    if(Basement.ishavingKey){
                         isReading=true;
                         isPaper=false;
                         if(!end.docAbenrollment) {
@@ -314,7 +311,7 @@ public class RoomOfRuna extends ScreenGame {
         gg.camera.update();
         gg.batch.setProjectionMatrix(gg.camera.combined);
         gg.batch.begin();
-        gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);
+        if(!isEnd) gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);
         if (isIntro) {
             texR = texRuna[0];
             changeTexture();
@@ -325,17 +322,16 @@ public class RoomOfRuna extends ScreenGame {
             gg.batch.draw(texKaiden[kaiden.faza + 7], kaiden.getX(), kaiden.getY());
             gg.batch.draw(texR, runa.getX(), -20);
         }
-        if (!isIntro && !isAfterIntro) {
-            gg.batch.draw(forButtons[0], 0, SCR_HEIGHT-300, 400, 400);
-            gg.fontSimple.draw(gg.batch, "готово", 130, SCR_HEIGHT-50);
+        if (!isIntro && !isAfterIntro && !isEnd) {
             if (runa.isWalking) {
                 changePose();
                 gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
             } else gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
-            if(!isEnd) {
+
+                gg.batch.draw(forButtons[0], 0, SCR_HEIGHT-300, 400, 400);
+                gg.fontSimple.draw(gg.batch, "готово", 130, SCR_HEIGHT-50);
                 gg.batch.draw(forButtons[1], 0, SCR_HEIGHT / 2f - 350, 500, 500);
                 gg.batch.draw(forButtons[2], SCR_WIDTH - 400, SCR_HEIGHT / 2f - 350, 500, 500);
-            }
         }
 
         if(isReading){
@@ -361,7 +357,6 @@ public class RoomOfRuna extends ScreenGame {
             ScreenUtils.clear(Color.BLACK);
             gg.font.draw(gg.batch, endPhrase, 50, SCR_HEIGHT/2f);
         }
-
         gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
         gg.batch.end();
 

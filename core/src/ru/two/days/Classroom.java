@@ -3,12 +3,15 @@ package ru.two.days;
 import static ru.two.days.TwoDays.SCR_HEIGHT;
 import static ru.two.days.TwoDays.SCR_WIDTH;
 import static ru.two.days.TwoDays.end;
+import static ru.two.days.TwoDays.soundOn;
 import static ru.two.days.TwoDays.timeCurrent;
 import static ru.two.days.TwoDays.timeStart;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.ArrayList;
@@ -142,7 +145,7 @@ public class Classroom extends ScreenGame {
     @Override
     public void render(float delta) {
         if (!isDialog && !isKeysStage && tt.phrase.equals("") && gg.touch.x != 0 && gg.touch.x != runa.getX()
-                && !stan.contains(tt.phrase) && !table.contains(tt.phrase))
+                && !stan.contains(tt.phrase) && !table.contains(tt.phrase)  & !isEnd & !isStop)
             runa.moveForRuna(gg.touch.x);
         else if(isDialog){
             switch (tt.phrase) {
@@ -260,6 +263,23 @@ public class Classroom extends ScreenGame {
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
+            /**КОНЦОВКА**/
+            if(yes.hit(gg.touch.x, gg.touch.y) && isStop) {
+                isEnd = true;
+            }
+            if(no.hit(gg.touch.x, gg.touch.y) && isStop) {
+                isStop=false;
+            }
+            if(isStop){
+                nowIsStop();
+            }
+            if(isEnd){
+                nowIsEnd();
+                if(endPhrase.equals(end.endfOfGame.get(end.endfOfGame.size()-1))){
+                    restart();
+                }
+            }
+            /**КОНЦОВКА**/
             if (!stan.contains(tt.phrase) && !table.contains(tt.phrase)) tt.phrase = "";
             isThreeMinutes();
             if (isDialog) {
@@ -289,6 +309,9 @@ public class Classroom extends ScreenGame {
                 }
             } else {
                 rightOutput(stan);rightOutput(table);
+                if((0 < gg.touch.x && gg.touch.x < 399 && SCR_HEIGHT-300 < gg.touch.y && gg.touch.y < SCR_HEIGHT) || timeCurrent==1000*60*36){
+                    isStop=true;
+                }
                 if (behindPoliam.hit(gg.touch.x, gg.touch.y)) {
                     outputText("Р: Не надо оно мне");
                 }
@@ -319,18 +342,16 @@ public class Classroom extends ScreenGame {
         gg.camera.update();
         gg.batch.setProjectionMatrix(gg.camera.combined);
         gg.batch.begin();
-        gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);//рисовка холла\подвала в кат-сцене
+        if(!isEnd) gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);//рисовка холла\подвала в кат-сцене
         if (!isDialog && !isDialogTwo && !isKeysStage) {
             imgBG = bg[0];
-            gg.batch.draw(forButtons[0], 0, SCR_HEIGHT-300, 400, 400);
-            gg.fontSimple.draw(gg.batch, "готово", 130, SCR_HEIGHT-50);
+
             gg.batch.draw(texP, poliam.getX(), poliam.getY(), texP.getWidth(), texP.getHeight(), 0, 0, 1280, 1280, false, false);//poliam
             if (runa.isWalking) {
                 changePose();
                 gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
-            } else
-                gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
-            gg.batch.draw(forButtons[2], SCR_WIDTH-400, SCR_HEIGHT/2f-350, 500, 500);
+            } else if(!isEnd) gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
+
         } else if(isDialog || isDialogTwo){
             gg.batch.draw(texP, poliam.getX(), poliam.getY(), texP.getWidth(), texP.getHeight(), 0, 0, 1280, 1280, false, false);//poliam
             imgBG = bg[0];
@@ -346,6 +367,20 @@ public class Classroom extends ScreenGame {
                 gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, false, false);
                 gg.batch.draw(texV, valo.getX(), valo.getY(), texV.getWidth(), texV.getHeight(), 0, 0, 1280, 1280, false, false);
             }
+        }
+        if(isStop && !isEnd){
+            gg.fontLarge.draw(gg.batch, "Вы уверенны?", SCR_WIDTH/2f-200, SCR_HEIGHT/2f);
+            yes.font.draw(gg.batch, yes.text, yes.x, yes.y);
+            no.font.draw(gg.batch, no.text, no.x, no.y);
+        }
+        if (isEnd){
+            ScreenUtils.clear(Color.BLACK);
+            gg.font.draw(gg.batch, endPhrase, 50, SCR_HEIGHT/2f);
+        }
+        else{
+            gg.batch.draw(forButtons[2], SCR_WIDTH-400, SCR_HEIGHT/2f-350, 500, 500);
+            gg.batch.draw(forButtons[0], 0, SCR_HEIGHT-300, 400, 400);
+            gg.fontSimple.draw(gg.batch, "готово", 130, SCR_HEIGHT-50);
         }
         gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
         gg.batch.end();

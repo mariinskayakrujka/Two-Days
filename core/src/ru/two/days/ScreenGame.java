@@ -25,23 +25,17 @@ public class ScreenGame implements Screen {
 
     TwoDays gg;
     Text tt;
-    boolean soundOn = true;
-    Sound shelest;
-    Music[] music = new Music[4];
+    Music[] music = new Music[3];
     public static String endPhrase;
 
     public static TextButton yes, no;
-
-    //Texture texPaper;
-    Texture[] texRuna = new Texture[18], texKaiden = new Texture[11]
-            /*,texValo = new Texture[]*/;
-
-    //TextButton [] buttons = new TextButton[5];
+    Texture[] texRuna = new Texture[18], texKaiden = new Texture[11];
     Texture[] forButtons = new Texture[5];
 
     public static final int END_OF_SCREEN_RIGHT = SCR_WIDTH*190/200,END_OF_SCREEN_LEFT = SCR_WIDTH/10;
 
-    boolean isTalking, isStop, isEnd;
+    public static boolean isStop, isEnd;
+    boolean isTalking;
 
     Texture texK, texR, texP, texV;
 
@@ -50,7 +44,7 @@ public class ScreenGame implements Screen {
     KaidenMorem kaiden;
 
 
-    int count = 0, countForEnd=0;
+    public static int count = 0, countForEnd=0;
 
     public ScreenGame(@NonNull TwoDays context){
         try {
@@ -60,11 +54,9 @@ public class ScreenGame implements Screen {
             tt = new Text(gg.font, "", SCR_WIDTH/5f, SCR_HEIGHT/ 11f);
             runa = new RunaMilekum(703);
             kaiden = new KaidenMorem(SCR_WIDTH*3/4f);
-            shelest = Gdx.audio.newSound(Gdx.files.internal("sounds/shelest.mp3"));
             music[0] = Gdx.audio.newMusic(Gdx.files.internal("sounds/WalkingKover.mp3"));
             music[1] = Gdx.audio.newMusic(Gdx.files.internal("sounds/beg-v-kablukah.mp3"));
             music[2] = Gdx.audio.newMusic(Gdx.files.internal("sounds/walkingRuna.mp3"));
-            music[3] = Gdx.audio.newMusic(Gdx.files.internal("sounds/withoutUn.mp3"));
 
             forButtons[0] = new Texture("buttons/buttonRestrt.png");
             forButtons[1] = new Texture("buttons/lScreen.png");
@@ -160,6 +152,17 @@ public class ScreenGame implements Screen {
             countForEnd = 0;
         }
     }
+    public void restart(){
+        gg.setScreen(gg.screenIntro);
+        count=0;
+        countForEnd=0;
+        isStop=false;
+        isEnd=false;
+        end.clearing();
+        timeStart=0;
+        timeCurrent=0;
+        gg.roomOfRuna.isIntro=true;
+    }
     public void nowIsStop(){
         gg.touch.x=0;
         runa.isWalking=false;
@@ -202,7 +205,6 @@ public class ScreenGame implements Screen {
         for (Texture texture : texRuna) {
             texture.dispose();
         }
-        shelest.dispose();
         for (Music music : music) {
             music.dispose();
         }
