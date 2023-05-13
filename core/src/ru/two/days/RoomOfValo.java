@@ -259,7 +259,7 @@ public class RoomOfValo extends ScreenGame {
     @Override
     public void dispose() {
         //super.dispose();
-        //keyboard.dispose();
+        keyboard.dispose();
         super.dispose();
     }
 }

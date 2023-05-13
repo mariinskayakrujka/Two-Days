@@ -28,12 +28,6 @@ public class Between implements Screen {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(Color.BLACK);
-        gg.camera.update();
-        gg.batch.setProjectionMatrix(gg.camera.combined);
-        gg.batch.begin();
-        gg.font.draw(gg.batch, "Load...", Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        gg.batch.end();
 
     }
 
@@ -59,6 +53,5 @@ public class Between implements Screen {
 
     @Override
     public void dispose() {
-
     }
 }

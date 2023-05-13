@@ -224,7 +224,7 @@ public class Hall extends ScreenGame {
             gg.camera.update();
             gg.batch.setProjectionMatrix(gg.camera.combined);
             gg.batch.begin();
-        if(!isEnd) gg.batch.draw(imgBG[numberOfHalls], 0, 0, SCR_WIDTH, SCR_HEIGHT);
+                if(!isEnd) gg.batch.draw(imgBG[numberOfHalls], 0, 0, SCR_WIDTH, SCR_HEIGHT);
             if (talkingKai) {
                 gg.batch.draw(texK, 200, kaiden.getY());
                 gg.batch.draw(texR, 800, runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
@@ -258,6 +258,9 @@ public class Hall extends ScreenGame {
 
     @Override
     public void dispose() {
+        for (Texture texture : imgBG) {
+            texture.dispose();
+        }
         super.dispose();
     }
 }

@@ -414,6 +414,12 @@ public class Classroom extends ScreenGame {
         for (Texture texture : texPoliam) {
             texture.dispose();
         }
+        for (Texture texture : texValo) {
+            texture.dispose();
+        }
+        for (Texture texture : bg) {
+            texture.dispose();
+        }
     }
 }
 
