@@ -15,7 +15,7 @@ public class ScreenIntro implements Screen {
     public ScreenIntro(TwoDays myGG) {
         gg = myGG;
 
-        imgBG = new Texture("img.png");
+        imgBG = new Texture("imgI.png");
 
         btnPlay = new TextButton(gg.fontLarge, "ИГРАТЬ", 650);
         btnSettings = new TextButton(gg.fontLarge, "НАСТРОЙКИ", 550);
@@ -24,9 +24,7 @@ public class ScreenIntro implements Screen {
     }
 
     @Override
-    public void show() {
-
-    }
+    public void show(){}
 
     @Override
     public void render(float delta) {
@@ -47,9 +45,6 @@ public class ScreenIntro implements Screen {
                 Gdx.app.exit();
             }
         }
-
-        // события
-
         // отрисовка всей графики
         gg.camera.update();
         gg.batch.setProjectionMatrix(gg.camera.combined);

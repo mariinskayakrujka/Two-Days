@@ -15,8 +15,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class Classroom extends ScreenGame {
 
@@ -27,7 +25,7 @@ public class Classroom extends ScreenGame {
     Texture[] texPoliam = new Texture[20];
     Texture[] texValo = new Texture[5];
     Texture[] bg = new Texture[2];
-    Objects desk, behindPoliam, trash, stand, tables;
+    Objects desk, behindPoliam1, behindPoliam2, trash, stand, tables, notebook;
     PoliamSt poliam;
     MainCharacter valo;
     ArrayList<String> dialogfirst = new ArrayList<>(), stan = new ArrayList<>(),
@@ -43,16 +41,18 @@ public class Classroom extends ScreenGame {
         }
         bg[0] = new Texture("bg/bg4.jpg");
         bg[1] = new Texture("bg/hall4.png");
-        behindPoliam = new Objects(0, 0, 702, 1426);
+        behindPoliam1 = new Objects(0, 0, 110, 1426);
+        behindPoliam2 = new Objects(269, 0, 702-269, 1426);
         tables = new Objects(764, 950, 1148 - 764, 1380 - 950);
         desk = new Objects(1180, 708, 2066 - 1180, 1340 - 708);
         stand = new Objects(2158, 758, 2506 - 2158, 1314 - 758);
         trash = new Objects(2288, 210, 2418 - 2288, 456 - 210);
+        notebook = new Objects(110, 702, 268-110, 858-702);
 
         poliam = new PoliamSt(802);
         valo = new MainCharacter(2800);
 
-        dialogfirst.add("Р: Здравствуйте, Ст.");dialogfirst.add("П: Я занят, Милекум. Позже.");dialogfirst.add("Р: \"Ага, занят\"");
+        {dialogfirst.add("Р: Здравствуйте, Ст.");dialogfirst.add("П: Я занят, Милекум. Позже.");dialogfirst.add("Р: \"Ага, занят\"");
         dialogfirst.add("Р: \"Ему точно не стоит говорить, что я все забыла\"");dialogfirst.add("Р: \"Но это... странное чувство...\"");
         dialogfirst.add("Р: Морэм сказала, что удивлена, как вы со мной решили работать.");
         dialogfirst.add("П: Я уверен, она это часто говорит.");dialogfirst.add("Р: \"Ни грамма такта\"");
@@ -124,7 +124,7 @@ public class Classroom extends ScreenGame {
         dialogNext.add("В: Так всю оставшуюся ночь и просидела на полу, не смыкая глаз.");
         dialogNext.add("Р: Серьезно? А ты смотрела, что там, в подвале?");dialogNext.add("В: Нет, я только проверила, закрыт ли он.");
         dialogNext.add("В: Ты что ли не помнишь?");dialogNext.add("Р:...");dialogNext.add("Р: Мне надо бежать.");
-        dialogNext.add("В: Что? Руна!");dialogNext.add("В:...");dialogNext.add("ends");
+        dialogNext.add("В: Что? Руна!");dialogNext.add("В:...");dialogNext.add("ends");}//добавление текста в лист
 
     }
 
@@ -263,6 +263,7 @@ public class Classroom extends ScreenGame {
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
+            System.out.println("СФЫЫКЩЩЬ " + gg.touch.x + gg.touch.y);
             rightOutput(stan);//rightOutput(table);
             /**КОНЦОВКА**/
             if(yes.hit(gg.touch.x, gg.touch.y) && isStop) {
@@ -312,8 +313,11 @@ public class Classroom extends ScreenGame {
                 if((0 < gg.touch.x && gg.touch.x < 399 && SCR_HEIGHT-300 < gg.touch.y && gg.touch.y < SCR_HEIGHT) || timeCurrent==1000*60*36){
                     isStop=true;
                 }
-                if (behindPoliam.hit(gg.touch.x, gg.touch.y)) {
+                if (behindPoliam1.hit(gg.touch.x, gg.touch.y) || behindPoliam2.hit(gg.touch.x, gg.touch.y)) {
                     outputText("Р: Не надо оно мне");
+                }
+                if (notebook.hit(gg.touch.x, gg.touch.y)) {
+                    outputText("Р: На вид - дорогой ноутбук.");
                 }
                 if (tables.hit(gg.touch.x, gg.touch.y)) {
                     outputText(table);
@@ -342,7 +346,7 @@ public class Classroom extends ScreenGame {
         gg.camera.update();
         gg.batch.setProjectionMatrix(gg.camera.combined);
         gg.batch.begin();
-        if(!isEnd) gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);//рисовка холла\подвала в кат-сцене
+        if(!isEnd) gg.batch.draw(imgBG, 0, 0, SCR_WIDTH, SCR_HEIGHT);
         if (!isDialog && !isDialogTwo && !isKeysStage) {
             imgBG = bg[0];
 
@@ -385,28 +389,6 @@ public class Classroom extends ScreenGame {
         gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
         gg.batch.end();
     }
-
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
     @Override
     public void dispose() {
         super.dispose();

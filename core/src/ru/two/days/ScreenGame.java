@@ -13,10 +13,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.List;
@@ -64,32 +62,23 @@ public class ScreenGame implements Screen {
             forButtons[2] = new Texture("buttons/rScreen.png");
             forButtons[3] = new Texture("buttons/left.png");
             forButtons[4] = new Texture("buttons/right.png");
+
             for (int i = 0; i < texRuna.length; i++) {
                 texRuna[i] = new Texture("runa/runa" + i + ".png");
             }
             for (int i = 0; i < texKaiden.length; i++) {
                 texKaiden[i] = new Texture("kaiden/kaiden" + i + ".png");
             }
-            /*
-            for (int i = 0; i < texPoliam.length; i++) {
-                texValo[i] = new Texture("valo/valo" + i + ".png");
-            }*/
 
         }catch (NullPointerException ignored){}
     }
     @Override
-    public void show() {
-
-    }
+    public void show() {}
     @Override
     public void render(float delta) {
         times();
-        /*gg.camera.update();
-        gg.batch.setProjectionMatrix(gg.camera.combined);
-        gg.batch.begin();
-
-        gg.batch.end();*/
     }
+
     void isThreeMinutes(){
         if (timeCurrent == 180000){
             outputText("Р: Что-то я так устала...");
@@ -109,7 +98,6 @@ public class ScreenGame implements Screen {
                     return gg.fontValo;
                 case ':':
                     return gg.fontSimple;
-                case 'З':
                 default:
                     return gg.fontMassovka;
             }
@@ -119,6 +107,7 @@ public class ScreenGame implements Screen {
     void rightOutput(List<String>list){
         if(list.contains((tt.phrase))) outputText(list);
     }
+
     public void outputText(List<String> list){
         try {
             isTalking = true;
@@ -209,6 +198,5 @@ public class ScreenGame implements Screen {
         for (Music music : music) {
             music.dispose();
         }
-
     }
 }

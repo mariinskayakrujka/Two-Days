@@ -2,12 +2,7 @@ package ru.two.days;
 
 import static ru.two.days.TwoDays.isGameStart;
 import static ru.two.days.TwoDays.timeStart;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
 
@@ -27,9 +22,7 @@ public class Between implements Screen {
     }
 
     @Override
-    public void render(float delta) {
-
-    }
+    public void render(float delta) {}
 
     @Override
     public void resize(int width, int height) {

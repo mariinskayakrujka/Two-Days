@@ -24,7 +24,7 @@ public class ScreenAbout implements Screen {
 
     public ScreenAbout(TwoDays myGG) {
         gg = myGG;
-        imgBG = new Texture("img_1.png");
+        imgBG = new Texture("img1.png");
         btnBack = new TextButton(gg.fontLarge, "НАЗАД", 100);
     }
 
@@ -39,7 +39,6 @@ public class ScreenAbout implements Screen {
         if(Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
-
             if(btnBack.hit(gg.touch.x, gg.touch.y)) {
                 gg.setScreen(gg.screenIntro);
             }

@@ -18,7 +18,7 @@ public class ScreenSettings implements Screen {
     public ScreenSettings(TwoDays context){
         c = context;
         // создание изображений
-        imgBG = new Texture("img_1.png");
+        imgBG = new Texture("img1.png");
         btnSound = new TextButton(c.fontLarge, "ЗВУК ВКЛ", 650);
         btnExit = new TextButton(c.fontLarge, "НАЗАД", 350);
     }

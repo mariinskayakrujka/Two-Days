@@ -5,7 +5,6 @@ import static ru.two.days.TwoDays.SCR_WIDTH;
 import static ru.two.days.TwoDays.end;
 import static ru.two.days.TwoDays.soundOn;
 import static ru.two.days.TwoDays.timeCurrent;
-import static ru.two.days.TwoDays.timeStart;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -16,7 +15,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import java.util.ArrayList;
 
 public class RoomOfValo extends ScreenGame {
-    Objects feliopter, bed, radio, trash, fridge, posters, closer;
+    Objects feliopter, bed, radio, trash, fridge, posters, closer, siggarets;
     InputKeyboard keyboard;
     ArrayList<String> feli = new ArrayList<>(), poste = new ArrayList<>(),
             history = new ArrayList<>(), clos = new ArrayList<>(), afterHistory = new ArrayList<>();
@@ -29,8 +28,8 @@ public class RoomOfValo extends ScreenGame {
     public RoomOfValo(TwoDays context) {
         super(context);
         keyboard = new InputKeyboard(SCR_WIDTH, SCR_HEIGHT / 2f, 4);
-
-        fridge = new Objects(788, 212, 1180 - 788, 934 - 212);
+        siggarets = new Objects(1087, 922, 1178-1086, 968-922);
+        fridge = new Objects(788, 212, 1086 - 788, 934 - 212);
         radio = new Objects(608, 728, 716 - 608, 788 - 728);
         feliopter = new Objects(1026, 1026, 1302 - 1026, 1402 - 1026);
         closer = new Objects(1642, 1048, 2228 - 1642, 1388 - 1048);
@@ -38,7 +37,7 @@ public class RoomOfValo extends ScreenGame {
         trash = new Objects(2006, 204, 2502 - 2006, 294 - 204);
         bed = new Objects(1522, 312, 2551 - 1522, 600 - 312);
 
-        feli.add("Р: Прикольное устройство.");
+            { feli.add("Р: Прикольное устройство.");
         feli.add("Р: Он пишет, что у меня почти все в норме. Никаких повреждений.");
         feli.add("Р: С печенью только... неполадки.");
         feli.add("Р: ...");
@@ -91,8 +90,7 @@ public class RoomOfValo extends ScreenGame {
         history.add(":Он считается поверхностным, но он устроен так, что Земля, которая обжита,");
         history.add(":лишь малая часть всего их огромного мира.");
         history.add(":Это создано для того, чтобы люди не могли проникнуть в наши мира без нашего согласия.");
-        history.add("...");
-
+        history.add("...");}//добавление текста в список
     }
 
     @Override
@@ -101,7 +99,7 @@ public class RoomOfValo extends ScreenGame {
         gg.touch.x = 0;
         runa.vx = 0;
         runa.x = 300;
-        texR = texRuna[6];
+        texR = texRuna[4];
         music[0].stop();
     }
 
@@ -160,7 +158,7 @@ public class RoomOfValo extends ScreenGame {
                     } else if (numberOfWays.equals("666")) {
                         outputText("Р: Не работает. Похоже, тут нет записей от Академии Дыма.");
                     } else {
-                        outputText("Р: Не работает. Наверное, я не то включаю..");
+                        outputText("Р: Не работает. Наверное, я не то включаю... Может, стоит лучше осмотреться?");
                     }
                     isKeyboard = false;
                 }
@@ -197,6 +195,9 @@ public class RoomOfValo extends ScreenGame {
                 }
                 if (posters.hit(gg.touch.x, gg.touch.y)) {
                     outputText(poste);
+                }
+                if(siggarets.hit(gg.touch.x, gg.touch.y)){
+                    outputText("Р: Нет времени на перекур.");
                 }
                 if (closer.hit(gg.touch.x, gg.touch.y)) {
                     outputText(clos);

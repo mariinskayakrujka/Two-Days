@@ -5,10 +5,6 @@ import static ru.two.days.TwoDays.SCR_WIDTH;
 import static ru.two.days.TwoDays.end;
 import static ru.two.days.TwoDays.soundOn;
 import static ru.two.days.TwoDays.timeCurrent;
-import static ru.two.days.TwoDays.timeStart;
-
-import androidx.annotation.NonNull;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -25,14 +21,14 @@ public class Basement extends ScreenGame{
     Objects key;
     Texture[] imgBg = new Texture[2];
     ArrayList<String> baseStage = new ArrayList<>(), aboutKey = new ArrayList<>();
-    public Basement(@NonNull TwoDays context) {
+    public Basement(TwoDays context) {
         super(context);
         for (int i = 0; i < imgBg.length; i++) {
             imgBg[i] = new Texture("bg/basement"+i+".png");
         }
         imgBG=imgBg[0];
         key=new Objects(2112, 766, 2294-2112, 880-766);
-        baseStage.add("Р:...");baseStage.add("Р: Твою ж...");
+        {baseStage.add("Р:...");baseStage.add("Р: Твою ж...");
         baseStage.add("Р: Так, так-так, я смогу это решить, я вспомнила...");baseStage.add("Р: Нужно лишь...");
 
         baseStage.add("Р: *заклинание, обезвреживающее призрака*");
@@ -41,7 +37,7 @@ public class Basement extends ScreenGame{
         baseStage.add("Р: Но теперь он обезврежен.");baseStage.add("Р:...");
         baseStage.add("Р: Так, теперь тут нужно прибраться. Не дай Верховный это кто-нибудь увидит.");baseStage.add("..");
 
-        aboutKey.add("Р: Так, что это?");aboutKey.add("Р: Ключ? От чего это?..");
+        aboutKey.add("Р: Так, что это?");aboutKey.add("Р: Ключ? От чего это?..");aboutKey.add(" ");}//добавление текста в лист
 
     }
 
@@ -85,6 +81,7 @@ public class Basement extends ScreenGame{
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
+            rightOutput(aboutKey);
             /**КОНЦОВКА**/
             if(yes.hit(gg.touch.x, gg.touch.y) && isStop) {
                 isEnd = true;
@@ -110,7 +107,7 @@ public class Basement extends ScreenGame{
                     imgBG=imgBg[1];
                 }
             }else {
-                rightOutput(aboutKey);
+
                 if((0 < gg.touch.x && gg.touch.x < 399 && SCR_HEIGHT-300 < gg.touch.y && gg.touch.y < SCR_HEIGHT) || timeCurrent==1000*60*36){
                     isStop=true;
                 }
