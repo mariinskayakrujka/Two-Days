@@ -263,6 +263,7 @@ public class Classroom extends ScreenGame {
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
+            rightOutput(stan);//rightOutput(table);
             /**КОНЦОВКА**/
             if(yes.hit(gg.touch.x, gg.touch.y) && isStop) {
                 isEnd = true;
@@ -308,7 +309,6 @@ public class Classroom extends ScreenGame {
                     gg.setScreen(gg.basement);
                 }
             } else {
-                rightOutput(stan);rightOutput(table);
                 if((0 < gg.touch.x && gg.touch.x < 399 && SCR_HEIGHT-300 < gg.touch.y && gg.touch.y < SCR_HEIGHT) || timeCurrent==1000*60*36){
                     isStop=true;
                 }

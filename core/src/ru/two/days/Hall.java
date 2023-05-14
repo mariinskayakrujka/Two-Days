@@ -197,6 +197,10 @@ public class Hall extends ScreenGame {
             if (gg.touch.y > SCR_HEIGHT - 100) {
                 talkingKai = false;
                 numberOfHalls = 1;
+                if(!end.talkingKaiden) {
+                    end.talkingKaiden = true;
+                    end.countKeys++;
+                }
             }
             if (talkingKai) {
                 outputText(talkWithKaiden);

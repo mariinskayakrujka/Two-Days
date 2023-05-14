@@ -44,7 +44,8 @@ public class ScreenGame implements Screen {
     KaidenMorem kaiden;
 
 
-    public static int count = 0, countForEnd=0;
+    int count = 0;
+    public static int countForEnd=0;
 
     public ScreenGame(@NonNull TwoDays context){
         try {
