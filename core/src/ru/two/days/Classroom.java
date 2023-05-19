@@ -286,7 +286,7 @@ public class Classroom extends ScreenGame {
             isThreeMinutes();
             if (isDialog) {
                 outputText(dialogfirst);
-                if (count == 0 || gg.touch.y > SCR_HEIGHT - 100) {
+                if (count == 0) {
                     isDialog = false;
                     end.talkingPoliam1 = true;
                     dialogfirst.clear();

@@ -219,10 +219,6 @@ public class RoomOfRuna extends ScreenGame {
                 }
             }
             /**КОНЦОВКА**/
-            if (gg.touch.y > SCR_HEIGHT - 100) {
-                isIntro = false;
-                isAfterIntro = false;
-            }
             if (isIntro) {
                 outputText(intro);
                 if (count == 0) {
