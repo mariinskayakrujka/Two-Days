@@ -73,7 +73,7 @@ public class Endings {
         endfOfGame.add("Она вспоминает.");
         endfOfGame.add("Перед глазами мельтешит,\n пульсирует в такт сердцебиению.");
         endfOfGame.add("Наверное, это и помешало увидеть\n косяк и вовремя повернуть.");
-        endfOfGame.add(" ");
+        endfOfGame.add("  ");
         endfOfGame.add("Дух остается в академии.");endfOfGame.add(".");
     }
 
