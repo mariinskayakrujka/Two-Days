@@ -80,7 +80,7 @@ public class Classroom extends ScreenGame {
         stan.add("Р: Известный историк Руальдоф Киморович.");stan.add("Р: А, его Ст часто цитирует, я помню.");
         table.add("Р: Плюсы изучения истории.");table.add("Р: Когда-то меня веселили эти таблички.");
 
-        dialogKeys.add("П: Что-то случилось?");dialogKeys.add("Р: Не знаю...");dialogKeys.add("Р: Да. Случилось.");
+        dialogKeys.add(" ");dialogKeys.add("П: Что-то случилось?");dialogKeys.add("Р: Не знаю...");dialogKeys.add("Р: Да. Случилось.");
         dialogKeys.add("Р: Вы мне не поверите, но я все забыла.");
         dialogKeys.add("Р: Я помню только то, что узнала за последние " + timeCurrent / 1000 / 60 % 60 / 10 + timeCurrent / 1000 / 60 % 60 % 10 + "часов.");
         dialogKeys.add("Р: Я вспомнила многое, что связано с вами... и не только с вами, конечно...");
@@ -333,7 +333,7 @@ public class Classroom extends ScreenGame {
                 }
                 if (poliam.interaction(gg.touch.x+500)) {
                     if (!end.talkingPoliam1) isDialog = true;
-                    else if ((timeCurrent-timeAfterDialog >= 1000*60*1.5 && !end.talkingPoliam2) || gg.touch.y > SCR_HEIGHT - 100) {
+                    else if ((timeCurrent-timeAfterDialog >= 1000*60*1.5 && !end.talkingPoliam2)) {
                         isDialogTwo = true;
                     } else
                         outputText("П: Не отвлекайте меня, пожалуйста, я занят.");
