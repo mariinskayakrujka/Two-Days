@@ -29,7 +29,7 @@ public class Classroom extends ScreenGame {
     PoliamSt poliam;
     MainCharacter valo;
     ArrayList<String> dialogfirst = new ArrayList<>(), stan = new ArrayList<>(),
-            table = new ArrayList<>(), dialogKeys = new ArrayList<>(), dialogNext = new ArrayList<>();
+            dialogKeys = new ArrayList<>(), dialogNext = new ArrayList<>();
 
     public Classroom(TwoDays context) {
         super(context);
@@ -77,8 +77,7 @@ public class Classroom extends ScreenGame {
         dialogfirst.add("П: Только аккуратнее, пожалуйста. У меня нет копий.");
         dialogfirst.add("Р: Не волнуйтесь, я буду осторожна.");dialogfirst.add("П:...");dialogfirst.add("end");
 
-        stan.add("Р: Известный историк Руальдоф Киморович.");stan.add("Р: А, его Ст часто цитирует, я помню.");stan.add("");
-        table.add("Р: Плюсы изучения истории.");table.add("Р: Когда-то меня веселили эти таблички.");table.add("");
+        stan.add("Р: Известный историк Руальдоф Киморович.");stan.add("Р: А, его Ст часто цитирует, я помню.");stan.add("end");
 
         dialogKeys.add(" ");dialogKeys.add("П: Что-то случилось?");dialogKeys.add("Р: Не знаю...");dialogKeys.add("Р: Да. Случилось.");
         dialogKeys.add("Р: Вы мне не поверите, но я все забыла.");
@@ -136,7 +135,7 @@ public class Classroom extends ScreenGame {
         gg.touch.x = 0;
         runa.vx = 0;
         texR = texRuna[6];
-        texP = texPoliam[1];
+        texP = texPoliam[10];
         texV = texValo[0];
         music[2].stop();
         imgBG = bg[0];
@@ -145,7 +144,7 @@ public class Classroom extends ScreenGame {
     @Override
     public void render(float delta) {
         if (!isDialog && !isKeysStage && tt.phrase.equals("") && gg.touch.x != 0 && gg.touch.x != runa.getX()
-                && !stan.contains(tt.phrase) && !table.contains(tt.phrase)  & !isEnd & !isStop)
+                && !stan.contains(tt.phrase) && !isEnd & !isStop)
             runa.moveForRuna(gg.touch.x);
         else if(isDialog){
             switch (tt.phrase) {
@@ -264,8 +263,7 @@ public class Classroom extends ScreenGame {
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
-            System.out.println("СФЫЫКЩЩЬ " + gg.touch.x + gg.touch.y);
-            rightOutput(stan);rightOutput(table);
+
             /**КОНЦОВКА**/
             if(yes.hit(gg.touch.x, gg.touch.y) && isStop) {
                 isEnd = true;
@@ -283,7 +281,7 @@ public class Classroom extends ScreenGame {
                 }
             }
             /**КОНЦОВКА**/
-            if (!stan.contains(tt.phrase) && !table.contains(tt.phrase)) tt.phrase = "";
+            if (!stan.contains(tt.phrase)) tt.phrase = "";
             isThreeMinutes();
             if (isDialog) {
                 outputText(dialogfirst);
@@ -311,6 +309,7 @@ public class Classroom extends ScreenGame {
                     gg.setScreen(gg.basement);
                 }
             } else {
+                rightOutput(stan);
                 if((0 < gg.touch.x && gg.touch.x < 399 && SCR_HEIGHT-300 < gg.touch.y && gg.touch.y < SCR_HEIGHT) || timeCurrent==1000*60*36){
                     isStop=true;
                 }
@@ -321,7 +320,7 @@ public class Classroom extends ScreenGame {
                     outputText("Р: На вид - дорогой ноутбук.");
                 }
                 if (tables.hit(gg.touch.x, gg.touch.y)) {
-                    outputText(table);
+                    outputText("Р: Плюсы изучения истории.");
                 }
                 if (desk.hit(gg.touch.x, gg.touch.y)) {
                     outputText("Р: \"Культ Грейс\"?");
@@ -341,7 +340,10 @@ public class Classroom extends ScreenGame {
                         if(countDialog == 13){
                             outputText("П: Сколько вам можно повторять?!");
                             texP = texPoliam[13];
-                        }else outputText("П: Не отвлекайте меня, пожалуйста, я занят.");
+                        }else{
+                            outputText("П: Не отвлекайте меня, пожалуйста, я занят.");
+                            texP = texPoliam[10];
+                        }
                     }
                 }
             }
