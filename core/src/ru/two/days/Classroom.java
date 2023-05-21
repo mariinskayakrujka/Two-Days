@@ -259,12 +259,13 @@ public class Classroom extends ScreenGame {
             gg.setScreen(gg.hall);
             music[2].stop();
         }
+
         // обработка касаний экрана
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
             System.out.println("СФЫЫКЩЩЬ " + gg.touch.x + gg.touch.y);
-            rightOutput(stan);//rightOutput(table);
+            rightOutput(stan);rightOutput(table);
             /**КОНЦОВКА**/
             if(yes.hit(gg.touch.x, gg.touch.y) && isStop) {
                 isEnd = true;
