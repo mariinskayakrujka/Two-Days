@@ -20,7 +20,7 @@ public class Classroom extends ScreenGame {
 
     Texture imgBG;
     boolean isDialog, isDialogTwo, isKeysStage;
-
+    int countDialog;
     long timeAfterDialog;
     Texture[] texPoliam = new Texture[20];
     Texture[] texValo = new Texture[5];
@@ -77,12 +77,12 @@ public class Classroom extends ScreenGame {
         dialogfirst.add("П: Только аккуратнее, пожалуйста. У меня нет копий.");
         dialogfirst.add("Р: Не волнуйтесь, я буду осторожна.");dialogfirst.add("П:...");dialogfirst.add("end");
 
-        stan.add("Р: Известный историк Руальдоф Киморович.");stan.add("Р: А, его Ст часто цитирует, я помню.");
-        table.add("Р: Плюсы изучения истории.");table.add("Р: Когда-то меня веселили эти таблички.");
+        stan.add("Р: Известный историк Руальдоф Киморович.");stan.add("Р: А, его Ст часто цитирует, я помню.");stan.add("");
+        table.add("Р: Плюсы изучения истории.");table.add("Р: Когда-то меня веселили эти таблички.");table.add("");
 
         dialogKeys.add(" ");dialogKeys.add("П: Что-то случилось?");dialogKeys.add("Р: Не знаю...");dialogKeys.add("Р: Да. Случилось.");
         dialogKeys.add("Р: Вы мне не поверите, но я все забыла.");
-        dialogKeys.add("Р: Я помню только то, что узнала за последние " + timeCurrent / 1000 / 60 % 60 / 10 + timeCurrent / 1000 / 60 % 60 % 10 + "часов.");
+        dialogKeys.add("Р: Я помню только то, что узнала за последние несколько часов.");
         dialogKeys.add("Р: Я вспомнила многое, что связано с вами... и не только с вами, конечно...");
         dialogKeys.add("Р: Я вела себя непозволительно во многих ситуациях, вы имеете право меня ненавидеть...");
         dialogKeys.add("П: Однако я этого не делаю.");
@@ -335,8 +335,13 @@ public class Classroom extends ScreenGame {
                     if (!end.talkingPoliam1) isDialog = true;
                     else if ((timeCurrent-timeAfterDialog >= 1000*60*1.5 && !end.talkingPoliam2)) {
                         isDialogTwo = true;
-                    } else
-                        outputText("П: Не отвлекайте меня, пожалуйста, я занят.");
+                    } else {
+                        countDialog++;
+                        if(countDialog == 13){
+                            outputText("П: Сколько вам можно повторять?!");
+                            texP = texPoliam[13];
+                        }else outputText("П: Не отвлекайте меня, пожалуйста, я занят.");
+                    }
                 }
             }
 
@@ -350,7 +355,7 @@ public class Classroom extends ScreenGame {
         if (!isDialog && !isDialogTwo && !isKeysStage) {
             imgBG = bg[0];
 
-            gg.batch.draw(texP, poliam.getX(), poliam.getY(), texP.getWidth(), texP.getHeight(), 0, 0, 1280, 1280, false, false);//poliam
+            gg.batch.draw(texP, poliam.getX(), poliam.getY(), texP.getWidth(), texP.getHeight(), 0, 0, 1280, 1280, true, false);//poliam
             if (runa.isWalking) {
                 changePose();
                 gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
