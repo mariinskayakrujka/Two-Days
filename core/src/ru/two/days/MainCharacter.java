@@ -41,7 +41,6 @@ public class MainCharacter {
 
 
     void move(boolean isRight, int vx){
-        //this.vx = vx;
         if(isRight) x +=vx;
         else x-=vx;
         changePhase();

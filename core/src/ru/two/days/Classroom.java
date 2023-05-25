@@ -26,7 +26,7 @@ public class Classroom extends ScreenGame {
     Texture[] texValo = new Texture[5];
     Texture[] bg = new Texture[2];
     Objects desk, behindPoliam1, behindPoliam2, trash, stand, tables, notebook;
-    PoliamSt poliam;
+    MainCharacter poliam;
     MainCharacter valo;
     ArrayList<String> dialogfirst = new ArrayList<>(), stan = new ArrayList<>(),
             dialogKeys = new ArrayList<>(), dialogNext = new ArrayList<>();
@@ -49,7 +49,7 @@ public class Classroom extends ScreenGame {
         trash = new Objects(2288, 210, 2418 - 2288, 456 - 210);
         notebook = new Objects(110, 702, 268-110, 858-702);
 
-        poliam = new PoliamSt(802);
+        poliam = new MainCharacter(802);
         valo = new MainCharacter(2800);
 
         {dialogfirst.add("Р: Здравствуйте, Ст.");dialogfirst.add("П: Я занят, Милекум. Позже.");dialogfirst.add("Р: \"Ага, занят\"");

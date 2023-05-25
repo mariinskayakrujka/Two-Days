@@ -39,7 +39,7 @@ public class ScreenGame implements Screen {
 
     RunaMilekum runa;
 
-    KaidenMorem kaiden;
+    MainCharacter kaiden;
 
 
     int count = 0;
@@ -52,7 +52,7 @@ public class ScreenGame implements Screen {
             no = new TextButton(gg.fontLarge, "НЕТ", 200);
             tt = new Text(gg.font, "", SCR_WIDTH/5f, SCR_HEIGHT/ 11f);
             runa = new RunaMilekum(703);
-            kaiden = new KaidenMorem(SCR_WIDTH*3/4f);
+            kaiden = new MainCharacter(SCR_WIDTH*3/4f);
             music[0] = Gdx.audio.newMusic(Gdx.files.internal("sounds/WalkingKover.mp3"));
             music[1] = Gdx.audio.newMusic(Gdx.files.internal("sounds/beg-v-kablukah.mp3"));
             music[2] = Gdx.audio.newMusic(Gdx.files.internal("sounds/walkingRuna.mp3"));
