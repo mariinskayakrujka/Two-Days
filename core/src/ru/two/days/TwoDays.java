@@ -119,7 +119,8 @@ public class TwoDays extends Game {
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
+		try {
+			batch.dispose();
 			fontRuna.dispose();
 			fontLarge.dispose();
 			fontMassovka.dispose();
@@ -128,6 +129,7 @@ public class TwoDays extends Game {
 			fontSimple.dispose();
 			fontKaiden.dispose();
 			font.dispose();
+		}catch (RuntimeException ignored){}
 	}
 
 	public BitmapFont getFont() {
