@@ -173,6 +173,7 @@ public class Hall extends ScreenGame {
             gg.touch.x = 600;
             isClassroom = false;
         }
+        if(talkingKai) numberOfHalls=0;
         //основные события игры
         if (Gdx.input.justTouched()) {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);

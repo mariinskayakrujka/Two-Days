@@ -288,7 +288,6 @@ public class Classroom extends ScreenGame {
                 if (count == 0) {
                     isDialog = false;
                     end.talkingPoliam1 = true;
-                    dialogfirst.clear();
                     end.countKeys++;
                     timeAfterDialog = TimeUtils.millis()-timeStart;
                 }
@@ -358,7 +357,7 @@ public class Classroom extends ScreenGame {
         if (!isDialog && !isDialogTwo && !isKeysStage) {
             imgBG = bg[0];
 
-            gg.batch.draw(texP, poliam.getX(), poliam.getY(), texP.getWidth(), texP.getHeight(), 0, 0, 1280, 1280, true, false);//poliam
+            if(!isEnd) gg.batch.draw(texP, poliam.getX(), poliam.getY(), texP.getWidth(), texP.getHeight(), 0, 0, 1280, 1280, true, false);//poliam
             if (runa.isWalking) {
                 changePose();
                 gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);

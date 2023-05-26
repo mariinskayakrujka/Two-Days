@@ -147,6 +147,9 @@ public class ScreenGame implements Screen {
         count=0;
         countForEnd=0;
         isGameStart=false;
+        gg.hall.talkingKai=true;
+        gg.classroom.countDialog=0;
+        gg.classroom.timeAfterDialog=0;
         isStop=false;
         isEnd=false;
         end.clearing();
