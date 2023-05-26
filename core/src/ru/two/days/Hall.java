@@ -101,6 +101,7 @@ public class Hall extends ScreenGame {
             gg.touch.x = 0;
             runa.vx = 0;
         }
+        texR = texRuna[4];
     }
 
     public void render(float delta) {

@@ -147,7 +147,7 @@ public class RoomOfRuna extends ScreenGame {
         }
         gg.touch.x = 0;
         runa.vx = 0;
-        texR = texRuna[6];
+        texR = texRuna[4];
 
     }
 

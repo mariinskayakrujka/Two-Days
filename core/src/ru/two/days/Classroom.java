@@ -134,7 +134,7 @@ public class Classroom extends ScreenGame {
         runa.x = 1700;
         gg.touch.x = 0;
         runa.vx = 0;
-        texR = texRuna[6];
+        texR = texRuna[4];
         texP = texPoliam[10];
         texV = texValo[0];
         music[2].stop();
