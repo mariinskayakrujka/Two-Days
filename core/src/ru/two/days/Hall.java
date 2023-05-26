@@ -231,7 +231,7 @@ public class Hall extends ScreenGame {
                 gg.batch.draw(texR, runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);
             } else if (!isEnd)
                 gg.batch.draw(texRuna[3], runa.getX(), runa.getY(), texR.getWidth(), texR.getHeight(), 0, 0, 1280, 1280, !runa.isFlip(), false);//спокойствие
-            if (numberOfHalls != 1)
+            if (numberOfHalls != 1 && !isEnd)
                 gg.batch.draw(forButtons[1], 0, SCR_HEIGHT / 2f - 350, 500, 500);
 
         }
@@ -243,7 +243,7 @@ public class Hall extends ScreenGame {
         if (isEnd) {
             ScreenUtils.clear(Color.BLACK);
             gg.font.draw(gg.batch, endPhrase, 50, SCR_HEIGHT / 2f);
-        } else {
+        }else {
             gg.batch.draw(forButtons[2], SCR_WIDTH - 400, SCR_HEIGHT / 2f - 350, 500, 500);
             gg.batch.draw(forButtons[0], 0, SCR_HEIGHT - 300, 400, 400);
             gg.fontSimple.draw(gg.batch, "готово", 130, SCR_HEIGHT - 50);
