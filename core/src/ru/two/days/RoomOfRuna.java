@@ -203,7 +203,7 @@ public class RoomOfRuna extends ScreenGame {
             gg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             gg.camera.unproject(gg.touch);
             /**КОНЦОВКА**/
-            if (yes.hit(gg.touch.x, gg.touch.y) && isStop) {
+            if ((yes.hit(gg.touch.x, gg.touch.y) && isStop) || timeCurrent>=2160000) {
                 isEnd = true;
             }
             if (no.hit(gg.touch.x, gg.touch.y) && isStop) {

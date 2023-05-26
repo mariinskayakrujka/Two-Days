@@ -146,6 +146,7 @@ public class ScreenGame implements Screen {
         gg.setScreen(gg.screenIntro);
         count=0;
         countForEnd=0;
+        isGameStart=false;
         isStop=false;
         isEnd=false;
         end.clearing();
