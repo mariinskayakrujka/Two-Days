@@ -384,6 +384,7 @@ public class Classroom extends ScreenGame {
             yes.font.draw(gg.batch, yes.text, yes.x, yes.y);
             no.font.draw(gg.batch, no.text, no.x, no.y);
         }
+
         if (isEnd){
             ScreenUtils.clear(Color.BLACK);
             gg.font.draw(gg.batch, endPhrase, 50, SCR_HEIGHT/2f);
