@@ -309,13 +309,13 @@ public class RoomOfRuna extends ScreenGame {
                     else {
                         outputText("Р: Мне правда стоит передохнуть.");
                         texR = texRuna[5];
-                        outputText("Р: Я поспала.");
                         if (!end.sleeping) {
                             end.sleeping = true;
                             end.countKeys++;
                         }
                     }
                 }
+                if(tt.phrase.equals("Р: Мне правда стоит передохнуть.")) outputText("Р: Я поспала.");
                 if (bottles.hit(gg.touch.x, gg.touch.y)) {
                     outputText("Р: Столько бутылок \"13\"... Мне правда стыдно.");
                 }

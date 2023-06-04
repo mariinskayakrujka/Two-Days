@@ -75,7 +75,8 @@ public class Classroom extends ScreenGame {
         dialogfirst.add("Р: \"Какой стыд. Я перед ним очень виновата\"");
         dialogfirst.add("П: Вы сегодня странны. Что вы хотели?");dialogfirst.add("Р: Я могу забрать дипломную?");
         dialogfirst.add("П: Только аккуратнее, пожалуйста. У меня нет копий.");
-        dialogfirst.add("Р: Не волнуйтесь, я буду осторожна.");dialogfirst.add("П:...");dialogfirst.add("end");
+        dialogfirst.add("Р: Не волнуйтесь, я буду осторожна.");dialogfirst.add("П:...");
+        dialogfirst.add("Р:\"Нужно будет зайти к нему чуть позже.\"");dialogfirst.add("end");
 
         stan.add("Р: Известный историк Руальдоф Киморович.");stan.add("Р: А, его Ст часто цитирует, я помню.");stan.add("end");
 
@@ -322,7 +323,7 @@ public class Classroom extends ScreenGame {
                     outputText("Р: Плюсы изучения истории.");
                 }
                 if (desk.hit(gg.touch.x, gg.touch.y)) {
-                    outputText("Р: \"Культ Грейс\"?");
+                    outputText("Р: \"Культ Грейс?\"");
                 }
                 if (trash.hit(gg.touch.x, gg.touch.y)) {
                     outputText("Р: Мусор. Ничего интересного");

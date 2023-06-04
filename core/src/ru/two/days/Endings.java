@@ -1,10 +1,12 @@
 package ru.two.days;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Endings {
+public class Endings{
     boolean recordOfLesson,//+
             talkingPoliam1,//+
             docAbenrollment,
@@ -13,12 +15,9 @@ public class Endings {
             talkingPoliam2,//+
             sleeping;//+
     int countKeys;
-    Text tt;
+    int endin;
     public ArrayList<String> endfOfGame = new ArrayList<>();
 
-    public Endings() {
-
-    }
 
     public void whatIsEnd() {
         endfOfGame.add("Собрано " + countKeys + " из 7 ключевых моментов.");
@@ -48,6 +47,7 @@ public class Endings {
     }
 
     void faintingInTravel() {
+        endin  = 5;
         endfOfGame.add("Руна даже не пришла в академию.");
         endfOfGame.add("Всю ночь она не спала, сидела\n как на иголках.");
         endfOfGame.add("Только солнце вышло из-за горизонта,\n она распахнула двери и\n выбежала прочь из общежития.");
@@ -60,6 +60,7 @@ public class Endings {
     }
 
     void memoriesWithoutPoliam() {
+        endin=9;
         endfOfGame.add("Руна отлично защитила дипломную,\n хоть было страшно.");
         endfOfGame.add("Она смотрела на Ст, сидевшего\n на первых рядах и внимательно\nглядя прямо ей в глаза.");
         endfOfGame.add("Он был напряжен,");
@@ -79,6 +80,7 @@ public class Endings {
 
 
     void goodEnding() {
+        endin = 1;
         endfOfGame.add("Руна отлично защитила дипломную,\n хоть было страшно.");
         endfOfGame.add("Она смотрела на Ст,\n сидевшего на первых рядах и\nвнимательно глядевшего ей в глаза. ");
         endfOfGame.add("Он был напряжен,");
@@ -94,6 +96,7 @@ public class Endings {
     }
 
     void badEnding() {
+        endin = 3;
         endfOfGame.add("Руна ничего не помнит.");
         endfOfGame.add("Руна ничего не знает.");
         endfOfGame.add("Руна осталась без прошлого.");
@@ -106,6 +109,7 @@ public class Endings {
     }
 
     void faintingAfterTravel() {
+        endin  =4;
         endfOfGame.add("Руна даже не пришла в академию.");
         endfOfGame.add("Всю ночь она не спала, сидела\n как на иголках.");
         endfOfGame.add("Только солнце вышло из-за\n горизонта, она распахнула двери\n и выбежала прочь из общежития.");
@@ -119,6 +123,7 @@ public class Endings {
     }
 
     void faintingToParents() {
+        endin = 8;
         endfOfGame.add("Окончательное решение\n не заставило долго себя ждать.");
         endfOfGame.add("Только солнце вышло из-за\nгоризонта, она распахнула двери\n и вышла на улицу.");
         endfOfGame.add("С ключом от Межмирья в\n одной руке и чемоданом в другой.");
@@ -131,6 +136,7 @@ public class Endings {
     }
 
     void faintingInProtection() {
+        endin=10;
         endfOfGame.add("Руна пришла на защиту во всеоружии.");
         endfOfGame.add("Она была готова дипломную, правда.");
         endfOfGame.add("Назвали ее имя.");
@@ -144,6 +150,7 @@ public class Endings {
     }
 
     void sleepWithPoliam() {
+        endin = 2;
         endfOfGame.add("Руна пришла на защиту во всеоружии.");
         endfOfGame.add("Она была готова защитить\n дипломную, правда.");
         endfOfGame.add("Но все же чувствовалась некоторая\n усталость. Наверное,\n это от недосыпа.");
@@ -162,6 +169,7 @@ public class Endings {
     }
 
     void welcomeHomeThink() {
+        endin = 6;
         endfOfGame.add("Окончательное решение\n не заставило долго себя ждать.");
         endfOfGame.add("Только солнце вышло из-за горизонта,\n она распахнула двери и вышла на улицу.");
         endfOfGame.add("С ключом от Межмирья в одной\n руке и чемоданом в другой.");
@@ -174,6 +182,7 @@ public class Endings {
     }
 
     void welcomeHomeWithoutThink() {
+        endin = 7;
         endfOfGame.add("Окончательное решение\n не заставило долго себя ждать.");
         endfOfGame.add("Только солнце вышло из-за горизонта, она\n распахнула двери и вышла на улицу.");
         endfOfGame.add("С ключом от Межмирья в одной\n руке и чемоданом в другой.");
@@ -186,6 +195,7 @@ public class Endings {
     }
 
     void memories() {
+        endin=11;
         endfOfGame.add("Последние несколько часов\n Руна судорожно перечитывала дипломную,");
         endfOfGame.add("Но буквы плыли перед ее глазами.");
         endfOfGame.add("Она пришла в академию, с\n папкой в руках, бледная, холодная.");
@@ -205,6 +215,7 @@ public class Endings {
     }
 
     void maybeHappiness() {
+        endin=12;
         endfOfGame.add("Последние несколько часов Руна\n судорожно перечитывала дипломную,");
         endfOfGame.add("Но буквы плыли перед ее глазами.");
         endfOfGame.add("Она пришла в академию, с \nпапкой в руках, бледная, холодная.");
