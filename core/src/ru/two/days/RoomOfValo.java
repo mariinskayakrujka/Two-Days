@@ -231,6 +231,7 @@ public class RoomOfValo extends ScreenGame {
         }
         if (isEnd) {
             ScreenUtils.clear(Color.BLACK);
+            if(endPhrase.equals(end.endfOfGame.get(end.endfOfGame.size()-2))) gg.batch.draw(picture, SCR_WIDTH/2f-picture.getWidth()/2f, SCR_HEIGHT/2f-picture.getHeight()/2f);
             gg.font.draw(gg.batch, endPhrase, 50, SCR_HEIGHT / 2f);
         }gg.font.draw(gg.batch, tt.phrase, tt.getX(), tt.getY());
         if (isEnterWays) keyboard.draw(gg.batch);

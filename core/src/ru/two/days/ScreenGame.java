@@ -25,7 +25,8 @@ public class ScreenGame implements Screen {
     Text tt;
     Music[] music = new Music[3];
     public static String endPhrase;
-
+    Texture[] foEnd = new Texture[4];
+    static Texture picture;
     public static TextButton yes, no;
     Texture[] texRuna = new Texture[18], texKaiden = new Texture[11];
     Texture[] forButtons = new Texture[5];
@@ -56,13 +57,15 @@ public class ScreenGame implements Screen {
             music[0] = Gdx.audio.newMusic(Gdx.files.internal("sounds/WalkingKover.mp3"));
             music[1] = Gdx.audio.newMusic(Gdx.files.internal("sounds/beg-v-kablukah.mp3"));
             music[2] = Gdx.audio.newMusic(Gdx.files.internal("sounds/walkingRuna.mp3"));
-
+            for (int i = 0; i < foEnd.length; i++) {
+                foEnd[i] = new Texture("ends/"+(i+1)+".png");
+            }
             forButtons[0] = new Texture("buttons/buttonRestrt.png");
             forButtons[1] = new Texture("buttons/lScreen.png");
             forButtons[2] = new Texture("buttons/rScreen.png");
             forButtons[3] = new Texture("buttons/left.png");
             forButtons[4] = new Texture("buttons/right.png");
-
+            picture = foEnd[0];
             for (int i = 0; i < texRuna.length; i++) {
                 texRuna[i] = new Texture("runa/runa" + i + ".png");
             }
@@ -132,6 +135,29 @@ public class ScreenGame implements Screen {
     public void nowIsEnd(){
         for (Music value : music) {
             value.stop();
+        }
+        switch (end.endin){
+            case 1:
+            case 12:
+                picture = foEnd[1];
+                break;
+            case 5:
+            case 9:
+            case 4:
+            case 8:
+            case 10:
+            case 11:
+                picture = foEnd[0];
+                break;
+            case 7:
+            case 6:
+                picture = foEnd[2];
+                break;
+            case 2:
+                picture = foEnd[3];
+                break;
+            default:
+                break;
         }
         runa.vx=0;
         runa.isWalking = false;
