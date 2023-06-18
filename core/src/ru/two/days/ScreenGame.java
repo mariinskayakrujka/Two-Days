@@ -228,5 +228,8 @@ public class ScreenGame implements Screen {
         for (Music music : music) {
             music.dispose();
         }
+        for(Texture texture : foEnd) {
+            texture.dispose();
+        }
     }
 }
